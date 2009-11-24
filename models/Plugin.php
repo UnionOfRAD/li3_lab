@@ -1,18 +1,18 @@
 <?php
 
-namespace app\models;
+namespace li3_lab\models;
 
 use \lithium\util\Validator;
 use \lithium\data\Connections;
 
-class Plugin extends \lithium\core\StaticObject {
+class Plugin extends \lithium\data\Model {
 
 	/**
 	 * public name of the model
 	 *
 	 * @var string
 	 */
-	public static $alias = 'Plugin';
+	public $alias = 'Plugin';
 
 	/**
 	 * Metadata
@@ -20,7 +20,7 @@ class Plugin extends \lithium\core\StaticObject {
 	 * @var array Meta data to link the model with the couchdb datasource
 	 *		- source : the name of the table (called database in couchdb)
 	 */
-	protected static $_meta = array('source' => 'plugins');
+	protected $_meta = array('source' => 'li3_lab', 'connection' => 'li3_lab');
 
 	/**
 	 *  Default values for document based db
@@ -37,6 +37,18 @@ class Plugin extends \lithium\core\StaticObject {
 		'source' => null,
 		'created' => null,
 		'updated' => null
+	);
+
+	public static $validates = array(
+		'maintainer' => 'You must specify a maintainer.',
+		'maintainer_email' => array(
+			'rule' => 'email',
+			'message' => 'You must specify a valid maintainer email address.'
+		),
+		'version' => 'You must specify a version number for this plugin.',
+		'name' => 'You must specify a name for this plugin.',
+		'summary' => 'You must specify a short summary for this plugin',
+		'source' => 'You must specify a source for this plugin.'
 	);
 
 	/**
@@ -69,31 +81,55 @@ class Plugin extends \lithium\core\StaticObject {
 
 	/*
 	* Validate the input data before saving to data
-	* Validates author, content, language, permanent
 	*
-	* @return stdClass
+	* @param $record Document instance
+	* @param $options array
+	* @return boolean
 	*/
-	public static function validate($data) {
-		if (!Validator::isNotEmpty($data->maintainer)) {
-			$data->errors['maintainer'] = 'You must specify a maintainer.';
+	public function validates($record, $options = array()) {
+		return static::_filter(__METHOD__, compact('record', 'options'), function($self, $params) {
+			extract($params);
+			$errors = array();
+			foreach ($self::$validates as $field => $params) {
+				$rule = 'isNotEmpty';
+				$message = $params;
+				$data = array();
+				if (!empty($params['rule'])) {
+					if (is_string($params['rule'])) {
+						$rule = $params['rule'];
+					} else {
+						$rule = array_shift((array) $params['rule']);
+						$data = $params['rule'];
+					}
+				}
+				$data = array($record->{$field}) + $data;
+				if (Validator::invokeMethod($rule, $data) !== true) {
+					if (!empty($params['message'])) {
+						$message = $params['message'];
+					}
+					$errors[$field] = $message;
+				}
+			}
+			if (empty($errors)) {
+				return true;
+			}
+			$record->set(array('errors' => $errors));
+			return false;
+		});
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data 
+	 * @return void
+	 */
+	public static function create($data = array()) {
+		$data += static::$_defaults;
+		if (!isset($data['created'])) {
+			$data['created'] = date('Y-m-d h:i:s');
 		}
-		if (!Validator::email($data->maintainer_email)) {
-			$data->errors['maintainer_email'] = 'You must specify a valid maintainer email address.';
-		}
-		if (!Validator::isNotEmpty($data->version)) {
-			$data->errors['version'] = 'You must specify a version number for this plugin.';
-		}
-		if (!Validator::isNotEmpty($data->name)) {
-			$data->errors['name'] = 'You must specify a name for this plugin.';
-		}
-		if (!Validator::isNotEmpty($data->summary)) {
-			$data->errors['name'] = 'You must specify a short summary for this plugin.';
-		}
-		/* @todo add custom regexes for git-based urls */
-		if (!Validator::isNotEmpty($data->source)) {
-			$data->errors['source'] = 'You must specify a source for this plugin.';
-		}
-		return $data;
+		return parent::create($data);
 	}
 
 	/**
@@ -113,24 +149,24 @@ class Plugin extends \lithium\core\StaticObject {
 	/**
 	 * Find
 	 */
-	public static function find($view = 'all', $options = array()) {
-		$couch = Connections::get('couch');
-		$data = $couch->get(static::$_meta['source'].'/_all_docs', $options);
-
-		$isError = (isset($data->error) && $data->error == 'not_found');
-
-		if ($isError && $data->reason == 'no_db_file')  {
-			$couch->put(static::$_meta['source']);
-			return null;
-		}
-		return $data;
-	}
+	// public static function find($view = 'all', $options = array()) {
+	// 	$couch = Connections::get('couch');
+	// 	$data = $couch->get(static::$_meta['source'].'/_all_docs', $options);
+	//
+	// 	$isError = (isset($data->error) && $data->error == 'not_found');
+	//
+	// 	if ($isError && $data->reason == 'no_db_file')  {
+	// 		$couch->put(static::$_meta['source']);
+	// 		return null;
+	// 	}
+	// 	return $data;
+	// }
 
 	/**
 	 * Simple search
 	 */
 	public static function findByWord($word, $options = array()) {
-		$couch = Connections::get('couch');
+		$couch = Connections::get('li3_lab');
 		$path = static::$_meta['source'] . '/' . static::$_views['search']['_id'];
 		$data = $couch->get($path . '/_view/search?key="'.$word.'"', $options);
 

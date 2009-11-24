@@ -8,8 +8,8 @@
 
 use \lithium\http\Router;
 
-Router::connect('/{:controller}/{:action}/{:id:[0-9]+}.{:type}', array('id' => null));
-Router::connect('/{:controller}/{:action}/{:id:[0-9]+}');
-Router::connect('/{:controller}/{:action}/{:args}');
+Router::connect('/lab/{:action}/{:args}', array(
+	'plugin' => 'li3_lab', 'controller' => 'plugins'
+));
 
 ?>

@@ -1,8 +1,9 @@
 <?php
 
-namespace app\controllers;
+namespace li3_lab\controllers;
 
-use \app\models\Plugin;
+use \lithium\data\Connections;
+use \li3_lab\models\Plugin;
 use \lithium\util\Set;
 
 /**
@@ -11,19 +12,26 @@ use \lithium\util\Set;
  */
 class PluginsController extends \lithium\action\Controller {
 
+	protected function _init() {
+		parent::_init();
+		Connections::add('li3_lab', 'http', array('adapter' => 'CouchDb'));
+	}
+
 	/**
 	 * Index
 	 */
 	public function index() {
-		$data = Plugin::find('all', array('include_docs' => 'true'));
+		$data = Plugin::all(array('include_docs' => 'true'));
 
 		$plugins = array();
-		foreach($data->rows as $row) {
-			if (!$row->doc->views) {
-				$plugins[] = $row->doc;
-			}
-		}
-		$this->render(array('json' => compact('plugins')));
+		// foreach($data->rows as $row) {
+		// 		if (!$row->doc->views) {
+		// 			$plugins[] = $row->doc;
+		// 		}
+		// 	}
+		var_Dump($plugins);
+		die();
+		//$this->render(array('json' => compact('plugins')));
 	}
 
 	/**
@@ -58,6 +66,23 @@ class PluginsController extends \lithium\action\Controller {
 	public function error($id = null) {
 		$error = array('type' => 'bad request', 'code' => 500);
 		return $this->render(array('text' => compact('error')));
+	}
+
+	public function add() {
+		if (!empty($this->request->data)) {
+			$plugin = Plugin::create($this->request->data);
+			if ($plugin->validates() && $plugin->save()) {
+				$this->redirect(array(
+					'controller' => 'plugins', 'action' => 'view', 'args' => array($plugin->id)
+				));
+			}
+		}
+		if (empty($plugin)) {
+			$plugin = Plugin::create();
+		}
+
+		$this->set(compact('plugin'));
+		$this->render('form');
 	}
 }
 ?>
