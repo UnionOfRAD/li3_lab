@@ -17,6 +17,10 @@
 	<title>Li3 Plugins</title>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
+	<style> 
+		label {display:block;}
+		input {display:block;}
+	</style>
 </head>
 <body>
 	<div id="container">
