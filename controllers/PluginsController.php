@@ -2,7 +2,6 @@
 
 namespace li3_lab\controllers;
 
-use \lithium\data\Connections;
 use \li3_lab\models\Plugin;
 use \li3_lab\models\PluginView;
 
@@ -11,11 +10,6 @@ use \li3_lab\models\PluginView;
  *
  */
 class PluginsController extends \lithium\action\Controller {
-
-	protected function _init() {
-		parent::_init();
-		Connections::add('li3_lab', 'http', array('adapter' => 'CouchDb', 'port' => 5984));
-	}
 
 	/**
 	 * Index

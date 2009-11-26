@@ -23,7 +23,7 @@ class Plugin extends \lithium\data\Model {
 	protected $_meta = array('source' => 'li3_lab', 'connection' => 'li3_lab');
 
 
-	public static $validates = array(
+	public $validates = array(
 		'maintainer' => 'You must specify a maintainer.',
 		'maintainer_email' => array(
 			'rule' => 'email',
@@ -51,47 +51,6 @@ class Plugin extends \lithium\data\Model {
 		'created' => null,
 		'updated' => null
 	);
-
-	/*
-	* Validate the input data before saving to data
-	*
-	* @param $record Document instance
-	* @param $options array
-	* @return boolean
-	*/
-	public function validates($record, $options = array()) {
-		return static::_filter(__METHOD__, compact('record', 'options'), function($self, $params) {
-			extract($params);
-			$errors = array();
-			foreach ($self::$validates as $field => $params) {
-				$rule = 'isNotEmpty';
-				$message = $params;
-				$data = array();
-				if (is_array($params) && !empty($params['rule'])) {
-					var_Dump($params['rule']);
-					if (is_string($params['rule'])) {
-						$rule = $params['rule'];
-					} else {
-						$rule = array_shift((array) $params['rule']);
-						$data = $params['rule'];
-					}
-				}
-
-				$data = array($record->{$field}) + $data;
-				if (Validator::invokeMethod($rule, $data) !== true) {
-					if (!empty($params['message'])) {
-						$message = $params['message'];
-					}
-					$errors[$field] = $message;
-				}
-			}
-			if (empty($errors)) {
-				return true;
-			}
-			$record->set(array('errors' => $errors));
-			return false;
-		});
-	}
 
 	/**
 	 * undocumented function
