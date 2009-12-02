@@ -22,7 +22,7 @@ class Lab extends \lithium\console\Command {
 	 * @var string
 	 */
 	public $path = null;
-	
+
 	/**
 	 * alternate path to use when creating plugins
 	 *
@@ -68,6 +68,8 @@ class Lab extends \lithium\console\Command {
 	 */
 	public function __construct($config = array()) {
 		$this->conf = LITHIUM_APP_PATH . '/config/li3_lab.ini';
+		$this->path = LITHIUM_APP_PATH . '/libraries/plugins';
+		$this->alternate = $this->path;
 		parent::__construct($config);
 	}
 
@@ -116,7 +118,6 @@ class Lab extends \lithium\console\Command {
 		}
 
 		$this->header($plugin->name);
-		$write = false;
 
 		if (isset($plugin->sources->git) && strpos(shell_exec('git --version'), 'git version 1.6') !== false) {
 			$result = shell_exec("cd {$this->path} && git clone {$plugin->sources->git}");
@@ -127,7 +128,7 @@ class Lab extends \lithium\console\Command {
 			$archive = new Phar($local);
 			return $archive->extractTo($this->path . '/' . basename($plugin->sources->phar, '.phar'));
 		}
-		return (bool) $write;
+		return false;
 	}
 
 	/**
@@ -157,13 +158,13 @@ class Lab extends \lithium\console\Command {
 	 *
 	 * @return void
 	 */
-	public function	config($key = null, $value = null, $config = true) {
+	public function config($key = null, $value = null, $options = true) {
 		if (empty($key) || empty($value)) {
 			return false;
 		}
 		switch($key) {
 			case 'server':
-				$this->_settings['servers'][$value] = $config;
+				$this->_settings['servers'][$value] = $options;
 			break;
 		}
 		return $this->_writeConf();
@@ -175,7 +176,10 @@ class Lab extends \lithium\console\Command {
 	 * @return void
 	 */
 	public function init() {
-		return $this->_writeConf(array('servers' => (array) $this->server));
+		if (!file_exists($this->conf)) {
+			return $this->_writeConf(array('servers' => (array) $this->server));
+		}
+		return false;
 	}
 
 	/**

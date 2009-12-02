@@ -128,7 +128,7 @@ EOD;
 				}
 				return false;
 			};
-			//$rmdir($this->_installPath . '/li3_example');
+			$rmdir($this->_installPath . '/li3_example');
 		}
 	}
 }
