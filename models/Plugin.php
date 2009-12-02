@@ -1,4 +1,10 @@
 <?php
+/**
+ * Lithium: the most rad php framework
+ *
+ * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ */
 
 namespace li3_lab\models;
 
@@ -24,7 +30,7 @@ class Plugin extends \lithium\data\Model {
 
 
 	public $validates = array(
-		'maintainer' => 'You must specify a maintainer.',
+		'maintainer' => 'You must specify at least one maintainer.',
 		'maintainer_email' => array(
 			'rule' => 'email',
 			'message' => 'You must specify a valid maintainer email address.'

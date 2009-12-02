@@ -1,6 +1,6 @@
 <?php
 
-namespace li3_lab\tests\mocks;
+namespace li3_lab\tests\mocks\models;
 
 class MockPlugin extends \li3_lab\models\Plugin {
 	

@@ -2,7 +2,7 @@
 
 namespace li3_lab\tests\cases\models;
 
-use \li3_lab\tests\mocks\MockPlugin;
+use \li3_lab\tests\mocks\models\MockPlugin;
 
 class PluginTest extends \lithium\test\Unit {
 
