@@ -15,11 +15,11 @@ class PluginTest extends \lithium\test\Unit {
 		$this->assertTrue(!empty($result));
 
 		$expected = array(
-			'maintainer_email' => 'You must specify a valid maintainer email address.',
-			'version' => 'You must specify a version number for this plugin.',
-			'name' => 'You must specify a name for this plugin.',
-			'summary' => 'You must specify a short summary for this plugin',
-			'source' => 'You must specify a source for this plugin.',
+			'maintainer_email' => array('You must specify a valid maintainer email address.'),
+			'version' => array('You must specify a version number for this plugin.'),
+			'name' => array('You must specify a name for this plugin.'),
+			'summary' => array('You must specify a short summary for this plugin'),
+			'source' => array('You must specify a source for this plugin.'),
 		);
 		$result = $plugin->errors();
 		$this->assertEqual($expected, $result);

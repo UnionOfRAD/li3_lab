@@ -6,11 +6,11 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-namespace li3_lab\tests\cases\extensions\commands;
+namespace li3_lab\tests\cases\extensions\command;
 
 use \lithium\console\Dispatcher;
 use \lithium\console\Request;
-use \li3_lab\extensions\commands\Lab;
+use \li3_lab\extensions\command\Lab;
 
 class LabTest extends \lithium\test\Unit {
 
@@ -24,8 +24,8 @@ class LabTest extends \lithium\test\Unit {
 
 	public function setUp() {
 		$this->_fixturesPath = dirname(dirname(dirname(__DIR__))) . '/fixtures/plugins';
-		$this->_installPath = LITHIUM_APP_PATH . '/tmp/tests';
-		$this->_conf = LITHIUM_APP_PATH . '/tmp/tests/li3_lab.ini';
+		$this->_installPath = LITHIUM_APP_PATH . '/resources/tmp/tests';
+		$this->_conf = LITHIUM_APP_PATH . '/resources/tmp/tests/li3_lab.ini';
 		Dispatcher::applyFilter('_call', function($self, $params, $chain) {
 			$result = $chain->next($self, $params, $chain);
 			if (!$result) {
@@ -35,7 +35,7 @@ class LabTest extends \lithium\test\Unit {
 		});
 
 		$classes = array(
-			'service' => '\li3_lab\tests\mocks\extensions\commands\MockService',
+			'service' => '\li3_lab\tests\mocks\extensions\command\MockService',
 			'response' => '\lithium\tests\mocks\console\MockResponse'
 		);
 		$request = new Request();
@@ -51,7 +51,7 @@ class LabTest extends \lithium\test\Unit {
 	public function testBasicInit() {
 		$lab = Dispatcher::run(new Request(array(
 			'args' => array(
-				'\li3_lab\extensions\commands\Lab',
+				'\li3_lab\extensions\command\Lab',
 				'init', '-conf', $this->_conf,
 			)
 		)));
@@ -66,7 +66,7 @@ class LabTest extends \lithium\test\Unit {
 	public function testServerConfig() {
 		$lab = Dispatcher::run(new Request(array(
 			'args' => array(
-				'\li3_lab\extensions\commands\Lab',
+				'\li3_lab\extensions\command\Lab',
 				'config', '-conf', $this->_conf, 'server', 'incubator.rad-dev.org'
 			)
 		)));

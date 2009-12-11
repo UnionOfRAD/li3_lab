@@ -92,8 +92,8 @@ class PluginsController extends \lithium\action\Controller {
 			$plugin = Plugin::create($this->request->data);
 			if ($plugin->validates() && $plugin->save()) {
 				$this->redirect(array(
-					'plugin' => 'li3_bot',
-					'controller' => 'plugins', 'action' => 'view', 'args' => array($plugin->id)
+					'plugin' => 'li3_lab', 'controller' => 'plugins', 
+					'action' => 'view', 'args' => array($plugin->id)
 				));
 			}
 		}

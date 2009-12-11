@@ -6,7 +6,7 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-namespace li3_lab\extensions\commands;
+namespace li3_lab\extensions\command;
 
 use \lithium\http\Service;
 use \Phar;
@@ -146,11 +146,23 @@ class Lab extends \lithium\console\Command {
 	 * @return boolean
 	 */
 	public function create($name = null) {
+		if (!$name) {
+			$this->out("please supply a name");
+			return false;
+		}
+		$result = false;
+
 		if (file_exists($this->alternate . '/' . $name)) {
 			$archive = new Phar($this->path . '/' . $name . '.phar');
-			return (bool) $archive->buildFromDirectory($this->alternate . '/' . $name);
+			$result = (bool) $archive->buildFromDirectory($this->alternate . '/' . $name);
 		}
-		return false;
+
+		if ($result) {
+			$this->out("{$name} created in {$this->path}");
+			return true;
+		}
+		$this->error("{$name} not created in {$this->path}");
+		return true;
 	}
 
 	/**

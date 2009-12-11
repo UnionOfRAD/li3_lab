@@ -6,7 +6,7 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-namespace li3_lab\tests\mocks\extensions\commands;
+namespace li3_lab\tests\mocks\extensions\command;
 
 class MockService extends \lithium\http\Service {
 
