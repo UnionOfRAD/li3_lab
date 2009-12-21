@@ -13,14 +13,11 @@
 <!doctype html>
 <html>
 <head>
-	<?php echo $this->html->charset(); ?>
+	<?=$this->html->charset(); ?>
 	<title>Li3 Plugins</title>
-	<?php echo $this->scripts(); ?>
-	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
-	<style> 
-		label {display:block;}
-		input {display:block;}
-	</style>
+	<?=$this->scripts(); ?>
+	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
+	<?=$this->html->style('base')?>
 </head>
 <body>
 	<div id="container">
@@ -29,16 +26,16 @@
 			<div id="menu">
 				<ul >
 					<li><?php echo $this->html->link('Add new', array(
-						'controller'=>'plugins', 'action' => 'add'
+						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add'
 					));?></li>
 					<li><?php echo $this->html->link('Latest', array(
-						'controller'=>'plugins', 'action' => 'index'
+						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'index'
 					));?></li>
 				</ul>
 			</div>
 		</div>
 		<div id="content">
-			<?php echo $this->content; ?>
+			<?php echo $this->content(); ?>
 		</div>
 		<div id="footer">
 			@2009 Union of Rad

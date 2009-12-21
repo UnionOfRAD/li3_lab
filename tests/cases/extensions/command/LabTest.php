@@ -1,6 +1,6 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
  * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
@@ -10,6 +10,7 @@ namespace li3_lab\tests\cases\extensions\command;
 
 use \lithium\console\Dispatcher;
 use \lithium\console\Request;
+use \lithium\action\Request as ActionRequest;
 use \li3_lab\extensions\command\Lab;
 
 class LabTest extends \lithium\test\Unit {
@@ -78,6 +79,49 @@ class LabTest extends \lithium\test\Unit {
 		$this->assertEqual($expected, $result);
 	}
 
+	public function testCreate() {
+		$this->lab->path = $this->_installPath;
+		$this->lab->original = $this->_fixturesPath;
+		$result = $this->lab->create('li3_example');
+		$this->assertTrue($result);
+
+		$result = file_exists($this->_installPath . '/li3_example.phar');
+		$this->assertTrue($result);
+		
+		$expected = 7386;
+		$result = filesize($this->_installPath . '/li3_example.phar');
+		$this->assertEqual($expected, $result);
+		$this->_cleanUp();
+	}
+
+	public function testPush() {
+		$this->lab->path = $this->_installPath;
+		$this->lab->original = $this->_fixturesPath;
+		$result = $this->lab->create('li3_example');
+		$this->assertTrue($result);
+
+		$request = new ActionRequest();
+		$this->lab->server = $request->env('HTTP_HOST') . $request->env('base');
+		$result = $this->lab->push('li3_example');
+		
+		$result = is_dir($this->_installPath . '/li3_example');
+		$this->assertTrue($result);
+		$this->_cleanUp();
+	}
+	
+	public function testAdd() {
+		$this->lab->path = $this->_installPath;
+		$result = $this->lab->add('li3_example');
+		$this->assertTrue($result);
+
+		$result = file_exists($this->_installPath . '/li3_example.phar');
+		$this->assertTrue($result);
+
+		$result = is_dir($this->_installPath . '/li3_example');
+		$this->assertTrue($result);
+		$this->_cleanUp();
+	}
+	
 	public function testFind() {
 		$this->lab->find();
 
@@ -94,42 +138,19 @@ EOD;
 		$this->assertEqual($expected, $result);
 	}
 
-	public function testCreate() {
-		$this->lab->path = $this->_installPath;
-		$this->lab->alternate = $this->_fixturesPath;
-		$result = $this->lab->create('li3_example');
-		$this->assertTrue($result);
-
-		$result = file_exists($this->_installPath . '/li3_example.phar');
-		$this->assertTrue($result);
-		if ($result) {
+	protected function _cleanUp() {
+		if (file_exists($this->_installPath . '/li3_example.phar')) {
 			unlink($this->_installPath . '/li3_example.phar');
 		}
-	}
-
-	public function testAdd() {
-		$this->lab->path = $this->_installPath;
-		$result = $this->lab->add('li3_example');
-		$this->assertTrue($result);
-
-		$result = file_exists($this->_installPath . '/li3_example.phar');
-		$this->assertTrue($result);
-		if ($result) {
-			unlink($this->_installPath . '/li3_example.phar');
-		}
-		$result = is_dir($this->_installPath . '/li3_example');
-		$this->assertTrue($result);
-		if ($result) {
-			$rmdir = function($value) use(&$rmdir) {
-				$result = is_file($value) ? unlink($value) : null;
-				if ($result == null && is_dir($value)) {
-					$result = array_filter(glob($value . '/*'), $rmdir);
-					rmdir($value);
-				}
-				return false;
-			};
-			$rmdir($this->_installPath . '/li3_example');
-		}
+		$rmdir = function($value) use(&$rmdir) {
+			$result = is_file($value) ? unlink($value) : null;
+			if ($result == null && is_dir($value)) {
+				$result = array_filter(glob($value . '/*'), $rmdir);
+				rmdir($value);
+			}
+			return false;
+		};
+		$rmdir($this->_installPath . '/li3_example');
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
  * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
@@ -10,9 +10,10 @@ namespace li3_lab\controllers;
 
 use \li3_lab\models\Plugin;
 use \li3_lab\models\PluginView;
+use \li3_lab\models\Formula;
 
 /**
- * Plugin controller
+ * Plugins Controller
  *
  */
 class PluginsController extends \lithium\action\Controller {
@@ -22,9 +23,8 @@ class PluginsController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$params = array(
-			'conditions'=> array(
-				'design' => 'latest', 'view' => 'all', 'descending' => 'true'
-			),
+			'conditions'=> array('design' => 'latest', 'view' => 'all'),
+			'order' => array('descending' => 'true'),
 			'limit' => '10',
 		);
 		$latest = Plugin::all($params);
@@ -33,7 +33,10 @@ class PluginsController extends \lithium\action\Controller {
 				$latest = Plugin::all($params);
 			}
 		}
-		$this->render(array('json' => $latest->to('array')));
+		if ($this->request->type == 'json') {
+			$this->render(array('json' => $latest->to('array')));
+		}
+		return compact('latest');
 	}
 
 	/**
@@ -45,7 +48,10 @@ class PluginsController extends \lithium\action\Controller {
 		if (empty($plugin)) {
 			$this->redirect(array('controller' => 'plugins', 'action' => 'error'));
 		}
-		return $this->render(array('json' => compact('plugin')));
+		if ($this->request->type == 'json') {
+			$this->render(array('json' => compact('plugin')));
+		}
+		return compact('plugin');
 	}
 
 	/**
@@ -68,7 +74,10 @@ class PluginsController extends \lithium\action\Controller {
 				$plugins = Plugin::all($params);
 			}
 		}
-		$this->render(array('json' => $plugins->to('array')));
+		if ($this->request->type == 'json') {
+			$this->render(array('json' => $plugins->to('array')));
+		}
+		return compact('plugins');
 	}
 
 	/**
@@ -79,7 +88,11 @@ class PluginsController extends \lithium\action\Controller {
 	 */
 	public function error($id = null) {
 		$error = array('type' => 'bad request', 'code' => 500);
-		return $this->render(array('json' => compact('error')));
+		if ($this->request->type == 'json') {
+			$this->render(array('json' => compact('error')));
+		}
+		$this->response->code($error['code']);
+		return compact('error');
 	}
 
 	/**
@@ -88,17 +101,33 @@ class PluginsController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function add() {
-		if (!empty($this->request->data)) {
+		if (!empty($this->request->data['formula'])) {
+			$formula = Formula::save($this->request->data['formula']);
+			if ($formula) {
+				$this->request->data = $formula;
+				return $this->verify();
+			}
+		}
+	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
+	public function verify() {
+		var_dump($this->request->data);
+		if (!empty($this->request->data['verfied'])) {
 			$plugin = Plugin::create($this->request->data);
-			if ($plugin->validates() && $plugin->save()) {
+			if ($plugin->save()) {
 				$this->redirect(array(
-					'plugin' => 'li3_lab', 'controller' => 'plugins', 
+					'plugin' => 'li3_lab', 'controller' => 'plugins',
 					'action' => 'view', 'args' => array($plugin->id)
 				));
 			}
 		}
 		if (empty($plugin)) {
-			$plugin = Plugin::create();
+			$plugin = Plugin::create($this->request->data);
 		}
 
 		$this->set(compact('plugin'));

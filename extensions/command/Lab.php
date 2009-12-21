@@ -1,6 +1,6 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
  * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
@@ -17,18 +17,18 @@ use \Phar;
 class Lab extends \lithium\console\Command {
 
 	/**
-	 * Path to plugins
+	 * path to save and add plugins
 	 *
 	 * @var string
 	 */
 	public $path = null;
 
 	/**
-	 * alternate path to use when creating plugins
+	 * path of original plugins used when creating archives
 	 *
 	 * @var string
 	 */
-	public $alternate = null;
+	public $original = null;
 
 	/**
 	 * Absolute path to config file
@@ -69,7 +69,7 @@ class Lab extends \lithium\console\Command {
 	public function __construct($config = array()) {
 		$this->conf = LITHIUM_APP_PATH . '/config/li3_lab.ini';
 		$this->path = LITHIUM_APP_PATH . '/libraries/plugins';
-		$this->alternate = $this->path;
+		$this->original = $this->path;
 		parent::__construct($config);
 	}
 
@@ -130,6 +130,32 @@ class Lab extends \lithium\console\Command {
 		}
 		return false;
 	}
+	
+	/**
+	 * Send a plugin to the server
+	 *
+	 * @param string $name 
+	 * @return void
+	 */
+	public function push($name = null) {
+		$file = "{$this->path}/{$name}.phar";
+		if (file_exists($file)) {
+			$boundary = md5(date('r', time()));
+			$service = new Service(array('host' => $this->server, 'port' => '30501'));
+			$headers = array(
+				"Content-Type: multipart/form-data; boundary={$boundary}"
+			);
+			$data = join("\r\n", array(
+				"--{$boundary}",
+				"Content-Disposition: form-data; name=\"phar\"; filename=\"{$file}\"",
+				"Content-Type: application/phar", "",
+				base64_encode(file_get_contents($file)),
+				"--{$boundary}--"
+			));
+			$result = $service->post('/lab/server/receive', $data, compact('headers'));
+			return $result;
+		}
+	}
 
 	/**
 	 * Update installed plugins
@@ -141,7 +167,7 @@ class Lab extends \lithium\console\Command {
 	}
 
 	/**
-	 * Create a new formula
+	 * Create a new archive and formula
 	 *
 	 * @return boolean
 	 */
@@ -151,12 +177,16 @@ class Lab extends \lithium\console\Command {
 			return false;
 		}
 		$result = false;
+		$path = "{$this->original}/{$name}";
 
-		if (file_exists($this->alternate . '/' . $name)) {
-			$archive = new Phar($this->path . '/' . $name . '.phar');
-			$result = (bool) $archive->buildFromDirectory($this->alternate . '/' . $name);
+		if (file_exists($path)) {
+			if (!file_exists("{$path}/config/{$name}.json")) {
+				$formula = json_encode(array('name' => $name));
+				file_put_contents("{$path}/config/{$name}.json", $formula);
+			}
+			$archive = new Phar("{$this->path}/{$name}.phar");
+			$result = (bool) $archive->buildFromDirectory($path);
 		}
-
 		if ($result) {
 			$this->out("{$name} created in {$this->path}");
 			return true;

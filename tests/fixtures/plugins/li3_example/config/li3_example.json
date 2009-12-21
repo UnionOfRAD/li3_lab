@@ -1,0 +1,18 @@
+{
+	"name": "li3_example",
+	"version": "1.0",
+	"summary": "a li3 plugin example",
+	"maintainers":[
+		{ "name": "gwoo", "email": "gwoo@rad-dev.org", "website": "li3.rad-dev.org" }
+	],
+	"sources": {
+		"git": "git://rad-dev.org/li3_example.git",
+		"phar": "http://downloads.rad-dev.org/li3_example.phar"
+	},
+	"requires": {
+		"li3_lab": { "version": ">= 1.0" }
+	},
+	"commands": {
+		"add": ["install_command"], "update": ["update_command"], "remove": ["remove_command"]
+	}
+}

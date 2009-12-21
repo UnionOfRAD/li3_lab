@@ -1,6 +1,6 @@
 <?php
 /**
- * Lithium: the most rad php framework
+ * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
  * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
@@ -28,35 +28,29 @@ class Plugin extends \lithium\data\Model {
 	 */
 	protected $_meta = array('source' => 'li3_lab', 'connection' => 'li3_lab');
 
-
-	public $validates = array(
-		'maintainer' => 'You must specify at least one maintainer.',
-		'maintainer_email' => array(
-			'rule' => 'email',
-			'message' => 'You must specify a valid maintainer email address.'
-		),
-		'version' => 'You must specify a version number for this plugin.',
-		'name' => 'You must specify a name for this plugin.',
-		'summary' => 'You must specify a short summary for this plugin',
-		'source' => 'You must specify a source for this plugin.'
-	);
-
 	/**
-	 *  Default values for document based db
+	 * validation rules
 	 *
-	 * @var array
+	 * @var string
 	 */
-	protected static $_defaults = array(
-		'maintainer' => null,
-		'maintainer_email' => null,
-		'version' => null,
-		'name' => null,
-		'summary' => false,
-		'description' => false,
-		'source' => null,
-		'created' => null,
-		'updated' => null
+	public $validates = array(
+		'name' => 'You must specify a name for this plugin.',
+		'version' => 'You must specify a version for this plugin.',
+		'summary' => 'You must specify a short summary for this plugin',
+		'sources' => array('isSource', 'message' => 'You must specify a source for this plugin.')
 	);
+	
+	public static function __init($options = array()) {
+		parent::__init($options);
+		Validator::add('isSource', function ($data, $params, $options) {
+			$types = array('git', 'phar');
+			foreach ($data as $type => $source) {
+				if (in_array($type, $types)) {
+					return true;
+				}
+			}
+		});
+	}
 
 	/**
 	 * undocumented function
@@ -65,7 +59,6 @@ class Plugin extends \lithium\data\Model {
 	 * @return void
 	 */
 	public static function create($data = array()) {
-		$data += static::$_defaults;
 		if (!isset($data['created'])) {
 			$data['created'] = date('Y-m-d h:i:s');
 		}
