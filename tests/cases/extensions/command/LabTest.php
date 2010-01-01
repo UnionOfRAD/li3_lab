@@ -45,7 +45,7 @@ class LabTest extends \lithium\test\Unit {
 
 	public function tearDown() {
 		if (file_exists($this->_conf)) {
-			unlink($this->_conf);
+			// /unlink($this->_conf);
 		}
 	}
 
@@ -53,7 +53,7 @@ class LabTest extends \lithium\test\Unit {
 		$lab = Dispatcher::run(new Request(array(
 			'args' => array(
 				'\li3_lab\extensions\command\Lab',
-				'init', '-conf', $this->_conf,
+				'init', "--conf={$this->_conf}",
 			)
 		)));
 		$result = file_exists($this->_conf);
@@ -68,7 +68,7 @@ class LabTest extends \lithium\test\Unit {
 		$lab = Dispatcher::run(new Request(array(
 			'args' => array(
 				'\li3_lab\extensions\command\Lab',
-				'config', '-conf', $this->_conf, 'server', 'incubator.rad-dev.org'
+				'config', "--conf={$this->_conf}", '--server=incubator.rad-dev.org'
 			)
 		)));
 
@@ -87,7 +87,7 @@ class LabTest extends \lithium\test\Unit {
 
 		$result = file_exists($this->_installPath . '/li3_example.phar');
 		$this->assertTrue($result);
-		
+
 		$expected = 7386;
 		$result = filesize($this->_installPath . '/li3_example.phar');
 		$this->assertEqual($expected, $result);
@@ -103,12 +103,11 @@ class LabTest extends \lithium\test\Unit {
 		$request = new ActionRequest();
 		$this->lab->server = $request->env('HTTP_HOST') . $request->env('base');
 		$result = $this->lab->push('li3_example');
-		
+
 		$result = is_dir($this->_installPath . '/li3_example');
 		$this->assertTrue($result);
-		$this->_cleanUp();
 	}
-	
+
 	public function testAdd() {
 		$this->lab->path = $this->_installPath;
 		$result = $this->lab->add('li3_example');
@@ -121,7 +120,7 @@ class LabTest extends \lithium\test\Unit {
 		$this->assertTrue($result);
 		$this->_cleanUp();
 	}
-	
+
 	public function testFind() {
 		$this->lab->find();
 

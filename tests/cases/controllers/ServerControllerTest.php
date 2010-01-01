@@ -8,7 +8,7 @@ use \li3_lab\controllers\ServerController;
 use \lithium\action\Request;
 
 class ServerControllerTest extends \lithium\test\Unit {
-	
+
 	public $request;
 
 	public function setUp() {
@@ -16,6 +16,7 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$this->request = new Request();
 		$this->_fixturesPath = dirname(dirname(__DIR__));
 		$this->_cleanUp();
+		Repo::invokeMethod('_connection')->describe(Repo::meta('source'));
 	}
 
 	public function tearDown() {}
@@ -28,15 +29,15 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$server = new ServerController(array('request' => $this->request));
 		Repo::meta('connection', 'test_resources');
 		$result = $server->receive();
-		
+
 		$expected = 'li3_example';
 		$this->assertEqual($expected, $result['name']);
-		
-		
+
+
 		$file = LITHIUM_APP_PATH . '/resources/tmp/tests/repos/li3_example.phar';
 		$result = file_exists($file);
 		$this->assertTrue($result);
-		
+
 		$this->_cleanUp();
 	}
 }

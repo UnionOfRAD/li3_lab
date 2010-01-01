@@ -16,16 +16,14 @@ class RepoTest extends \lithium\test\Unit {
 	public function setUp() {
 		Connections::add('test_resources', 'Media', array('path' => '/resources/tmp/tests'));
 		$this->_fixturesPath = dirname(dirname(__DIR__));
-		
 	}
 
 	public function testSaveAndFind() {
 		Repo::meta('connection', 'test_resources');
 		$repo = Repo::create(array(
 			'name' => 'li3_example.phar', 'type' => 'application/phar',
-			'tmp_name' => $_fixturesPath . '/fixtures/plugins/li3_example.phar',
+			'tmp_name' => $this->_fixturesPath . '/fixtures/plugins/li3_example.phar',
 		));
-
 		$result = $repo->save();
 		$this->assertTrue($result);
 
@@ -38,17 +36,14 @@ class RepoTest extends \lithium\test\Unit {
 		$expected = 'li3_example.phar';
 		$result = $repo->current()->getFilename();
 		$this->assertEqual($expected, $result);
-		
-		$this->_cleanUp();
 	}
 
 	public function testSaveAndFindFileObject() {
 		Repo::meta('connection', 'test_resources');
 		$repo = Repo::create(array(
 			'name' => 'li3_example.json', 'type' => 'text/json',
-			'tmp_name' => $_fixturesPath . '/fixtures/plugins/li3_example/config/li3_example.json',
+			'tmp_name' => $this->_fixturesPath . '/fixtures/plugins/li3_example/config/li3_example.json',
 		));
-
 		$result = $repo->save();
 		$this->assertTrue($result);
 
@@ -63,11 +58,11 @@ class RepoTest extends \lithium\test\Unit {
 		$expected = 'li3_example.json';
 		$result = $repo->current()->getFilename();
 		$this->assertEqual($expected, $result);
-		
+
 		$expected = 'li3_example';
 		$result = json_decode($repo->current()->contents());
 		$this->assertEqual($expected, $result->name);
-		
+
 		$this->_cleanUp();
 	}
 }

@@ -35,21 +35,30 @@ class File extends \lithium\data\model\Record {
 		}
 		parent::__construct((array) $config + $defaults);
 	}
-	
-	
-	protected function _init() {
-		parent::_init();
-	}
-	
+
+	/**
+	 * Magic method to set data
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @return void
+	 */
 	public function __set($name, $value) {
 		if ($name == 'data' && is_object($value)) {
-			$this->_data[0] = $value;
+			$this->_data = array($value);
 			return;
 		}
 		$this->_modified[$name] = true;
 		$this->_data[$name] = $value;
 	}
-	
+
+	/**
+	 * Magic method to pass methods to SplFileInfo type object or Model
+	 *
+	 * @param string $method
+	 * @param string $params
+	 * @return void
+	 */
 	public function __call($method, $params = array()) {
 		if (isset($this->_data[0]) && is_object($this->_data[0])) {
 			if (method_exists($this->_data[0], $method)) {
@@ -58,9 +67,13 @@ class File extends \lithium\data\model\Record {
 		}
 		return parent::__call($method, $params);
 	}
-	
-	public function contents() {
-		$file = null;
+
+	/**
+	 * Returns the contents of the file
+	 *
+	 * @return void
+	 */
+	public function contents($file = null) {
 		if (isset($this->_data[0]) && is_object($this->_data[0])) {
 			$file = $this->_data[0]->getPathname();
 		}

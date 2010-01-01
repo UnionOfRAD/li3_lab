@@ -116,7 +116,6 @@ class Lab extends \lithium\console\Command {
 		if (count($results) == 1) {
 			$plugin = current($results);
 		}
-
 		$this->header($plugin->name);
 
 		if (isset($plugin->sources->git) && strpos(shell_exec('git --version'), 'git version 1.6') !== false) {
@@ -130,11 +129,11 @@ class Lab extends \lithium\console\Command {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Send a plugin to the server
 	 *
-	 * @param string $name 
+	 * @param string $name
 	 * @return void
 	 */
 	public function push($name = null) {

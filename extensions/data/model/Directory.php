@@ -8,8 +8,6 @@
 
 namespace li3_lab\extensions\data\model;
 
-use \Iterator;
-
 /**
  * `FileRecord` is an alternative to the `model\RecordSet` class, which is optimized for organizing
  * collections of records from the file system. `FileRecord`
@@ -17,11 +15,13 @@ use \Iterator;
  */
 class Directory extends \lithium\data\model\RecordSet {
 
-	protected function _init() {
-		parent::_init();
-		
-	}
-	
+	/**
+	 * Magic method for passing some methods through to SplFileInfo type object
+	 *
+	 * @param string $method
+	 * @param string $params
+	 * @return void
+	 */
 	public function __call($method, $params = array()) {
 		if (isset($this->_items[0]) && is_object($this->_items[0])) {
 			if (method_exists($this->_items[0], $method)) {
@@ -29,7 +29,7 @@ class Directory extends \lithium\data\model\RecordSet {
 			}
 		}
 	}
-	
+
 	/**
 	* Returns the currently pointed to record in the set.
 	*
@@ -52,12 +52,12 @@ class Directory extends \lithium\data\model\RecordSet {
 			return;
 		}
 		$data = $data ?: $this->_handle->result('next', $this->_result, $this);
+
 		if (!isset($data)) {
 			return $this->_close();
 		}
-
 		$this->_items[] = new $this->_classes['record'](compact('data'));
-		$this->_index[] = $key;		
+		$this->_index[] = $key;
 		return $this->_items[$key];
 	}
 }

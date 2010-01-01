@@ -33,12 +33,22 @@ class Media extends \lithium\data\Source {
 	 */
 	protected $_path = null;
 
+	/**
+	 * Class dependencies
+	 *
+	 * @var array
+	 */
 	protected $_classes = array(
 		'record' => '\li3_lab\extensions\data\model\File',
 		'recordSet' => '\li3_lab\extensions\data\model\Directory',
 		'recordObject' => '\SplFileInfo',
 	);
 
+	/**
+	 * Constructor for setting config options.
+	 *
+	 * @param string $config
+	 */
 	public function __construct($config = array()) {
 		$defaults = array(
 			'library' => 'app',
@@ -48,8 +58,20 @@ class Media extends \lithium\data\Source {
 		parent::__construct((array) $config + $defaults);
 	}
 
+	/**
+	 * Magic method does nothing yet
+	 *
+	 * @param string $method
+	 * @param string $params
+	 * @return void
+	 */
 	public function __call($method, $params) {}
 
+	/**
+	 * Check if the resource path exists
+	 *
+	 * @return void
+	 */
 	public function connect() {
 		if (!$this->_isConnected) {
 			$library = Libraries::get($this->_config['library']);
@@ -62,14 +84,31 @@ class Media extends \lithium\data\Source {
 		return $this->_isConnected;
 	}
 
+	/**
+	 * Disconnect does nothing
+	 *
+	 * @return void
+	 */
 	public function disconnect() {
 		return true;
 	}
 
+	/**
+	 * Used to configure model with data source specific settings
+	 *
+	 * @param string $class
+	 * @return array
+	 */
 	public function configureClass($class) {
 		return array('meta' => array('key' => 'name'), 'classes' => $this->_classes);
 	}
 
+	/**
+	 * Lists all the directories in the resource
+	 *
+	 * @param $class string
+	 * @return array
+	 */
 	public function entities($class = null) {
 		return array_map('basename', glob($this->_path . '/*', GLOB_ONLYDIR));
 	}
@@ -92,10 +131,23 @@ class Media extends \lithium\data\Source {
 		return null;
 	}
 
+	/**
+	 * Source name
+	 *
+	 * @param string $table
+	 * @return string
+	 */
 	public function name($table) {
 		return preg_replace('/\W-/', '', $table);
 	}
 
+	/**
+	 * Create method for data source, saves uploaded file to resource path
+	 *
+	 * @param string $query
+	 * @param string $options
+	 * @return void
+	 */
 	public function create($query, $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
@@ -116,15 +168,22 @@ class Media extends \lithium\data\Source {
 		});
 	}
 
+	/**
+	 * Reads files from resource path
+	 *
+	 * @param string $query
+	 * @param string $options
+	 * @return mixed
+	 */
 	public function read($query, $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
 		$config = $this->_config;
-		
+
 		return $this->_filter(__METHOD__, $params, function($self, $params) use ($path, $config) {
 			extract($params);
 			extract($query->export($self), EXTR_OVERWRITE);
-			$conditions['path'] = "{$config['path']}/{$table}";
+
 			if (!is_callable($conditions['format'])) {
 				$conditions['format'] = function ($file, $config) use ($options){
 					return new $options['classes']['recordObject']($file);
@@ -137,7 +196,7 @@ class Media extends \lithium\data\Source {
 				}
 				return $conditions['format']($file, $config);
 			}
-
+			$conditions['path'] = "{$config['path']}/{$table}";
 			$files = Libraries::find($config['library'], $conditions);
 			return $files;
 		});
