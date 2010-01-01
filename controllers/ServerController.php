@@ -9,6 +9,8 @@
 namespace li3_lab\controllers;
 
 use \Phar;
+use li3_lab\models\Repo;
+use li3_lab\models\Formula;
 
 /**
  * Server Controller
@@ -23,19 +25,17 @@ class ServerController extends \lithium\action\Controller {
 	 */
 	public function receive() {
 		if (!empty($this->request->data['phar'])) {
-			$file = $this->request->data['phar'];
-			$plugins = LITHIUM_APP_PATH . "/resources/plugins";
-			if (!is_dir($plugins)) {
-				mkdir($plugins);
-			}
-			$local = "{$plugins}/{$file['name']}";
-			$contents = file_get_contents($file['tmp_name']);
-			file_put_contents($local, base64_decode($contents));
-			$archive = new Phar($local);
-			$name = basename($local, '.phar');
-			$saved = dirname($local) . '/' . $name;
-			if ($archive->extractTo($saved)) {
-				return Formula::save(file_get_contents("{$saved}/config/{$name}.json"));
+			$file = Repo::create($this->request->data['phar']);
+			if ($file->save()) {
+				$archive = new Phar($file->getPathname());
+				$name = basename($file->getFilename(), '.phar');
+				$saved = $file->getPath() . '/' . $name;
+				if ($archive->extractTo($saved)) {
+					return Formula::save(array(
+						'name' => "{$name}.json", 'type' => 'application/json',
+						'tmp_name' => "{$saved}/config/{$name}.json"
+					));
+				}
 			}
 		}
 		return false;

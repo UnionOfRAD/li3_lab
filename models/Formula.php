@@ -12,9 +12,9 @@ use \lithium\util\Inflector;
 use \lithium\util\Validator;
 
 class Formula extends \lithium\core\StaticObject {
-
+	
 	/**
-	 * undocumented
+	 * undocumented 
 	 *
 	 */
 	public static $path = null;
@@ -24,7 +24,11 @@ class Formula extends \lithium\core\StaticObject {
 	 *
 	 * @var string
 	 */
-	public static $validates = array();
+	public static $validates = array(
+		// 'name' => array('/\W-/',
+		// 			'message' => 'The name can only contain letters, numbers, and "_"'
+		// 		),
+	);
 	/**
 	 * undocumented function
 	 *

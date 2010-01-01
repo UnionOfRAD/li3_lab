@@ -35,6 +35,5 @@ class FormulaTest extends \lithium\test\Unit {
 			//unlink($file);
 		}
 	}
-
 }
 ?>

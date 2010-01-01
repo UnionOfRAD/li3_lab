@@ -137,21 +137,6 @@ EOD;
 		$result = $this->lab->response->output;
 		$this->assertEqual($expected, $result);
 	}
-
-	protected function _cleanUp() {
-		if (file_exists($this->_installPath . '/li3_example.phar')) {
-			unlink($this->_installPath . '/li3_example.phar');
-		}
-		$rmdir = function($value) use(&$rmdir) {
-			$result = is_file($value) ? unlink($value) : null;
-			if ($result == null && is_dir($value)) {
-				$result = array_filter(glob($value . '/*'), $rmdir);
-				rmdir($value);
-			}
-			return false;
-		};
-		$rmdir($this->_installPath . '/li3_example');
-	}
 }
 
 ?>

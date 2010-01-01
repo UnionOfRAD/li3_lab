@@ -6,9 +6,16 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-use \lithium\data\Connections;
+namespace li3_lab\models;
 
-Connections::add('li3_lab', 'http', array('adapter' => 'CouchDb', 'port' => 5984));
-Connections::add('resources', 'Media', array('path' => '/resources'));
+/**
+ * Used to store uploaded phar archives
+ *
+ * @package default
+ */
+class Repo extends \lithium\data\Model {
+	
+	protected $_meta = array('connection' => 'resources');
+}
 
 ?>
