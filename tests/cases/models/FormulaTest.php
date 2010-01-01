@@ -14,26 +14,28 @@ class FormulaTest extends \lithium\test\Unit {
 
 	public function testSave() {
 		$path = dirname(dirname(__DIR__));
-		$data = Formula::save(array(
+		$formula = Formula::create(array(
 			'name' => 'li3_example.json', 'type' => 'text/json',
 			'tmp_name' => $path . '/fixtures/plugins/li3_example/config/li3_example.json',
 		));
-		$expected = 'li3_example';
-		$result = $data['name'];
-		$this->assertEqual($expected, $result);
+		$result = $formula->save();
 
 		$file = LITHIUM_APP_PATH . '/resources/formulas/li3_example.json';
 		$result = file_exists($file);
 		$this->assertTrue($result);
-		
+
 		$data = json_decode(str_replace(array("\r\n", "\n", "\t"), '', file_get_contents($file)));
 		$expected = 'li3_example';
 		$result = $data->name;
 		$this->assertEqual($expected, $result);
-		
-		if ($result) {
-			//unlink($file);
-		}
+
+		$data = json_decode($formula->contents());
+		$expected = 'li3_example';
+		$result = $data->name;
+		$this->assertEqual($expected, $result);
+
+
+		$this->_cleanUp();
 	}
 }
 ?>

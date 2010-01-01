@@ -31,10 +31,14 @@ class ServerController extends \lithium\action\Controller {
 				$name = basename($file->getFilename(), '.phar');
 				$saved = $file->getPath() . '/' . $name;
 				if ($archive->extractTo($saved)) {
-					return Formula::save(array(
+					$formula = Formula::create(array(
 						'name' => "{$name}.json", 'type' => 'application/json',
 						'tmp_name' => "{$saved}/config/{$name}.json"
 					));
+					if ($formula->save()) {
+						return json_decode($formula->contents(), true);
+					}
+					return false;
 				}
 			}
 		}

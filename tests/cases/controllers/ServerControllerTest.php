@@ -16,7 +16,6 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$this->request = new Request();
 		$this->_fixturesPath = dirname(dirname(__DIR__));
 		$this->_cleanUp();
-		Repo::invokeMethod('_connection')->describe(Repo::meta('source'));
 	}
 
 	public function tearDown() {}
@@ -28,6 +27,7 @@ class ServerControllerTest extends \lithium\test\Unit {
 		);
 		$server = new ServerController(array('request' => $this->request));
 		Repo::meta('connection', 'test_resources');
+		Repo::invokeMethod('_connection')->describe(Repo::meta('source'));
 		$result = $server->receive();
 
 		$expected = 'li3_example';
