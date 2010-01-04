@@ -26,10 +26,12 @@ class ServerController extends \lithium\action\Controller {
 	public function receive() {
 		if (!empty($this->request->data['phar'])) {
 			$file = Repo::create($this->request->data['phar']);
+
 			if ($file->save()) {
 				$archive = new Phar($file->getPathname());
-				$name = $archive->getBasename();
+				$name = $file->getBasename();
 				$saved = $file->getPath() . '/' . $name;
+
 				if ($archive->extractTo($saved)) {
 					$formula = Formula::create(array(
 						'name' => "{$name}.json", 'type' => 'application/json',

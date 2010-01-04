@@ -42,7 +42,7 @@ class Lab extends \lithium\console\Command {
 	 *
 	 * @var array
 	 */
-	public $server = 'plugins.rad-dev.org';
+	public $server = 'lab.lithify.me';
 
 	/**
 	 * Holds settings from conf file
@@ -137,10 +137,13 @@ class Lab extends \lithium\console\Command {
 	 * @return void
 	 */
 	public function push($name = null) {
-		$file = "{$this->path}/{$name}.phar";
+		if (!$name) {
+			$name = $this->in("please supply a name");
+		}
+		$file = "{$this->path}/{$name}.phar.gz";
 		if (file_exists($file)) {
 			$boundary = md5(date('r', time()));
-			$service = new Service(array('host' => $this->server, 'port' => '30501'));
+			$service = new Service(array('host' => $this->server, 'port' => '30582'));
 			$headers = array(
 				"Content-Type: multipart/form-data; boundary={$boundary}"
 			);
@@ -172,8 +175,7 @@ class Lab extends \lithium\console\Command {
 	 */
 	public function create($name = null) {
 		if (!$name) {
-			$this->out("please supply a name");
-			return false;
+			$name = $this->in("please supply a name");
 		}
 		$result = false;
 		$path = "{$this->original}/{$name}";
@@ -185,6 +187,7 @@ class Lab extends \lithium\console\Command {
 			}
 			$archive = new Phar("{$this->path}/{$name}.phar");
 			$result = (bool) $archive->buildFromDirectory($path);
+			$archive->compress(Phar::GZ);
 		}
 		if ($result) {
 			$this->out("{$name} created in {$this->path}");
