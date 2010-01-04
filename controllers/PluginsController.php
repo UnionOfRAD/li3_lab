@@ -28,11 +28,6 @@ class PluginsController extends \lithium\action\Controller {
 			'limit' => '10',
 		);
 		$latest = Plugin::all($params);
-		if ($latest === null) {
-			if (PluginView::create()->save()) {
-				$latest = Plugin::all($params);
-			}
-		}
 		if ($this->request->type == 'json') {
 			$this->render(array('json' => $latest->to('array')));
 		}
@@ -68,12 +63,7 @@ class PluginsController extends \lithium\action\Controller {
 			'limit' => 10
 		);
 		$plugins = Plugin::all($params);
-		if (empty($plugins[0])) {
 
-			if (PluginView::create('search')->save()) {
-				$plugins = Plugin::all($params);
-			}
-		}
 		if ($this->request->type == 'json') {
 			$this->render(array('json' => $plugins->to('array')));
 		}
@@ -116,7 +106,6 @@ class PluginsController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function verify() {
-		var_dump($this->request->data);
 		if (!empty($this->request->data['verfied'])) {
 			$plugin = Plugin::create($this->request->data);
 			if ($plugin->save()) {

@@ -28,13 +28,6 @@ namespace li3_lab\models;
 class PluginView extends \lithium\data\Model {
 
 	/**
-	 * public name of the model
-	 *
-	 * @var string
-	 */
-	public $alias = 'PluginView';
-
-	/**
 	 * Metadata
 	 *
 	 * @var array Meta data to link the model with the couchdb datasource
@@ -46,7 +39,7 @@ class PluginView extends \lithium\data\Model {
 	/**
 	 * Predefined views. Only used to store in db if not already there.
 	 */
-	protected static $_views = array(
+	public static $views = array(
 		'latest' => array(
 			'id' => '_design/latest',
 			'language' => 'javascript',
@@ -86,10 +79,10 @@ class PluginView extends \lithium\data\Model {
 	 * @return Document
 	 */
 	public static function create($data = 'latest') {
-		if (!isset(static::$_views[$data])) {
+		if (!isset(static::$views[$data])) {
 			return false;
 		}
-		return parent::create(static::$_views[$data]);
+		return parent::create(static::$views[$data]);
 	}
 }
 

@@ -64,5 +64,14 @@ class Plugin extends \lithium\data\Model {
 		}
 		return parent::create($data);
 	}
+	
+	/**
+	 * Creates a new database
+	 *
+	 * @return void
+	 */
+	public static function install() {
+		return Connections::get(static::meta('connection'))->put(static::meta('source'));
+	}
 }
 ?>
