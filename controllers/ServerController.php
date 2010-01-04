@@ -28,7 +28,7 @@ class ServerController extends \lithium\action\Controller {
 			$file = Repo::create($this->request->data['phar']);
 			if ($file->save()) {
 				$archive = new Phar($file->getPathname());
-				$name = basename($file->getFilename(), '.phar');
+				$name = $archive->getBasename();
 				$saved = $file->getPath() . '/' . $name;
 				if ($archive->extractTo($saved)) {
 					$formula = Formula::create(array(
