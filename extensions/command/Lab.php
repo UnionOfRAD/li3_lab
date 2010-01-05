@@ -143,7 +143,7 @@ class Lab extends \lithium\console\Command {
 		$file = "{$this->path}/{$name}.phar.gz";
 		if (file_exists($file)) {
 			$boundary = md5(date('r', time()));
-			$service = new Service(array('host' => $this->server, 'port' => '30582'));
+			$service = new Service(array('host' => $this->server));
 			$headers = array(
 				"Content-Type: multipart/form-data; boundary={$boundary}"
 			);

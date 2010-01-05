@@ -157,12 +157,18 @@ class Media extends \lithium\data\Source {
 			extract($query->export($self), EXTR_OVERWRITE);
 			$data = $query->data();
 			$filename = preg_replace('/\W-/', '', $data['name']);
-			$contents = file_get_contents($data['tmp_name']);
-			$file = "{$path}/{$table}/{$filename}";
-			if (file_put_contents($file, $contents)) {
-				$query->conditions(array('name' => $filename));
-				$record = $self->read($query, $options);
-				return $query->record()->data = $record;
+			if (!empty($data['tmp_name'])) {
+				$contents = file_get_contents($data['tmp_name']);
+
+				if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $contents)) {
+					$contents = base64_decode($contents);
+				}
+				$file = "{$path}/{$table}/{$filename}";
+				if (file_put_contents($file, $contents)) {
+					$query->conditions(array('name' => $filename));
+					$record = $self->read($query, $options);
+					return $query->record()->data = $record;
+				}
 			}
 			return false;
 		});

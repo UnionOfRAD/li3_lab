@@ -29,7 +29,8 @@ class ServerController extends \lithium\action\Controller {
 
 			if ($file->save()) {
 				$archive = new Phar($file->getPathname());
-				$name = $file->getBasename();
+				$name = $file->getBasename('.gz');
+				$name = basename($name, '.phar');
 				$saved = $file->getPath() . '/' . $name;
 
 				if ($archive->extractTo($saved)) {
