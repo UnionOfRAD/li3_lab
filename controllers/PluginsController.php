@@ -106,7 +106,7 @@ class PluginsController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function verify() {
-		if (!empty($this->request->data['verfied'])) {
+		if (!empty($this->request->data['verified'])) {			
 			$plugin = Plugin::create($this->request->data);
 			if ($plugin->save()) {
 				$this->redirect(array(
