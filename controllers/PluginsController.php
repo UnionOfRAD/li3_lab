@@ -92,9 +92,9 @@ class PluginsController extends \lithium\action\Controller {
 	 */
 	public function add() {
 		if (!empty($this->request->data['formula'])) {
-			$formula = Formula::save($this->request->data['formula']);
-			if ($formula) {
-				$this->request->data = $formula;
+			$formula = Formula::create($this->request->data['formula']);
+			if ($formula->save()) {
+				$this->request->data = json_decode($formula->contents(), true);
 				return $this->verify();
 			}
 		}
