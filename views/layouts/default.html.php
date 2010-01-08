@@ -18,6 +18,24 @@
 	<?=$this->scripts(); ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->style('base')?>
+	<style>
+		#extension h2 {
+			color: pink;
+			margin-bottom: 0;
+		}
+		#extension h3 {
+			margin:0 0 1em; padding: 0;
+			font-size:small;
+			color: #666;
+		}
+		#extension p.summary {
+			margin: 0 0 1em; padding: 0;
+			font-weight: bold;
+		}
+		#extension div.description {
+			margin-bottom: 2em;
+		}
+	</style>
 </head>
 <body>
 	<div id="container">
