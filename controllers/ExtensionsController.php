@@ -96,6 +96,8 @@ class ExtensionsController extends \lithium\action\Controller {
 					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
 			}
 		}
+		$url = array('plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add');
+		$this->set(compact('url'));
 		$this->render('form');
 	}
 
@@ -117,7 +119,11 @@ class ExtensionsController extends \lithium\action\Controller {
 					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
 			}
 		}
-		$this->set(compact('extension'));
+		$url = array(
+			'plugin' => 'li3_lab', 'controller' => 'extensions',
+			'action' => 'edit', 'args' => array($extension->id)
+		);
+		$this->set(compact('extension', 'url'));
 		$this->render('form');
 	}
 

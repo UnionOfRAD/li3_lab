@@ -1,11 +1,7 @@
 <?php
-
 echo $this->form->create($extension, array(
 	'method' => 'POST',
-	'url' => array(
-		'plugin' => 'li3_lab', 'controller' => 'extensions',
-		'action' => 'edit', 'args' => array($extension->id)
-	)
+	'url' => $url
 ));
 
 $this->form->config(array('templates' => array('checkbox' =>
