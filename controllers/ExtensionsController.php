@@ -37,7 +37,11 @@ class ExtensionsController extends \lithium\action\Controller {
 	 * View
 	 */
 	public function view($id = null) {
-		$extension = Extension::find($id);
+		$conditions = array('id' => $id, 'revs' => 'true');
+		if (!empty($this->request->data)) {
+			$conditions['rev'] = $this->request->data['revision'];
+		}
+		$extension = Extension::find('first', compact('conditions'));
 
 		if (empty($extension)) {
 			$this->redirect(array('controller' => 'extensions', 'action' => 'error'));
