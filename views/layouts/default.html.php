@@ -14,7 +14,7 @@
 <html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>Li3 Plugins</title>
+	<title>Li3 Lab</title>
 	<?=$this->scripts(); ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->style('base')?>
@@ -22,14 +22,27 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Li3 Plugins</h1>
+			<h1>Li3 Lab</h1>
 			<div id="menu">
-				<ul >
-					<li><?php echo $this->html->link('Add new', array(
+				<ul style="margin:0 0 15px 0;">
+					<li style="display:inline;">
+						<?php echo $this->html->link('Add new Plugin', array(
 						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add'
 					));?></li>
-					<li><?php echo $this->html->link('Latest', array(
+					<li style="display:inline;"> | </li>
+					<li style="display:inline;">
+						<?php echo $this->html->link('Latest Plugins', array(
 						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'index'
+					));?></li>
+					<li style="display:inline;"> | </li>
+					<li style="display:inline;">
+						<?php echo $this->html->link('Add new Extension', array(
+						'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add'
+					));?></li>
+					<li style="display:inline;"> | </li>
+					<li style="display:inline;">
+						<?php echo $this->html->link('Latest Extensions', array(
+						'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'index'
 					));?></li>
 				</ul>
 			</div>

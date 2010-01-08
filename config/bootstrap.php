@@ -8,7 +8,12 @@
 
 use \lithium\data\Connections;
 
-Connections::add('li3_lab', 'http', array('adapter' => 'CouchDb', 'port' => 5984));
+Connections::add('li3_lab', 'http', array(
+	'adapter' => 'CouchDb',
+	'host' => '127.0.0.1',
+	'port' => '5984'
+));
+
 Connections::add('resources', 'Media', array('path' => '/resources'));
 
 ?>

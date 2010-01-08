@@ -9,23 +9,9 @@
 namespace li3_lab\models;
 
 /**
- * This model is used to store Couch design views to the `Plugin` database
- * It also defines it. Do not call a 'find' on this model. To view the view, use
- * the 'design' condition in a 'find' call on the `Plugin` model, ie :
- * {{{
- *		$latest = Plugin::find('all', array('conditions' => array(
- *			'design' => 'latest,
- *			'limit' => 10
- *		)));
- * }}}
  *
- * When the find call in the example above returns a NULL, that means the view does not
- * exist in the `Plugin` database. To insert it use:
- * {{{
- *		PluginView::create()->save();
- * }}}
  */
-class PluginView extends \lithium\data\Model {
+class ExtensionView extends \lithium\data\Model {
 
 	/**
 	 * Metadata
@@ -33,7 +19,7 @@ class PluginView extends \lithium\data\Model {
 	 * @var array Meta data to link the model with the couchdb datasource
 	 *		- source : the name of the table (called database in couchdb)
 	 */
-	protected $_meta = array('source' => 'li3_lab_plugins', 'connection' => 'li3_lab');
+	protected $_meta = array('source' => 'li3_lab_extensions', 'connection' => 'li3_lab');
 
 
 	/**

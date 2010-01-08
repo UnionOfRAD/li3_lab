@@ -9,16 +9,15 @@
 namespace li3_lab\models;
 
 use \lithium\util\Validator;
-use \lithium\data\Connections;
 
-class Plugin extends \lithium\data\Model {
+class Extension extends \lithium\data\Model {
 
 	/**
 	 * public name of the model
 	 *
 	 * @var string
 	 */
-	public $alias = 'Plugin';
+	public $alias = 'Extension';
 
 	/**
 	 * Metadata
@@ -26,7 +25,7 @@ class Plugin extends \lithium\data\Model {
 	 * @var array Meta data to link the model with the couchdb datasource
 	 *		- source : the name of the table (called database in couchdb)
 	 */
-	protected $_meta = array('source' => 'li3_lab_plugins', 'connection' => 'li3_lab');
+	protected $_meta = array('source' => 'li3_lab_extensions', 'connection' => 'li3_lab');
 
 	/**
 	 * validation rules
@@ -36,22 +35,13 @@ class Plugin extends \lithium\data\Model {
 	public $validates = array(
 		'name' => 'You must specify a name for this plugin.',
 		'version' => 'You must specify a version for this plugin.',
-		'summary' => 'You must specify a short summary for this plugin',
-		'sources' => array('isSource', 'message' => 'You must specify a source for this plugin.')
+		'summary' => 'You must specify a short summary for this plugin'
 	);
-
+/*
 	public static function __init($options = array()) {
 		parent::__init($options);
-		Validator::add('isSource', function ($data, $params, $options) {
-			$types = array('git', 'phar');
-			foreach ($data as $type => $source) {
-				if (in_array($type, $types)) {
-					return true;
-				}
-			}
-		});
 	}
-
+*/
 	/**
 	 * undocumented function
 	 *
@@ -71,7 +61,7 @@ class Plugin extends \lithium\data\Model {
 	 * @return void
 	 */
 	public static function install() {
-		return Connections::get(static::meta('connection'))->put(static::meta('source'));
+		return \lithium\data\Connections::get(static::meta('connection'))->put(static::meta('source'));
 	}
 }
 ?>
