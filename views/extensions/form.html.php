@@ -14,38 +14,52 @@ if (isset($extension->id) && isset($extension->rev)) {
 	echo $this->form->hidden('rev');
 }
 ?>
-<p>
+<div class="input">
 	<?php
 		echo $this->form->label('name', 'Extension Name', array(
 			'class' => 'required'
 		));
 		echo $this->form->text('name');
 		if (isset($extension->errors['name'])) {
-			echo '<p style="color:red">'.$extension->errors['name'].'</p>';
+			echo '<div style="color:red">'.$extension->errors['name'].'</div>';
 		}
 	?>
-</p>
-<p>
+</div>
+<div class="input">
 	<?php
 		echo $this->form->label('summary', 'Summary', array(
 			'class' => 'required'
 		));
 		echo $this->form->textarea('summary', array('cols' => 40, 'rows' => 3));
 		if (isset($extension->errors['summary'])) {
-			echo '<p style="color:red">'.$extension->errors['summary'].'</p>';
+			echo '<div style="color:red">'.$extension->errors['summary'].'</div>';
 		}
 	?>
-</p>
-<p>
+</div>
+<div class="input">
 	<?php
 		echo $this->form->label('description', 'Description');
 		echo $this->form->textarea('description', array('cols' => 40, 'rows' => 10));
 		if (isset($extension->errors['description'])) {
-			echo '<p style="color:red">'.$extension->errors['description'].'</p>';
+			echo '<div style="color:red">'.$extension->errors['description'].'</div>';
 		}
 	?>
-</p>
-<p>
+</div>
+<div class="input">
+	<?php
+		echo $this->form->label('maintainers', 'Maintainers');
+		echo '<a href="#" class="add-maintainer">Add</a>';
+		echo '<div class="maintainer">';
+		echo $this->form->label('maintainers.0.name', 'Name');
+		echo $this->form->text('maintainers[0][name]');
+		echo $this->form->label('maintainers.0.email', 'Email');
+		echo $this->form->text('maintainers[0][email]');
+		echo $this->form->label('maintainers.0.website', 'Website');
+		echo $this->form->text('maintainers[0][website]');
+		echo '</div>';
+	?>
+</div>
+<div class="input">
 	<?php
 		echo $this->form->label('code', 'Class code', array(
 			'class' => 'required'
@@ -53,11 +67,10 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->textarea('code', array('cols' => 40, 'rows' => 15
 		));
 		if (isset($extension->errors['code'])) {
-			echo '<p style="color:red">'.$extension->errors['code'].'</p>';
+			echo '<div style="color:red">'.$extension->errors['code'].'</div>';
 		}
 	?>
-</p>
+</div>
 <?php echo $this->form->submit('save', array('name' => 'verified'));?>
 <?php echo $this->form->submit('cancel', array('name' => 'cancel'));?>
 </form>
-<p></p>
