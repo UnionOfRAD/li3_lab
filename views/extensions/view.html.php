@@ -8,7 +8,7 @@
 
 <div id="extension">
 	<h2><?=$extension->name;?></h2>
-	<h3>Version: <?php echo $version;?></h3>
+	<h3>Version: <?php echo $version;?> Created: <?=$extension->created;?></h3>
 	<p class="summary"><?=$extension->summary;?></p>
 	<div class="description"><?=$extension->description;?></div>
 	<div class="actions" style="margin-bottom: 5px;">
