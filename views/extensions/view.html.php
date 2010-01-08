@@ -36,6 +36,12 @@
 		echo $this->form->submit('Get', array('style' => 'display:inline; margin:0 0 0 5px; padding: 1px;'));
 		echo '</form>';
 		?>
+		 | <?=$this->Html->link('Newest', array(
+				'plugin' => 'li3_lab',
+				'controller' => 'extensions',
+				'action' => 'view',
+				'args' => array($extension->id)
+		 ));?>
 		 | <?=$this->Html->link('Edit', array(
 				'plugin' => 'li3_lab',
 				'controller' => 'extensions',

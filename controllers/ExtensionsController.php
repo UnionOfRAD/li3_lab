@@ -108,12 +108,14 @@ class ExtensionsController extends \lithium\action\Controller {
 					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
 			}
 		} else {
-			$extension = Extension::create($this->request->data);
-			if ($extension->save()) {
+			$extension = Extension::find($this->request->data['id']);
+			if (isset($extension->error) && $extension->error == 'not_found') {
+				$this->redirect(array(
+					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
+			} elseif ($extension->save($this->request->data)) {
 				$this->redirect(array(
 					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
 			}
-		//	var_dump($extension);
 		}
 		$this->set(compact('extension'));
 		$this->render('form');
