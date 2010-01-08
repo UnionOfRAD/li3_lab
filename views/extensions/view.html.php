@@ -10,6 +10,19 @@
 	<h2><?=$extension->name;?></h2>
 	<h3>Version: <?php echo $version;?> Created: <?=$extension->created;?></h3>
 	<p class="summary"><?=$extension->summary;?></p>
+	<ul class="maintainers">
+		<li style="list-style:none; font-weight: bold; color: pink;">Maintainers:</li>
+	<?php
+		foreach ($extension->maintainers as $man) {
+			$name = (!empty($man->name)) ? $man->name : $man->email;
+			if (empty($name)) continue;
+			echo '<li><strong>';
+			echo $name . '</strong> (<a href="mailto:' . $man->email .'">' . $man->email .'</a>) '
+			 . '<a href="http://' . $man->website .'">' . $man->website .'</a>';
+			echo '</li>';
+		}
+	?>
+	</ul>
 	<div class="description"><?=$extension->description;?></div>
 	<div class="actions" style="margin-bottom: 5px;">
 		<a href="#">Download</a>

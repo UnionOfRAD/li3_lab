@@ -45,37 +45,23 @@ if (isset($extension->id) && isset($extension->rev)) {
 		}
 	?>
 </div>
-<div class="input">
+<div id="mm" class="input">
 	<?php
 		echo $this->form->label('maintainers', 'Maintainers');
-		echo '<a href="#" class="add-maintainer">Add</a>';
-		echo '<div class="maintainer">';
-		echo $this->form->label('maintainers.0.name', 'Name');
-		echo $this->form->text('maintainers[0][name]',
-			array('value' => $extension->maintainers[0]->name));
-		echo $this->form->label('maintainers.0.email', 'Email');
-		echo $this->form->text('maintainers[0][email]',
-			array('value' => $extension->maintainers[0]->email));
-		echo $this->form->label('maintainers.0.website', 'Website');
-		echo $this->form->text('maintainers[0][website]',
-			array('value' => $extension->maintainers[0]->website));
-		echo '</div>';
+		echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">Add</a>';
+		echo $this->maintainer->render(0, $extension->maintainers[0]);
+		$next = 1;
 		if (isset($extension->maintainers) && sizeof($extension->maintainers->to("array")) > 1) {
 			foreach ($extension->maintainers as $k => $main) {
 				if ($k == 0) continue; // skip  the first;
-				echo '<div class="maintainer">';
-				echo $this->form->label('maintainers.' . $k . '.name', 'Name');
-				echo $this->form->text('maintainers[' . $k . '][name]',
-					array('value' => $extension->maintainers[$k]->name));
-				echo $this->form->label('maintainers.' . $k . '.email', 'Email');
-				echo $this->form->text('maintainers[' . $k . '][email]',
-					array('value' => $extension->maintainers[$k]->email));
-				echo $this->form->label('maintainers.' . $k . '.website', 'Website');
-				echo $this->form->text('maintainers[' . $k . '][website]',
-					array('value' => $extension->maintainers[$k]->website));
-				echo '</div>';
+				$next++;
+				echo $this->maintainer->render($k, $extension->maintainers[$k]);
 			}
 		}
+		echo "<script type='text/javascript'>
+			var maintainer_count = $next;
+			var maintainer_template = '{$this->maintainer->template()}';
+		</script>";
 	?>
 </div>
 <div class="input">
@@ -93,3 +79,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 <?php echo $this->form->submit('save', array('name' => 'verified'));?>
 <?php echo $this->form->submit('cancel', array('name' => 'cancel'));?>
 </form>
+<?php
+
+ //var_dump($extension->data());
+
+?>
