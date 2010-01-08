@@ -34,7 +34,6 @@ class Extension extends \lithium\data\Model {
 	 */
 	public $validates = array(
 		'name' => 'You must specify a name for this plugin.',
-		'version' => 'You must specify a version for this plugin.',
 		'summary' => 'You must specify a short summary for this plugin'
 	);
 /*

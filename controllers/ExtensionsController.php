@@ -88,42 +88,36 @@ class ExtensionsController extends \lithium\action\Controller {
 		return compact('error');
 	}
 
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 */
 	public function add() {
 		if (!empty($this->request->data)) {
-			$ext = Extension::create($this->request->data);
-			if ($ext->save()) {
-				$this->redirect(array('action' => 'index'));
-			}
-		}
-		$this->render('form');
-	}
-
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 */
-	public function verify() {
-		if (!empty($this->request->data['verified'])) {
 			$extension = Extension::create($this->request->data);
 			if ($extension->save()) {
 				$this->redirect(array(
-					'extension' => 'li3_lab', 'controller' => 'extensions',
-					'action' => 'view', 'args' => array($extension->id)
-				));
+					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
 			}
 		}
-		if (empty($extension)) {
-			$extension = Extension::create($this->request->data);
-		}
+		$this->render('form');
+	}
 
+	public function edit($id = null) {
+		if (empty($this->request->data)) {
+			$conditions = array('id' => $id);
+			$extension = Extension::find('first', compact('conditions'));
+			if (isset($extension->error) && $extension->error == 'not_found') {
+				$this->redirect(array(
+					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
+			}
+		} else {
+			$extension = Extension::create($this->request->data);
+			if ($extension->save()) {
+				$this->redirect(array(
+					'plugin' => 'li3_lab', 'controller' => 'extensions','action' => 'index'));
+			}
+		//	var_dump($extension);
+		}
 		$this->set(compact('extension'));
 		$this->render('form');
 	}
+
 }
 ?>
