@@ -1,18 +1,23 @@
 <?php
 
 echo $this->form->create($extension, array(
-	'method' => 'post',
-	'url' => array('plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'edit')));
+	'method' => 'POST',
+	'url' => array(
+		'plugin' => 'li3_lab', 'controller' => 'extensions',
+		'action' => 'edit', 'args' => array($extension->id)
+	)
+));
 
 $this->form->config(array('templates' => array('checkbox' =>
 	'<input type="hidden" name="{:name}" value="0" />
 	 <input type="checkbox" value="1" name="{:name}"{:options} />'
 )));
 
-if (isset($extension->id) && isset($extension->rev)) : ?>
-	<input type="hidden" name="id" value="<?=$extension->id;?>" />
-	<input type="hidden" name="rev" value="<?=$extension->rev;?>" />
-<?php endif;?>
+if (isset($extension->id) && isset($extension->rev)) {
+	echo $this->form->hidden('id');
+	echo $this->form->hidden('rev');
+}
+?>
 <p>
 	<?php
 		echo $this->form->label('name', 'Extension Name', array(
