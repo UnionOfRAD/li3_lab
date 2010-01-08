@@ -60,6 +60,22 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->text('maintainers[0][website]',
 			array('value' => $extension->maintainers[0]->website));
 		echo '</div>';
+		if (isset($extension->maintainers) && sizeof($extension->maintainers->to("array")) > 1) {
+			foreach ($extension->maintainers as $k => $main) {
+				if ($k == 0) continue; // skip  the first;
+				echo '<div class="maintainer">';
+				echo $this->form->label('maintainers.' . $k . '.name', 'Name');
+				echo $this->form->text('maintainers[' . $k . '][name]',
+					array('value' => $extension->maintainers[$k]->name));
+				echo $this->form->label('maintainers.' . $k . '.email', 'Email');
+				echo $this->form->text('maintainers[' . $k . '][email]',
+					array('value' => $extension->maintainers[$k]->email));
+				echo $this->form->label('maintainers.' . $k . '.website', 'Website');
+				echo $this->form->text('maintainers[' . $k . '][website]',
+					array('value' => $extension->maintainers[$k]->website));
+				echo '</div>';
+			}
+		}
 	?>
 </div>
 <div class="input">
