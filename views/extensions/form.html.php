@@ -51,11 +51,14 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo '<a href="#" class="add-maintainer">Add</a>';
 		echo '<div class="maintainer">';
 		echo $this->form->label('maintainers.0.name', 'Name');
-		echo $this->form->text('maintainers[0][name]');
+		echo $this->form->text('maintainers[0][name]',
+			array('value' => $extension->maintainers[0]->name));
 		echo $this->form->label('maintainers.0.email', 'Email');
-		echo $this->form->text('maintainers[0][email]');
+		echo $this->form->text('maintainers[0][email]',
+			array('value' => $extension->maintainers[0]->email));
 		echo $this->form->label('maintainers.0.website', 'Website');
-		echo $this->form->text('maintainers[0][website]');
+		echo $this->form->text('maintainers[0][website]',
+			array('value' => $extension->maintainers[0]->website));
 		echo '</div>';
 	?>
 </div>
