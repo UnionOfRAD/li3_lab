@@ -25,11 +25,11 @@ class Server extends \lithium\console\Command {
 
 		foreach (array_keys(PluginView::$views) as $view) {
 			PluginView::create($view)->save();
-		//	$this->_check('PluginView', $view);
+			$this->_check('\li3_lab\models\PluginView', $view);
 		}
 		foreach (array_keys(ExtensionView::$views) as $view) {
 			ExtensionView::create($view)->save();
-		//	$this->_check('ExtensionView', $view);
+			$this->_check('\li3_lab\models\ExtensionView', $view);
 		}
 
 	}
@@ -58,7 +58,7 @@ class Server extends \lithium\console\Command {
 			}
 		}
 		if (isset($view->id) && $view->id == "_design/{$name}") {
-			$this->out("{$name} view created.");
+			$this->out("{$model} {$name} view created.");
 			return true;
 		}
 	}
