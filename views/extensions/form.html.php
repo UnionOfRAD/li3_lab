@@ -45,18 +45,18 @@ if (isset($extension->id) && isset($extension->rev)) {
 		}
 	?>
 </div>
-<divclass="input">
+<div class="input">
 	<fieldset id="mm">
 		<legend>Maintainers</legend>
 	<?php
-		echo $this->maintainer->render(0, $extension->maintainers[0]);
-		$next = 1;
-		if (isset($extension->maintainers) && sizeof($extension->maintainers->to("array")) > 1) {
+		$next = 0;
+		if (isset($extension->maintainers)) {
 			foreach ($extension->maintainers as $k => $main) {
-				if ($k == 0) continue; // skip  the first;
 				$next++;
 				echo $this->maintainer->render($k, $extension->maintainers[$k]);
 			}
+		} else {
+			echo $this->maintainer->render(0);
 		}
 		echo "<script type='text/javascript'>
 			var maintainer_count = $next;
