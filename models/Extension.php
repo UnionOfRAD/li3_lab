@@ -30,17 +30,32 @@ class Extension extends \lithium\data\Model {
 	/**
 	 * validation rules
 	 *
-	 * @var string
+	 * @var array
 	 */
 	public $validates = array(
-		'name' => 'You must specify a name for this plugin.',
-		'summary' => 'You must specify a short summary for this plugin'
+		'name' => 'You must specify a name.',
+		'summary' => 'You must specify a short summary.',
+		'description' => 'You must specify a longer description.',
+		'maintainers' => array(
+			'validMaintainer',
+			'message' => 'Must specify at least one with at least an email.'
+		),
+		'code' => array('validCode', 'message' => 'Must be a class with a namespace.')
 	);
-/*
+
 	public static function __init($options = array()) {
 		parent::__init($options);
+		Validator::add('validMaintainer', function ($value, $format, $options) {
+			$result = Validator::isEmail($value[0]['email']);
+			return $result;
+		});
+		Validator::add('validCode', function ($value, $format, $options) {
+			$namespace = preg_match('/namespace/', $value);
+			$class = preg_match('/class/', $value);
+			return $namespace && $class;
+		});
 	}
-*/
+
 	/**
 	 * undocumented function
 	 *
