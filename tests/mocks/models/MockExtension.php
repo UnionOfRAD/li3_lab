@@ -33,6 +33,27 @@ class MockExtension extends \li3_lab\models\Extension {
 		return $this->_classes;
 	}
 
+	public static $mockData = array(
+		'name' => 'MockExtension model',
+		'summary' => 'Pretend model for testing purposes',
+		'description' => 'Contains mock setup and data for testing the Extension model.',
+		'maintainers' => array('email' => 'john@example.org'),
+		'code' => '<?php
+
+namespace li3_lab\tests\mocks\models;
+
+class MockExtension extends \li3_lab\models\Extension {
+	protected $_meta = array();
+}'
+	);
+
+	public static function __init($options = array()) {
+		parent::__init($options);
+		MockExtension::applyFilter('save', function($self, $params, $chain) {
+			$params['record']->created = date('Y-m-d h:i:s');
+			return $chain->next($self, $params, $chain);
+		});
+	}
 }
 
 ?>

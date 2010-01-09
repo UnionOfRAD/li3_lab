@@ -75,6 +75,44 @@ class ExtensionTest extends \lithium\test\Unit {
 		$result = $extension->errors('maintainers');
 		$this->assertTrue(empty($result));
 	}
+
+	public function testSaveFilterCreated() {
+		$extension = MockExtension::create(MockExtension::$mockData);
+		$default = $extension->created;
+		$result = $extension->save();
+		$current = $extension->created;
+		$this->assertTrue($default != $current);
+	}
+
+	public function testSaveFilterNamespace() {
+		$extension = MockExtension::create(MockExtension::$mockData);
+		$result = $extension->save();
+		$this->assertFalse($result);
+
+		$expected = 'li3_lab\tests\mocks\models';
+		$result = $extension->namespace;
+		$this->assertEqual($expected, $result);
+	}
+
+	public function testSaveFilterClass() {
+		$extension = MockExtension::create(MockExtension::$mockData);
+		$result = $extension->save();
+		$this->assertFalse($result);
+
+		$expected = 'MockExtension';
+		$result = $extension->class;
+		$this->assertEqual($expected, $result);
+	}
+
+	public function testSaveFilterFile() {
+		$extension = MockExtension::create(MockExtension::$mockData);
+		$result = $extension->save();
+		$this->assertFalse($result);
+
+		$expected = 'li3_lab\tests\mocks\models\mock_extension.php';
+		$result = $extension->file;
+		$this->assertEqual($expected, $result);
+	}
 }
 
 ?>

@@ -45,6 +45,10 @@ class Extension extends \lithium\data\Model {
 
 	public static function __init($options = array()) {
 		parent::__init($options);
+		Extension::applyFilter('save', function($self, $params, $chain) {
+			$params['record']->created = date('Y-m-d h:i:s');
+			return $chain->next($self, $params, $chain);
+		});
 		Validator::add('validMaintainer', function ($value, $format, $options) {
 			$result = false;
 			if (is_array($value) && isset($value[0]['email'])) {
@@ -57,19 +61,6 @@ class Extension extends \lithium\data\Model {
 			$class = preg_match('/class/', $value);
 			return $namespace && $class;
 		});
-	}
-
-	/**
-	 * undocumented function
-	 *
-	 * @param string $data
-	 * @return void
-	 */
-	public static function create($data = array()) {
-		if (!isset($data['created'])) {
-			$data['created'] = date('Y-m-d h:i:s');
-		}
-		return parent::create($data);
 	}
 
 	/**
