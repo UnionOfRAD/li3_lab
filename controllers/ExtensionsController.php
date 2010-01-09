@@ -89,7 +89,9 @@ class ExtensionsController extends \lithium\action\Controller {
 	}
 
 	public function add() {
-		if (!empty($this->request->data)) {
+		if (empty($this->request->data)) {
+			$extension = Extension::create();
+		} else {
 			$extension = Extension::create($this->request->data);
 			if ($extension->save()) {
 				$this->redirect(array(
@@ -97,7 +99,7 @@ class ExtensionsController extends \lithium\action\Controller {
 			}
 		}
 		$url = array('plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add');
-		$this->set(compact('url'));
+		$this->set(compact('url', 'extension'));
 		$this->render('form');
 	}
 
