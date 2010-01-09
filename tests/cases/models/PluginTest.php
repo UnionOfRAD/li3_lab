@@ -80,3 +80,5 @@ class PluginTest extends \lithium\test\Unit {
 		$this->assertEqual($expected, $result);
 	}
 }
+
+?>
