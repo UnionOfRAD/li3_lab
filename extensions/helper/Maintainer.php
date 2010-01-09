@@ -20,6 +20,7 @@ class Maintainer extends \lithium\template\Helper {
 			$data = array('name' => null, 'email' => null, 'website' => null);
 		}
 		$ret = '<div class="maintainer">';
+		$ret .= '<button onclick="javascript:remove(this); return false;">X</button>';
 		$ret .= $this->form->label('maintainers.' . $counter . '.name', 'Name');
 		$ret .= $this->form->text('maintainers[' . $counter . '][name]',
 			array('value' => $data['name']));
@@ -35,6 +36,7 @@ class Maintainer extends \lithium\template\Helper {
 
 	public function template() {
 		$ret = '<div class="maintainer">';
+		$ret .= '<button onclick="javascript:remove(this); return false;">X</button>';
 		$ret .= $this->form->label('maintainers.XXX.name', 'Name');
 		$ret .= $this->form->text('maintainers[XXX][name]');
 		$ret .= $this->form->label('maintainers.XXX.email', 'Email');

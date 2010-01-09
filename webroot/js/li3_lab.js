@@ -5,3 +5,8 @@ function add() {
 	maintainer_count++;
 	return false;
 }
+
+function remove(div) {
+	$(div).parent().remove();
+	return false;
+}

@@ -18,6 +18,15 @@ div.maintainer {
 	margin: 3px 0 20px;
 	border: 1px dashed grey;
 	padding: 5px;
+	overflow: auto;
+}
+.maintainer button {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 3px 5px;
+	margin: 5px 5px 5px 0;
+	float: right;
+	
 }
 a.add-maintainer {
 	padding: .5em 1em;
