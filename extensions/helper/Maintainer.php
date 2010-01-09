@@ -11,7 +11,7 @@ class Maintainer extends \lithium\template\Helper {
 		$this->form = new Form($config);
 	}
 
-	function render($counter = 0, $d = null) {
+	public function render($counter = 0, $d = null) {
 		$data['name'] = ($d->name)?: null;
 		$data['email'] = ($d->email)?: null;
 		$data['website'] = ($d->website)?: null;
@@ -29,7 +29,7 @@ class Maintainer extends \lithium\template\Helper {
 		return $ret;
 	}
 
-	function template() {
+	public function template() {
 		$ret = '<div class="maintainer">';
 		$ret .= $this->form->label('maintainers.XXX.name', 'Name');
 		$ret .= $this->form->text('maintainers[XXX][name]',
@@ -44,7 +44,6 @@ class Maintainer extends \lithium\template\Helper {
 		return $ret;
 
 	}
-
 }
 
 ?>
