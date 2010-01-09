@@ -1,4 +1,5 @@
 <?php
+$errors = $extension->errors();
 echo $this->form->create($extension, array('method' => 'POST','url' => $url));
 
 $this->form->config(array('templates' => array('checkbox' =>
@@ -15,8 +16,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 	<?php
 		echo $this->form->label('name', 'Extension Name', array('class' => 'required'));
 		echo $this->form->text('name');
-		if (isset($extension->errors['name'])) {
-			echo '<div style="color:red">'.$extension->errors['name'].'</div>';
+		if (isset($errors['name'])) {
+			echo '<div style="color:red">'.implode(', ', $errors['name']).'</div>';
 		}
 	?>
 </div>
@@ -24,8 +25,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 	<?php
 		echo $this->form->label('summary', 'Summary', array('class' => 'required'));
 		echo $this->form->textarea('summary', array('cols' => 40, 'rows' => 3));
-		if (isset($extension->errors['summary'])) {
-			echo '<div style="color:red">'.$extension->errors['summary'].'</div>';
+		if (isset($errors['summary'])) {
+			echo '<div style="color:red">'.implode(', ', $errors['summary']).'</div>';
 		}
 	?>
 </div>
@@ -33,8 +34,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 	<?php
 		echo $this->form->label('description', 'Description');
 		echo $this->form->textarea('description', array('cols' => 40, 'rows' => 10));
-		if (isset($extension->errors['description'])) {
-			echo '<div style="color:red">'.$extension->errors['description'].'</div>';
+		if (isset($errors['description'])) {
+			echo '<div style="color:red">'.implode(', ', $errors['description']).'</div>';
 		}
 	?>
 </div>
@@ -42,8 +43,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 	<?php
 		echo $this->form->label('code', 'Class code', array('class' => 'required'));
 		echo $this->form->textarea('code', array('cols' => 40, 'rows' => 15));
-		if (isset($extension->errors['code'])) {
-			echo '<div style="color:red">'.$extension->errors['code'].'</div>';
+		if (isset($errors['code'])) {
+			echo '<div style="color:red">'.implode(', ', $errors['code']).'</div>';
 		}
 	?>
 </div>
@@ -51,6 +52,9 @@ if (isset($extension->id) && isset($extension->rev)) {
 	<fieldset id="mm">
 		<legend>Maintainers</legend>
 	<?php
+		if (isset($errors['maintainers'])) {
+			echo '<div style="color:red">'.implode(', ', $errors['maintainers']).'</div>';
+		}
 		$next = 0;
 		if (isset($extension->maintainers)) {
 			foreach ($extension->maintainers as $k => $main) {
