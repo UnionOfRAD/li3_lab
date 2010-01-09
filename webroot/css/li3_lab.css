@@ -14,6 +14,13 @@
 #extension div.description {
 	margin-bottom: 2em;
 }
+.input {
+	margin-top: 10px;
+}
+.input label {
+	font-weight: bold;
+	font-size: 14px;	
+}
 div.maintainer {
 	margin: 3px 0 20px;
 	border: 1px dashed grey;
@@ -28,9 +35,19 @@ div.maintainer {
 	float: right;
 	
 }
+div.buttons {
+	margin: 10px 0 0;
+	overflow: hidden;
+}
+.buttons input[type=submit] {
+	float: left;	
+	clear: none;
+	display: block;
+	margin: 0 5px;
+}
 a.add-maintainer {
+	float: left;
 	padding: .5em 1em;
-	margin-left: 50px;
 	color: #000;
 	background: #e6e6e6;
 	font-size: 16px;
