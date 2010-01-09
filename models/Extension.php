@@ -46,7 +46,10 @@ class Extension extends \lithium\data\Model {
 	public static function __init($options = array()) {
 		parent::__init($options);
 		Validator::add('validMaintainer', function ($value, $format, $options) {
-			$result = Validator::isEmail($value[0]['email']);
+			$result = false;
+			if (is_array($value) && isset($value[0]['email'])) {
+				$result = Validator::isEmail($value[0]['email']);
+			}
 			return $result;
 		});
 		Validator::add('validCode', function ($value, $format, $options) {
