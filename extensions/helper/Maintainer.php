@@ -12,9 +12,13 @@ class Maintainer extends \lithium\template\Helper {
 	}
 
 	public function render($counter = 0, $d = null) {
-		$data['name'] = ($d && $d->name)?: null;
-		$data['email'] = ($d && $d->email)?: null;
-		$data['website'] = ($d && $d->website)?: null;
+		if ($d) {
+			$data['name'] = ($d->name)?: null;
+			$data['email'] = ($d->email)?: null;
+			$data['website'] = ($d->website)?: null;
+		} else {
+			$data = array('name' => null, 'email' => null, 'website' => null);
+		}
 		$ret = '<div class="maintainer">';
 		$ret .= $this->form->label('maintainers.' . $counter . '.name', 'Name');
 		$ret .= $this->form->text('maintainers[' . $counter . '][name]',

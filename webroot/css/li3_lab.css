@@ -15,7 +15,18 @@
 	margin-bottom: 2em;
 }
 div.maintainer {
-	margin: 3px 0;
+	margin: 3px 0 20px;
 	border: 1px dashed grey;
 	padding: 5px;
+}
+a.add-maintainer {
+	padding: .5em 1em;
+	margin-left: 50px;
+	color: #000;
+	background: #e6e6e6;
+	font-size: 16px;
+	font-weight: bold;
+	-moz-box-shadow: inset 1px 1px 6px #a6a6a6;
+	-webkit-box-shadow: inset 1px 1px 6px #a6a6a6;
+	box-shadow: inset 1px 1px 6px #a6a6a6;
 }

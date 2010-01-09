@@ -45,10 +45,10 @@ if (isset($extension->id) && isset($extension->rev)) {
 		}
 	?>
 </div>
-<div id="mm" class="input">
+<divclass="input">
+	<fieldset id="mm">
+		<legend>Maintainers</legend>
 	<?php
-		echo $this->form->label('maintainers', 'Maintainers');
-		echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">Add</a>';
 		echo $this->maintainer->render(0, $extension->maintainers[0]);
 		$next = 1;
 		if (isset($extension->maintainers) && sizeof($extension->maintainers->to("array")) > 1) {
@@ -63,6 +63,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 			var maintainer_template = '{$this->maintainer->template()}';
 		</script>";
 	?>
+	</fieldset>
+	<?php echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">Add maintainer</a>'; ?>
 </div>
 <div class="input">
 	<?php
