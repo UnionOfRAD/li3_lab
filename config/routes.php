@@ -8,20 +8,11 @@
 
 use \lithium\http\Router;
 
-Router::connect('/lab/server/{:action}', array(
-	'plugin' => 'li3_lab', 'controller' => 'server'
-));
-Router::connect('/lab/plugins/{:action}/{:args}', array(
+Router::connect('/lab/{:controller}/{:action}', array(
 	'plugin' => 'li3_lab', 'controller' => 'plugins'
 ));
-Router::connect('/lab/plugins/{:action}/{:args}', array(
+Router::connect('/lab/{:controller}/{:action}/{:args}', array(
 	'plugin' => 'li3_lab', 'controller' => 'plugins'
-));
-Router::connect('/lab/extensions/{:action}/{:args}', array(
-	'plugin' => 'li3_lab', 'controller' => 'extensions'
-));
-Router::connect('/lab/extensions/{:action}/{:args}', array(
-	'plugin' => 'li3_lab', 'controller' => 'extensions'
 ));
 
 ?>
