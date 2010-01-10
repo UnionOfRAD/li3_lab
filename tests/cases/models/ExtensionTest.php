@@ -20,7 +20,6 @@ class ExtensionTest extends \lithium\test\Unit {
 		$this->assertTrue(!empty($errors));
 
 		$expected = array(
-			'name' => array('You must specify a name.'),
 			'summary' => array('You must specify a short summary.'),
 			'description' => array('You must specify a longer description.'),
 			'maintainers' => array('Must specify at least one with at least an email.'),

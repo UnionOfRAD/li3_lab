@@ -12,7 +12,7 @@ class Maintainer extends \lithium\template\Helper {
 
 		foreach ($maintainers as $key => $data) {
 			$data = array_merge($defaults, (array) $data);
-			$fields = array('<button class="remove">X</button>');
+			$fields = array();
 
 			foreach (array_keys($defaults) as $field) {
 				$fields[] = join("\n", array(
