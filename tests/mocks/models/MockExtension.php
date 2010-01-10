@@ -36,7 +36,9 @@ class MockExtension extends \li3_lab\models\Extension {
 		'name' => 'MockExtension model',
 		'summary' => 'Pretend model for testing purposes',
 		'description' => 'Contains mock setup and data for testing the Extension model.',
-		'maintainers' => array('email' => 'john@example.org'),
+		'maintainers' => array(
+			array('email' => 'john@example.org')
+		),
 		'code' => '<?php
 
 namespace li3_lab\tests\mocks\models;

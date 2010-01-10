@@ -33,7 +33,6 @@ class Extension extends \lithium\data\Model {
 	 * @var array
 	 */
 	public $validates = array(
-		'name' => 'You must specify a name.',
 		'summary' => 'You must specify a short summary.',
 		'description' => 'You must specify a longer description.',
 		'maintainers' => array(
@@ -46,22 +45,19 @@ class Extension extends \lithium\data\Model {
 	public static function __init($options = array()) {
 		parent::__init($options);
 		static::applyFilter('save', function($self, $params, $chain) {
-			$temp = $params['record']->maintainers->data();
-			foreach ($temp as $m) {
-				$new[] = $m;
-			}
-			$params['record']->maintainers = $new;
 			if (isset($params['record']->created)) {
 				$params['record']->modified = date('Y-m-d h:i:s');
 			} else {
 				$params['record']->created = date('Y-m-d h:i:s');
-				$params['record']->namespace = $self::parseNamespace($params['record']->code);
-				$params['record']->class = $self::parseClass($params['record']->code);
+				if (preg_match('/namespace\s(.*?);/', $params['record']->code, $match)) {
+					$params['record']->namespace = $match[1];
+				}
+				if (preg_match('/class\s(.*?)\s/', $params['record']->code, $match)) {
+					$params['record']->class = $match[1];
+				}
 				$params['record']->file =
 					str_replace("\\", "/", $params['record']->namespace) .
-					'/' .
-					$params['record']->class .
-					'.php';
+					'/' . $params['record']->class . '.php';
 			}
 			return $chain->next($self, $params, $chain);
 		});
@@ -81,25 +77,15 @@ class Extension extends \lithium\data\Model {
 		});
 	}
 
-	public static function parseNamespace($code) {
-		$start = strpos($code, 'namespace') + 10;
-		$end = strpos($code, ';');
-		return substr($code, $start, $end - $start);
-	}
-
-	public static function parseClass($code) {
-		$start = strpos($code, 'class') + 6;
-		$end = strpos($code, ' ', $start);
-		return substr($code, $start, $end - $start);
-	}
-
 	/**
 	 * Creates a new database
 	 *
 	 * @return void
 	 */
 	public static function install() {
-		return \lithium\data\Connections::get(static::meta('connection'))->put(static::meta('source'));
+		return \lithium\data\Connections::get(
+			static::meta('connection'))->put(static::meta('source')
+		);
 	}
 }
 

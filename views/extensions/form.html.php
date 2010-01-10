@@ -14,17 +14,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 ?>
 <div class="input">
 	<?php
-		echo $this->form->label('name', 'Extension Name', array('class' => 'required'));
-		echo $this->form->text('name');
-		if (isset($errors['name'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['name']) . '</div>';
-		}
-	?>
-</div>
-<div class="input">
-	<?php
 		echo $this->form->label('summary', 'Summary', array('class' => 'required'));
-		echo $this->form->textarea('summary', array('cols' => 40, 'rows' => 3));
+		echo $this->form->text('summary');
 		if (isset($errors['summary'])) {
 			echo '<div style="color:red">' . implode(', ', $errors['summary']) . '</div>';
 		}
@@ -41,7 +32,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 </div>
 <div class="input">
 	<?php
-		echo $this->form->label('code', 'Class code', array('class' => 'required'));
+		echo $this->form->label('code', 'Code', array('class' => 'required'));
 		echo $this->form->textarea('code', array('cols' => 40, 'rows' => 15));
 		if (isset($errors['code'])) {
 			echo '<div style="color:red">' . implode(', ', $errors['code']) . '</div>';
@@ -49,34 +40,21 @@ if (isset($extension->id) && isset($extension->rev)) {
 	?>
 </div>
 <div class="input">
-	<fieldset id="mm">
+	<fieldset id="maintainers">
 		<legend>Maintainers</legend>
 	<?php
 		if (isset($errors['maintainers'])) {
 			echo '<div style="color:red">' . implode(', ', $errors['maintainers']) . '</div>';
 		}
-		$next = 0;
-		if (isset($extension->maintainers)) {
-			foreach ($extension->maintainers as $k => $main) {
-				$next++;
-				echo $this->maintainer->render($k, $extension->maintainers[$k]);
-			}
-		} else {
-			echo $this->maintainer->render();
-		}
-		echo "<script type='text/javascript'>
-			var maintainer_count = $next;
-			var maintainer_template = '{$this->maintainer->template()}';
-		</script>";
+		echo $this->maintainer->render($extension->maintainers);
 	?>
 	</fieldset>
+	<a href="#add-maintainer" id="add-maintainer">Add maintainer</a>
 </div>
 <div class="buttons">
 <?php
 	echo $this->form->submit('save');
 	echo $this->form->submit('cancel', array('name' => 'cancel'));
-	echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">' .
-		'Add maintainer</a>';
 ?>
 </div>
 </form>

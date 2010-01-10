@@ -3,7 +3,7 @@
 <?php
 
 foreach ($latest as $ext) :
-	echo '<li>' . $this->Html->link($ext->name, array(
+	echo '<li>' . $this->Html->link($ext->class, array(
 		 'plugin' => 'li3_lab',	'controller' => 'extensions',
 		'action' => 'view', 'args' => array($ext->id)
 	))  . '</li>';

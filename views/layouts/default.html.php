@@ -57,5 +57,14 @@
 			@2009 Union of Rad
 		</div>
 	</div>
+	
+	<?php echo $this->html->script(array(
+		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js', 'li3_lab'
+	)); ?>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function () {
+			li3Lab.maintainers();
+		});
+	</script>
 </body>
 </html>

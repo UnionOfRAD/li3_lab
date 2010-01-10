@@ -7,12 +7,14 @@
 ?>
 
 <div id="extension">
-	<h2><?=$extension->name;?></h2>
-	<h3>Version: <?=$version;?> Created: <?=$extension->created;?></h3>
-	<h3>Namespace: <strong><?=$extension->namespace;?></strong>
-		 Class: <strong><?=$extension->class;?></strong>
-		 File: <strong><?=$extension->file;?></strong></h3>
+	<h1><?=$extension->namespace;?></h1>
+	<h2><?=$extension->class;?></h2>
 	<p class="summary"><?=$extension->summary;?></p>
+	<ul>
+		<li>Version: <?php echo (isset($extension->_revisions->start)) ?: 1;?></li>
+		<li>Created: <?=$extension->created;?></li>
+		<li>File: <?=$extension->file;?></li>
+	</ul>
 	<?php if (isset($extension->maintainers)) {?>
 		<ul class="maintainers">
 			<li style="list-style:none; font-weight: bold; color: pink;">Maintainers:</li>
