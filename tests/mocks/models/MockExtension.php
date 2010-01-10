@@ -9,7 +9,6 @@
 namespace li3_lab\tests\mocks\models;
 
 use \li3_lab\models\Extension;
-use \lithium\util\Inflector;
 
 class MockExtension extends \li3_lab\models\Extension {
 
@@ -59,7 +58,7 @@ class MockExtension extends \li3_lab\models\Extension {
 			$params['record']->file =
 				str_replace("\\", "/", $params['record']->namespace) .
 				'/' .
-				Inflector::underscore($params['record']->class) .
+				$params['record']->class .
 				'.php';
 			return $chain->next($self, $params, $chain);
 		});

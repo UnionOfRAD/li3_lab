@@ -9,7 +9,6 @@
 namespace li3_lab\models;
 
 use \lithium\util\Validator;
-use \lithium\util\Inflector;
 
 class Extension extends \lithium\data\Model {
 
@@ -53,7 +52,7 @@ class Extension extends \lithium\data\Model {
 			$params['record']->file =
 				str_replace("\\", "/", $params['record']->namespace) .
 				'/' .
-				Inflector::underscore($params['record']->class) .
+				$params['record']->class .
 				'.php';
 			return $chain->next($self, $params, $chain);
 		});
