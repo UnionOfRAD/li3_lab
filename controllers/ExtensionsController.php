@@ -54,42 +54,6 @@ class ExtensionsController extends \lithium\action\Controller {
 		return compact('extension');
 	}
 
-	/**
-	 * Search
-	 */
-	public function search($word = null) {
-		if (!$word) {
-			$this->redirect(array('controller' => 'extensions', 'action' => 'error'));
-		}
-		$params = array(
-			'conditions' => array(
-				'design' => 'search', 'view' => 'words', 'key' => json_encode($word)
-			),
-			'limit' => 10
-		);
-		$extensions = Extension::all($params);
-
-		if ($this->request->type == 'json') {
-			$this->render(array('json' => $extensions->to('array')));
-		}
-		return compact('extensions');
-	}
-
-	/**
-	 * Temporary controller-based error handler.
-	 *
-	 * @param string $id
-	 * return string Result
-	 */
-	public function error($id = null) {
-		$error = array('type' => 'bad request', 'code' => 500);
-		if ($this->request->type == 'json') {
-			$this->render(array('json' => compact('error')));
-		}
-		$this->response->code($error['code']);
-		return compact('error');
-	}
-
 	public function add() {
 		if (empty($this->request->data)) {
 			$extension = Extension::create();
