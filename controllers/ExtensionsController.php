@@ -35,6 +35,8 @@ class ExtensionsController extends \lithium\action\Controller {
 
 	/**
 	 * View
+	 *
+	 * @param string $id
 	 */
 	public function view($id = null) {
 		$conditions = array('id' => $id, 'revs' => 'true');
@@ -103,6 +105,10 @@ class ExtensionsController extends \lithium\action\Controller {
 		$this->render('form');
 	}
 
+	/**
+	 *
+	 * @param string $id
+	 */
 	public function edit($id = null) {
 		if (empty($this->request->data)) {
 			$conditions = array('id' => $id);
@@ -128,6 +134,6 @@ class ExtensionsController extends \lithium\action\Controller {
 		$this->set(compact('extension', 'url'));
 		$this->render('form');
 	}
-
 }
+
 ?>

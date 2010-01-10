@@ -72,4 +72,5 @@ class Extension extends \lithium\data\Model {
 		return \lithium\data\Connections::get(static::meta('connection'))->put(static::meta('source'));
 	}
 }
+
 ?>

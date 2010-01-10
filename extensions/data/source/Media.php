@@ -222,7 +222,7 @@ class Media extends \lithium\data\Source {
 			'filter' => '', 'exclude' => '',
 			'format' => ''
 		);
-		$conditions = (array)$conditions + $defaults;
+		$conditions = (array) $conditions + $defaults;
 		return $conditions;
 	}
 

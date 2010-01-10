@@ -38,4 +38,5 @@ class FormulaTest extends \lithium\test\Unit {
 		$this->_cleanUp();
 	}
 }
+
 ?>

@@ -74,4 +74,5 @@ class Plugin extends \lithium\data\Model {
 		return Connections::get(static::meta('connection'))->put(static::meta('source'));
 	}
 }
+
 ?>

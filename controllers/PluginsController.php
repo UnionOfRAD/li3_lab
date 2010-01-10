@@ -36,6 +36,8 @@ class PluginsController extends \lithium\action\Controller {
 
 	/**
 	 * View
+	 *
+	 * @param string $id
 	 */
 	public function view($id = null) {
 		$plugin = Plugin::find($id);
@@ -51,6 +53,8 @@ class PluginsController extends \lithium\action\Controller {
 
 	/**
 	 * Search
+	 *
+	 * @param string $word
 	 */
 	public function search($word = null) {
 		if (!$word) {
@@ -106,7 +110,7 @@ class PluginsController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function verify() {
-		if (!empty($this->request->data['verified'])) {			
+		if (!empty($this->request->data['verified'])) {
 			$plugin = Plugin::create($this->request->data);
 			if ($plugin->save()) {
 				$this->redirect(array(
@@ -123,4 +127,5 @@ class PluginsController extends \lithium\action\Controller {
 		$this->render('form');
 	}
 }
+
 ?>

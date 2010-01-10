@@ -15,9 +15,9 @@ use \lithium\data\model\Query;
 use \lithium\data\model\Record;
 
 class MediaTest extends \lithium\test\Unit {
-	
+
 	protected $_testPath;
-	
+
 	public function setUp() {
 		$this->_testPath = LITHIUM_APP_PATH . '/resources/tmp/tests';
 		Connections::add('media_test', 'Media', array(
@@ -38,22 +38,22 @@ class MediaTest extends \lithium\test\Unit {
 	public function tearDown() {
 		unset($this->query);
 	}
-	
+
 	public function testAllMethodsNoConnection() {
 		$media = new Media(array('path' => '/something/that/does/not/exist'));
 		$this->assertFalse($media->connect());
 		$this->assertTrue($media->disconnect());
 	}
-	
+
 	public function testConnection() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$this->assertTrue($media->connect());
 		$this->assertTrue($media->disconnect());
 	}
-	
+
 	public function testDescribe() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
-		
+
 		$expected = array(
 			'path' => $this->_testPath,
 			'entity' => "mock_uploads"
@@ -64,15 +64,15 @@ class MediaTest extends \lithium\test\Unit {
 		$expected = 'mock_uploads';
 		$this->assertEqual($expected, $result->getFilename());
 	}
-	
+
 	public function testEntities() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
-		
+
 		$expected = array("mock_uploads");
 		$result = $media->entities();
 		$this->assertEqual($expected, $result);
 	}
-	
+
 	public function testCreate() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$this->query->data(array(
@@ -81,20 +81,20 @@ class MediaTest extends \lithium\test\Unit {
 		));
 		$result = $media->create($this->query, array('classes' => $this->classes));
 		$this->assertTrue(is_object($result));
-		
+
 		$expected = 'some_file.phar.gz';
 		$this->assertEqual($expected, $result->getFilename());
-		
+
 		$result = file_exists("{$this->_testPath}/mock_uploads/some_file.phar.gz");
-		$this->assertTrue($result);		
+		$this->assertTrue($result);
 	}
-	
+
 	public function testRead() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$expected = 1;
 		$result = $media->read($this->query, array('classes' => $this->classes));
 		$this->assertEqual($expected, count($result));
-		
+
 		$expected = 'some_file.phar.gz';
 		$result = basename($result[0]);
 		$this->assertEqual($expected, $result);
@@ -104,6 +104,8 @@ class MediaTest extends \lithium\test\Unit {
 }
 
 class MockUpload extends \lithium\data\Model {
-	
+
 	protected $_meta = array('connection' => 'media_test');
 }
+
+?>

@@ -66,4 +66,5 @@ class RepoTest extends \lithium\test\Unit {
 		$this->_cleanUp();
 	}
 }
+
 ?>

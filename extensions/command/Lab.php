@@ -105,6 +105,7 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * Add plugins to current application
 	 *
+	 * @param string $plugin name of plugin to add
 	 * @return boolean
 	 */
 	public function add($plugin = null) {
@@ -118,14 +119,18 @@ class Lab extends \lithium\console\Command {
 		}
 		$this->header($plugin->name);
 
-		if (isset($plugin->sources->git) && strpos(shell_exec('git --version'), 'git version 1.6') !== false) {
-			$result = shell_exec("cd {$this->path} && git clone {$plugin->sources->git}");
+		if (isset($plugin->sources->git) &&
+			strpos(shell_exec('git --version'), 'git version 1.6') !== false) {
+				$result = shell_exec("cd {$this->path} && git clone {$plugin->sources->git}");
 		} elseif (isset($plugin->sources->phar)) {
 			$remote = $plugin->sources->phar;
 			$local = $this->path . '/' . basename($plugin->sources->phar);
 			$write = file_put_contents($local, file_get_contents($remote));
 			$archive = new Phar($local);
-			return $archive->extractTo($this->path . '/' . basename($plugin->sources->phar, '.phar'));
+			return $archive->extractTo(
+				$this->path . '/' .
+				basename($plugin->sources->phar, '.phar')
+			);
 		}
 		return false;
 	}
@@ -162,6 +167,7 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * Update installed plugins
 	 *
+	 * @param string $name
 	 * @return boolean
 	 */
 	public function update() {
@@ -171,6 +177,7 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * Create a new archive and formula
 	 *
+	 * @param string $name
 	 * @return boolean
 	 */
 	public function create($name = null) {
@@ -186,7 +193,7 @@ class Lab extends \lithium\console\Command {
 				file_put_contents("{$path}/config/{$name}.json", $formula);
 			}
 			$archive = new Phar("{$this->path}/{$name}.phar");
-			$result = (bool) $archive->buildFromDirectory($path);
+			$result = (boolean) $archive->buildFromDirectory($path);
 			$archive->compress(Phar::GZ);
 		}
 		if ($result) {
@@ -200,6 +207,9 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * Add some configuration
 	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @param mixed $options
 	 * @return void
 	 */
 	public function config($key = null, $value = null, $options = true) {
@@ -253,7 +263,7 @@ class Lab extends \lithium\console\Command {
 			}
 		};
 		$writer($settings);
-		return (bool) file_put_contents($this->conf, join("\n", $data));
+		return (boolean) file_put_contents($this->conf, join("\n", $data));
 	}
 }
 

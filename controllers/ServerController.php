@@ -48,3 +48,5 @@ class ServerController extends \lithium\action\Controller {
 		return false;
 	}
 }
+
+?>

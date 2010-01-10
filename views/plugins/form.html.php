@@ -20,7 +20,7 @@ if (isset($plugin->id) && isset($plugin->rev)) : ?>
 			'value' => $plugin->name
 		));
 		if (isset($plugin->errors['name'])) {
-			echo '<p style="color:red">'.$plugin->errors['name'].'</p>';
+			echo '<p style="color:red">' . $plugin->errors['name'] . '</p>';
 		}
 	?>
 </p>
@@ -33,7 +33,7 @@ if (isset($plugin->id) && isset($plugin->rev)) : ?>
 			'value' => $plugin->version
 		));
 		if (isset($plugin->errors['version'])) {
-			echo '<p style="color:red">'.$plugin->errors['version'].'</p>';
+			echo '<p style="color:red">' . $plugin->errors['version'] . '</p>';
 		}
 	?>
 </p>
@@ -46,7 +46,7 @@ if (isset($plugin->id) && isset($plugin->rev)) : ?>
 			'value' => $plugin->summary, 'cols' => 40, 'rows' => 5
 		));
 		if (isset($plugin->errors['summary'])) {
-			echo '<p style="color:red">'.$plugin->errors['summary'].'</p>';
+			echo '<p style="color:red">' . $plugin->errors['summary'] . '</p>';
 		}
 	?>
 </p>
@@ -57,7 +57,7 @@ if (isset($plugin->id) && isset($plugin->rev)) : ?>
 			'value' => $plugin->description, 'cols' => 40, 'rows' => 15
 		));
 		if (isset($plugin->errors['description'])) {
-			echo '<p style="color:red">'.$plugin->errors['description'].'</p>';
+			echo '<p style="color:red">' . $plugin->errors['description'] . '</p>';
 		}
 	?>
 </p>
@@ -70,7 +70,7 @@ if (isset($plugin->id) && isset($plugin->rev)) : ?>
 			'value' => $plugin->source
 		));
 		if (isset($plugin->errors['source'])) {
-			echo '<p style="color:red">'.$plugin->errors['source'].'</p>';
+			echo '<p style="color:red">' . $plugin->errors['source'] . '</p>';
 		}
 	?>
 </p>

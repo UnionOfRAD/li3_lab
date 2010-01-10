@@ -62,7 +62,6 @@ class Server extends \lithium\console\Command {
 			return true;
 		}
 	}
-
 }
 
 ?>

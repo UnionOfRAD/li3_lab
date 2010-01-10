@@ -18,8 +18,8 @@
 				$name = (!empty($man->name)) ? $man->name : $man->email;
 				if (empty($name)) continue;
 				echo '<li><strong>';
-				echo $name . '</strong> (<a href="mailto:' . $man->email .'">' . $man->email .'</a>) '
-				 . '<a href="http://' . $man->website .'">' . $man->website .'</a>';
+				echo $name . '</strong> (<a href="mailto:' . $man->email . '">' . $man->email . '</a>) '
+				 . '<a href="http://' . $man->website . '">' . $man->website . '</a>';
 				echo '</li>';
 			}
 		?>

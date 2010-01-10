@@ -14,7 +14,7 @@ namespace li3_lab\models;
  * @package default
  */
 class Repo extends \lithium\data\Model {
-	
+
 	protected $_meta = array('connection' => 'resources');
 }
 

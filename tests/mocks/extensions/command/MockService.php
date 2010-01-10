@@ -19,7 +19,7 @@ class MockService extends \lithium\http\Service {
 			return json_encode($this->__data(1));
 		}
 	}
-	
+
 	private function __data($key = null) {
 		$data = array(
 			array(

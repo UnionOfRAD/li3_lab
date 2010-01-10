@@ -71,6 +71,7 @@ class File extends \lithium\data\model\Record {
 	/**
 	 * Returns the contents of the file
 	 *
+	 * @param string $file
 	 * @return void
 	 */
 	public function contents($file = null) {

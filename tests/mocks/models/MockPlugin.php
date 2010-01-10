@@ -9,9 +9,8 @@
 namespace li3_lab\tests\mocks\models;
 
 class MockPlugin extends \li3_lab\models\Plugin {
-	
-	protected $_meta = array('source' => 'test_li3_lab', 'connection' => 'test_li3_lab');
 
+	protected $_meta = array('source' => 'test_li3_lab', 'connection' => 'test_li3_lab');
 }
 
 ?>

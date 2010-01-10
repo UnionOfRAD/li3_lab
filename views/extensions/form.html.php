@@ -17,7 +17,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->label('name', 'Extension Name', array('class' => 'required'));
 		echo $this->form->text('name');
 		if (isset($errors['name'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['name']).'</div>';
+			echo '<div style="color:red">'.implode(', ', $errors['name']) . '</div>';
 		}
 	?>
 </div>
@@ -26,7 +26,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->label('summary', 'Summary', array('class' => 'required'));
 		echo $this->form->textarea('summary', array('cols' => 40, 'rows' => 3));
 		if (isset($errors['summary'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['summary']).'</div>';
+			echo '<div style="color:red">' . implode(', ', $errors['summary']) . '</div>';
 		}
 	?>
 </div>
@@ -35,7 +35,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->label('description', 'Description');
 		echo $this->form->textarea('description', array('cols' => 40, 'rows' => 10));
 		if (isset($errors['description'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['description']).'</div>';
+			echo '<div style="color:red">' . implode(', ', $errors['description']) . '</div>';
 		}
 	?>
 </div>
@@ -44,7 +44,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 		echo $this->form->label('code', 'Class code', array('class' => 'required'));
 		echo $this->form->textarea('code', array('cols' => 40, 'rows' => 15));
 		if (isset($errors['code'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['code']).'</div>';
+			echo '<div style="color:red">' . implode(', ', $errors['code']) . '</div>';
 		}
 	?>
 </div>
@@ -53,7 +53,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 		<legend>Maintainers</legend>
 	<?php
 		if (isset($errors['maintainers'])) {
-			echo '<div style="color:red">'.implode(', ', $errors['maintainers']).'</div>';
+			echo '<div style="color:red">' . implode(', ', $errors['maintainers']) . '</div>';
 		}
 		$next = 0;
 		if (isset($extension->maintainers)) {
@@ -75,7 +75,8 @@ if (isset($extension->id) && isset($extension->rev)) {
 <?php
 	echo $this->form->submit('save', array('name' => 'verified'));
 	echo $this->form->submit('cancel', array('name' => 'cancel'));
-	echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">Add maintainer</a>';
+	echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">' .
+		'Add maintainer</a>';
 ?>
 </div>
 </form>
