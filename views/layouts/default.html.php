@@ -19,7 +19,6 @@
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->style('base')?>
 	<?=$this->html->style('li3_lab')?>
-	<?=$this->html->script('jquery-1.3.2.min')?>
 	<?=$this->html->script('li3_lab')?>
 </head>
 <body>
@@ -57,7 +56,7 @@
 			@2009 Union of Rad
 		</div>
 	</div>
-	
+
 	<?php echo $this->html->script(array(
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js', 'li3_lab'
 	)); ?>
