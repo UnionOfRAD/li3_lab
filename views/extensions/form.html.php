@@ -54,7 +54,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 <div class="buttons">
 <?php
 	echo $this->form->submit('save');
-	echo $this->form->submit('cancel', array('name' => 'cancel'));
+	echo $this->form->submit('cancel', array('value' => 'cancel'));
 ?>
 </div>
 </form>
