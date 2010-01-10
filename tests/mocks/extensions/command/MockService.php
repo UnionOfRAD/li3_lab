@@ -11,24 +11,27 @@ namespace li3_lab\tests\mocks\extensions\command;
 class MockService extends \lithium\http\Service {
 
 	public function send($method, $path = null, $data = array(), $options = array()) {
-		if ($path == 'lab') {
-			return json_encode($this->__data());
+		if ($path == 'lab/plugins') {
+			return json_encode($this->__data('plugins'));
 		}
-
-		if (preg_match("/lab\/(.*?).json/", $path)) {
-			return json_encode($this->__data(1));
+		if ($path == 'lab/extensions') {
+			return json_encode($this->__data('extensions'));
+		}
+		if (preg_match("/lab\/(.*?).json/", $path, $match)) {
+			return json_encode($this->__data('plugins', 1));
 		}
 	}
 
-	private function __data($key = null) {
-		$data = array(
+	private function __data($type, $key = null) {
+		$plugins = array(
 			array(
 				'name' => 'li3_lab', 'version' => '1.0',
 				'summary' => 'the li3 plugin client/server',
 				'maintainers' => array(
-					'name' => 'gwoo',
-					'email' => 'gwoo@nowhere.com',
-					'website' => 'li3.rad-dev.org'
+					array(
+						'name' => 'gwoo', 'email' => 'gwoo@nowhere.com',
+						'website' => 'li3.rad-dev.org'
+					)
 				),
 				'created' => '2009-11-30', 'updated' => '2009-11-30',
 				'rating' => '9.9', 'downloads' => '1000',
@@ -40,11 +43,12 @@ class MockService extends \lithium\http\Service {
 			),
 			array(
 				'name' => 'li3_example', 'version' => '1.0',
-				'summary' => 'and li3 plugin example',
+				'summary' => 'an li3 plugin example',
 				'maintainers' => array(
-					'name' => 'gwoo',
-					'email' => 'gwoo@nowhere.com',
-					'website' => 'li3.rad-dev.org'
+					array(
+						'name' => 'gwoo', 'email' => 'gwoo@nowhere.com',
+						'website' => 'li3.rad-dev.org'
+					)
 				),
 				'created' => '2009-11-30', 'updated' => '2009-11-30',
 				'rating' => '9.9', 'downloads' => '1000',
@@ -56,8 +60,40 @@ class MockService extends \lithium\http\Service {
 				)
 			),
 		);
-		if (isset($data[$key])) {
-			return $data[$key];
+
+		$extensions = array(
+			array(
+				'class' => 'Example', 'namespace' => 'app\extensions\adapter\cache',
+				'summary' => 'the example adapter',
+				'maintainers' => array(
+					array(
+						'name' => 'gwoo', 'email' => 'gwoo@nowhere.com',
+						'website' => 'li3.rad-dev.org'
+					)
+				),
+				'created' => '2009-11-30', 'updated' => '2009-11-30',
+				'rating' => '9.9', 'downloads' => '1000',
+			),
+			array(
+				'class' => 'Paginator', 'namespace' => 'app\extensions\helpes',
+				'summary' => 'a paginator helper',
+				'maintainers' => array(
+					array(
+						'name' => 'gwoo', 'email' => 'gwoo@nowhere.com',
+						'website' => 'li3.rad-dev.org'
+					)
+				),
+				'created' => '2009-11-30', 'updated' => '2009-11-30',
+				'rating' => '9.9', 'downloads' => '1000',
+			),
+		);
+		$data = compact('plugins', 'extensions');
+
+		if (isset($data[$type][$key])) {
+			return $data[$type][$key];
+		}
+		if (isset($data[$type])) {
+			return $data[$type];
 		}
 		if ($key !== null) {
 			return null;

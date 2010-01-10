@@ -40,9 +40,16 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * server hosts to query for plugins
 	 *
-	 * @var array
+	 * @var string
 	 */
 	public $server = 'lab.lithify.me';
+
+	/**
+	 * Requested plugins and extensions will be installed in this library
+	 *
+	 * @var string
+	 */
+	public $library = 'app';
 
 	/**
 	 * Holds settings from conf file
@@ -82,6 +89,7 @@ class Lab extends \lithium\console\Command {
 		parent::_init();
 		if (file_exists($this->conf)) {
 			$this->_settings += parse_ini_file($this->conf, true);
+
 		}
 		$this->_settings['servers'][$this->server] = true;
 	}
@@ -91,15 +99,33 @@ class Lab extends \lithium\console\Command {
 	 *
 	 * @return void
 	 */
-	public function find() {
+	public function run($type = 'plugins') {
 		$results = array();
-		foreach ($this->_settings['servers'] as $server) {
+
+		foreach (array_keys($this->_settings['servers']) as $server) {
 			$service = new $this->_classes['service'](array('host' => $server));
-			$results[$server] = json_decode($service->get('lab'));
-			foreach ($results[$server] as $plugin) {
-				$this->header($plugin->name);
+			$results[$server] = json_decode($service->get("lab/{$type}"));
+
+			if (empty($results[$server])) {
+				$this->out("No {$type} at {$server}");
+				continue;
+			}
+			foreach ((array) $results[$server] as $data) {
+				$header = "{$server} > $data->name";
+
+				if (!$header) {
+					$header = "{$server} > $data->class";
+				}
+				$out = array(
+					"{$data->summary}",
+					"Version: {$data->version}", "Created: {$data->created}",
+				);
+
+				$this->header($header);
+				$this->out(array_filter($out));
 			}
 		}
+
 	}
 
 	/**
@@ -162,6 +188,7 @@ class Lab extends \lithium\console\Command {
 			$result = $service->post('/lab/server/receive', $data, compact('headers'));
 			return $result;
 		}
+		return false;
 	}
 
 	/**
@@ -237,9 +264,9 @@ class Lab extends \lithium\console\Command {
 	}
 
 	/**
-	 * Helper method for writing conf file
+	 * Helper method for writing config file.
 	 *
-	 * @param array $settings
+	 * @param array $settings array of configuration to write
 	 * @return boolean
 	 */
 	protected function _writeConf($settings = null) {

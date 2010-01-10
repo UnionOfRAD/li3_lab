@@ -8,6 +8,7 @@
 
 namespace li3_lab\tests\cases\extensions\command;
 
+use \Phar;
 use \lithium\console\Dispatcher;
 use \lithium\console\Request;
 use \lithium\action\Request as ActionRequest;
@@ -59,7 +60,7 @@ class LabTest extends \lithium\test\Unit {
 		$result = file_exists($this->_conf);
 		$this->assertTrue($result);
 
-		$expected = array('servers' => array('plugins.rad-dev.org' => true));
+		$expected = array('servers' => array('lab.lithify.me' => true));
 		$result = parse_ini_file($this->_conf, true);
 		$this->assertEqual($expected, $result);
 	}
@@ -68,12 +69,13 @@ class LabTest extends \lithium\test\Unit {
 		$lab = Dispatcher::run(new Request(array(
 			'args' => array(
 				'\li3_lab\extensions\command\Lab',
-				'config', "--conf={$this->_conf}", '--server=incubator.rad-dev.org'
+				'config', "--conf={$this->_conf}", 'server', 'incubator.lithify.me'
 			)
 		)));
 
 		$expected = array('servers' => array(
-			'plugins.rad-dev.org' => true, 'incubator.rad-dev.org' => true
+			'lab.lithify.me' => true,
+			'incubator.lithify.me' => true
 		));
 		$result = parse_ini_file($this->_conf, true);
 		$this->assertEqual($expected, $result);
@@ -85,12 +87,15 @@ class LabTest extends \lithium\test\Unit {
 		$result = $this->lab->create('li3_example');
 		$this->assertTrue($result);
 
-		$result = file_exists($this->_installPath . '/li3_example.phar');
+		$result = file_exists($this->_installPath . '/li3_example.phar.gz');
 		$this->assertTrue($result);
 
-		$expected = 7386;
-		$result = filesize($this->_installPath . '/li3_example.phar');
-		$this->assertEqual($expected, $result);
+		$expected = 2000;
+		$result = filesize($this->_installPath . '/li3_example.phar.gz');
+		$this->assertTrue($expected < $result);
+
+		Phar::unlinkArchive($this->_installPath . '/li3_example.phar');
+		Phar::unlinkArchive($this->_installPath . '/li3_example.phar.gz');
 		$this->_cleanUp();
 	}
 
@@ -98,6 +103,9 @@ class LabTest extends \lithium\test\Unit {
 		$this->lab->path = $this->_installPath;
 		$this->lab->original = $this->_fixturesPath;
 		$result = $this->lab->create('li3_example');
+		$this->assertTrue($result);
+
+		$result = file_exists($this->_installPath . '/li3_example.phar.gz');
 		$this->assertTrue($result);
 
 		$request = new ActionRequest();
@@ -122,15 +130,21 @@ class LabTest extends \lithium\test\Unit {
 	}
 
 	public function testFind() {
-		$this->lab->find();
+		$this->lab->run();
 
 $expected = <<<EOD
 --------------------------------------------------------------------------------
-li3_lab
+lab.lithify.me > li3_lab
 --------------------------------------------------------------------------------
+the li3 plugin client/server
+Version: 1.0
+Created: 2009-11-30
 --------------------------------------------------------------------------------
-li3_example
+lab.lithify.me > li3_example
 --------------------------------------------------------------------------------
+an li3 plugin example
+Version: 1.0
+Created: 2009-11-30
 
 EOD;
 		$result = $this->lab->response->output;
