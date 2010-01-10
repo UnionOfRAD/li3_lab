@@ -23,8 +23,7 @@ class MockExtension extends \li3_lab\models\Extension {
 		'summary' => array('default' => null, 'type' => 'string'),
 		'description' => array('default' => null, 'type' => 'string'),
 		'maintainers' => array('default' => null, 'type' => 'list'),
-		'code' => array('default' => null, 'type' => 'string'),
-		'created' 	=> array('default' => '1979-01-01 01:01:01', 'type' => 'string')
+		'code' => array('default' => null, 'type' => 'string')
 	);
 
 	protected $_meta = array();
