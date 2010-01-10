@@ -46,26 +46,37 @@ class Extension extends \lithium\data\Model {
 	public static function __init($options = array()) {
 		parent::__init($options);
 		static::applyFilter('save', function($self, $params, $chain) {
-			$params['record']->created = date('Y-m-d h:i:s');
-			$params['record']->namespace = $self::parseNamespace($params['record']->code);
-			$params['record']->class = $self::parseClass($params['record']->code);
-			$params['record']->file =
-				str_replace("\\", "/", $params['record']->namespace) .
-				'/' .
-				$params['record']->class .
-				'.php';
+			$temp = $params['record']->maintainers->data();
+			foreach ($temp as $m) {
+				$new[] = $m;
+			}
+			$params['record']->maintainers = $new;
+			if (isset($params['record']->created)) {
+				$params['record']->modified = date('Y-m-d h:i:s');
+			} else {
+				$params['record']->created = date('Y-m-d h:i:s');
+				$params['record']->namespace = $self::parseNamespace($params['record']->code);
+				$params['record']->class = $self::parseClass($params['record']->code);
+				$params['record']->file =
+					str_replace("\\", "/", $params['record']->namespace) .
+					'/' .
+					$params['record']->class .
+					'.php';
+			}
 			return $chain->next($self, $params, $chain);
 		});
 		Validator::add('validMaintainer', function ($value, $format, $options) {
 			$result = false;
-			if (is_array($value) && isset($value[0]['email'])) {
-				$result = Validator::isEmail($value[0]['email']);
+			if (is_array($value)) {
+				foreach ($value as $m) {
+					$result = $result || Validator::isEmail($m['email']);
+				}
 			}
 			return $result;
 		});
 		Validator::add('validCode', function ($value, $format, $options) {
-			$namespace = preg_match('/namespace/', $value);
-			$class = preg_match('/class/', $value);
+			$namespace = preg_match('/namespace /', $value);
+			$class = preg_match('/class /', $value);
 			return $namespace && $class;
 		});
 	}

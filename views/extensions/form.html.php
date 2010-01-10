@@ -62,7 +62,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 				echo $this->maintainer->render($k, $extension->maintainers[$k]);
 			}
 		} else {
-			echo $this->maintainer->render(0);
+			echo $this->maintainer->render();
 		}
 		echo "<script type='text/javascript'>
 			var maintainer_count = $next;
