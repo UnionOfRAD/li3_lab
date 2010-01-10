@@ -2,17 +2,14 @@
 
 namespace li3_lab\extensions\helper;
 
-
 class Maintainer extends \lithium\template\Helper {
 
 	public function render($maintainers) {
 		$form = $this->_context->helper('Form');
-
-		$defaults = array('name' => null, 'email' => null, 'website' => null);
 		$fieldset = array();
-		if (empty($maintainers)) {
-			$maintainers = array($defaults);
-		}
+		$defaults = array('name' => null, 'email' => null, 'website' => null);
+		$maintainers = (is_object($maintainers)) ? $maintainers->data() : array($defaults);
+
 		foreach ($maintainers as $key => $data) {
 			$data = array_merge($defaults, (array) $data);
 			$fields = array('<button class="remove">X</button>');
