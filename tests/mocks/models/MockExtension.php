@@ -8,8 +8,6 @@
 
 namespace li3_lab\tests\mocks\models;
 
-use \li3_lab\models\Extension;
-
 class MockExtension extends \li3_lab\models\Extension {
 
 	protected $_classes = array(
@@ -48,21 +46,6 @@ class MockExtension extends \li3_lab\models\Extension {
 	protected $_meta = array();
 }'
 	);
-
-	public static function __init($options = array()) {
-		parent::__init($options);
-		MockExtension::applyFilter('save', function($self, $params, $chain) {
-			$params['record']->created = date('Y-m-d h:i:s');
-			$params['record']->namespace = Extension::parseNamespace($params['record']->code);
-			$params['record']->class = Extension::parseClass($params['record']->code);
-			$params['record']->file =
-				str_replace("\\", "/", $params['record']->namespace) .
-				'/' .
-				$params['record']->class .
-				'.php';
-			return $chain->next($self, $params, $chain);
-		});
-	}
 }
 
 ?>

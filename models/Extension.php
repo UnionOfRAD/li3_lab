@@ -45,10 +45,10 @@ class Extension extends \lithium\data\Model {
 
 	public static function __init($options = array()) {
 		parent::__init($options);
-		Extension::applyFilter('save', function($self, $params, $chain) {
+		static::applyFilter('save', function($self, $params, $chain) {
 			$params['record']->created = date('Y-m-d h:i:s');
-			$params['record']->namespace = Extension::parseNamespace($params['record']->code);
-			$params['record']->class = Extension::parseClass($params['record']->code);
+			$params['record']->namespace = $self::parseNamespace($params['record']->code);
+			$params['record']->class = $self::parseClass($params['record']->code);
 			$params['record']->file =
 				str_replace("\\", "/", $params['record']->namespace) .
 				'/' .
