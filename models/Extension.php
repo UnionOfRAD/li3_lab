@@ -9,6 +9,7 @@
 namespace li3_lab\models;
 
 use \lithium\util\Validator;
+use \lithium\util\Inflector;
 
 class Extension extends \lithium\data\Model {
 
@@ -47,6 +48,13 @@ class Extension extends \lithium\data\Model {
 		parent::__init($options);
 		Extension::applyFilter('save', function($self, $params, $chain) {
 			$params['record']->created = date('Y-m-d h:i:s');
+			$params['record']->namespace = Extension::parseNamespace($params['record']->code);
+			$params['record']->class = Extension::parseClass($params['record']->code);
+			$params['record']->file =
+				str_replace("\\", "/", $params['record']->namespace) .
+				'/' .
+				Inflector::underscore($params['record']->class) .
+				'.php';
 			return $chain->next($self, $params, $chain);
 		});
 		Validator::add('validMaintainer', function ($value, $format, $options) {
@@ -61,6 +69,18 @@ class Extension extends \lithium\data\Model {
 			$class = preg_match('/class/', $value);
 			return $namespace && $class;
 		});
+	}
+
+	public static function parseNamespace($code) {
+		$start = strpos($code, 'namespace') + 10;
+		$end = strpos($code, ';');
+		return substr($code, $start, $end - $start);
+	}
+
+	public static function parseClass($code) {
+		$start = strpos($code, 'class') + 6;
+		$end = strpos($code, ' ', $start);
+		return substr($code, $start, $end - $start);
 	}
 
 	/**

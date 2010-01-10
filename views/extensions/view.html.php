@@ -8,7 +8,10 @@
 
 <div id="extension">
 	<h2><?=$extension->name;?></h2>
-	<h3>Version: <?php echo $version;?> Created: <?=$extension->created;?></h3>
+	<h3>Version: <?=$version;?> Created: <?=$extension->created;?></h3>
+	<h3>Namespace: <strong><?=$extension->namespace;?></strong>
+		 Class: <strong><?=$extension->class;?></strong>
+		 File: <strong><?=$extension->file;?></strong></h3>
 	<p class="summary"><?=$extension->summary;?></p>
 	<?php if (isset($extension->maintainers)) {?>
 		<ul class="maintainers">

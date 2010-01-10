@@ -73,7 +73,7 @@ if (isset($extension->id) && isset($extension->rev)) {
 </div>
 <div class="buttons">
 <?php
-	echo $this->form->submit('save', array('name' => 'verified'));
+	echo $this->form->submit('save');
 	echo $this->form->submit('cancel', array('name' => 'cancel'));
 	echo '<a href="#" class="add-maintainer" onclick="javascript:add(); return false;">' .
 		'Add maintainer</a>';

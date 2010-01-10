@@ -109,7 +109,7 @@ class ExtensionTest extends \lithium\test\Unit {
 		$result = $extension->save();
 		$this->assertFalse($result);
 
-		$expected = 'li3_lab\tests\mocks\models\mock_extension.php';
+		$expected = 'li3_lab/tests/mocks/models/mock_extension.php';
 		$result = $extension->file;
 		$this->assertEqual($expected, $result);
 	}
