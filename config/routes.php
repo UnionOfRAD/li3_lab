@@ -7,12 +7,15 @@
  */
 
 use \lithium\http\Router;
-
+Router::connect('/lab', array(
+	'plugin' => 'li3_lab', 'controller' => 'home', 'action' => 'index'
+));
 Router::connect('/lab/{:controller}/{:action}', array(
 	'plugin' => 'li3_lab', 'controller' => 'plugins'
 ));
 Router::connect('/lab/{:controller}/{:action}/{:args}', array(
 	'plugin' => 'li3_lab', 'controller' => 'plugins'
 ));
+
 
 ?>
