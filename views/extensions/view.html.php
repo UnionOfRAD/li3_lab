@@ -6,18 +6,64 @@
 
 ?>
 
+
 <div id="extension">
-	<h1><?=$extension->namespace;?></h1>
-	<h2><?=$extension->class;?></h2>
-	<p class="summary"><?=$extension->summary;?></p>
-	<ul>
-		<li>Version: <?php echo (isset($extension->_revisions->start)) ?: 1;?></li>
-		<li>Created: <?=$extension->created;?></li>
-		<li>File: <?=$extension->file;?></li>
-	</ul>
+	<div class="details">
+		<h1><?=$extension->namespace;?></h1>
+		<h2><?=$extension->class;?></h2>
+		<p class="summary"><?=$extension->summary;?></p>
+		<div class="actions">
+			<a href="#">Download</a>
+			 | <?php
+			$rev_list = array(0 => 'View Old Revision');
+			foreach ($extension->_revisions->ids as $k => $id) {
+				$i = $extension->_revisions->start - $k;
+				$rev_list[$i . '-' . $id] = $i . '-' . substr($id, 0, 6) . '...';
+			}
+			echo $this->form->create(null, array(
+				'url' => array(
+					'plugin' => 'li3_lab',
+					'controller' => 'extensions',
+					'action' => 'view',
+					'args' => array($extension->id)
+				),
+				'id' => 'revision-form',
+				'style' => 'margin:0; padding:0; display: inline;'
+			));
+			echo $this->form->select('revision', $rev_list, array(
+				'id' => 'revision-select',
+				'style' => 'margin:0; padding:0; display: inline;'
+			));
+			echo $this->form->submit('Get', array('style' => 'display:inline; margin:0 0 0 5px; padding: 1px;'));
+			echo '</form>';
+			?>
+			 | <?=$this->Html->link('Newest', array(
+					'plugin' => 'li3_lab',
+					'controller' => 'extensions',
+					'action' => 'view',
+					'args' => array($extension->id)
+			 ));?>
+			 | <?=$this->Html->link('Edit', array(
+					'plugin' => 'li3_lab',
+					'controller' => 'extensions',
+					'action' => 'edit',
+					'args' => array($extension->id)
+			 ));?>
+		</div>
+		<div class="php"><pre><code><?=$extension->code; ?></code></pre></div>
+	</div>
+	<div class="meta">
+		<h3>Description</h3>
+		<div class="description"><?=$extension->description;?></div>
+		<h3>Details</h3>
+		<ul>
+			<li>Version: <?php echo (isset($extension->_revisions->start)) ?: 1;?></li>
+			<li>Created: <?=$extension->created;?></li>
+			<li>File: <?=$extension->file;?></li>
+		</ul>
 	<?php if (isset($extension->maintainers)) {?>
+		<h3>Maintainers</h3>
 		<ul class="maintainers">
-			<li style="list-style:none; font-weight: bold; color: pink;">Maintainers:</li>
 		<?php
 			foreach ($extension->maintainers as $man) {
 				$name = (!empty($man->name)) ? $man->name : $man->email;
@@ -32,44 +78,5 @@
 	<?php } else {
 		echo '<p>No maintainers set.</p>';
 	}?>
-	<div class="description"><?=$extension->description;?></div>
-	<div class="actions" style="margin-bottom: 5px;">
-		<a href="#">Download</a>
-		 | <?php
-		$rev_list = array(0 => 'View Old Revision');
-		foreach ($extension->_revisions->ids as $k => $id) {
-			$i = $extension->_revisions->start - $k;
-			$rev_list[$i . '-' . $id] = $i . '-' . $id;
-		}
-		echo $this->form->create(null, array(
-			'url' => array(
-				'plugin' => 'li3_lab',
-				'controller' => 'extensions',
-				'action' => 'view',
-				'args' => array($extension->id)
-			),
-			'id' => 'revision-form',
-			'style' => 'margin:0; padding:0; display: inline;'
-		));
-		echo $this->form->select('revision', $rev_list, array(
-			'id' => 'revision-select',
-			'style' => 'margin:0; padding:0; display: inline;'
-		));
-		echo $this->form->submit('Get', array('style' => 'display:inline; margin:0 0 0 5px; padding: 1px;'));
-		echo '</form>';
-		?>
-		 | <?=$this->Html->link('Newest', array(
-				'plugin' => 'li3_lab',
-				'controller' => 'extensions',
-				'action' => 'view',
-				'args' => array($extension->id)
-		 ));?>
-		 | <?=$this->Html->link('Edit', array(
-				'plugin' => 'li3_lab',
-				'controller' => 'extensions',
-				'action' => 'edit',
-				'args' => array($extension->id)
-		 ));?>
 	</div>
-	<div class="code"><pre><code><?=$extension->code; ?></code></pre></div>
 </div>

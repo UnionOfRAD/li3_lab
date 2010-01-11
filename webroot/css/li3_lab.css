@@ -46,22 +46,113 @@
 	float:left;
 	width:33%;
 }
-
-.home #header {
-	padding-bottom:2em;
+/** General **/
+#header {
+	padding-bottom: 2em;
 	border-bottom: 1px solid #e6e6e6;
+}
+
+.internal #header {
+	display: block;
+	padding-bottom: 0;
+}
+.internal #header h1 {
+	display: inline-block;
+	margin: 0;
+	padding: 0 1em 0 0;
+}
+.internal #header h1 a {
+	display:inline-block;
+	background:url(../img/li3-lab-small.png) no-repeat center center;
+	width:200px;
+	height:0;
+	padding:126px 0 0 0;
+	overflow:hidden;
+}
+.internal #menu {
+	vertical-align: 60px;
+	display: inline-block;
+}
+.internal #menu ul {
+	display: inline-block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.internal #menu ul li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+.internal #menu ul li a {
+	text-transform: lowercase;
+	display: inline-block;
+	background: #f0f0f0;
+	color: black;
+	font-weight:bold;
+	padding:.5em 1em;
+}
+.internal #menu ul li a:hover {
+	background: black;
+	color: white;
+}
+.internal #menu .add-plugin a {
+	-moz-border-radius-bottomleft: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-webkit-border-top-left-radius: 6px;
+}
+.internal #menu .all-extensions a {
+	-moz-border-radius-bottomright: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	-webkit-border-top-right-radius: 6px;
+}
+.internal #content {
+	
 }
 #footer {
 	clear:both;
 }
-#extension h2 {
-	color: pink;
-	margin-bottom: 0;
+
+/** Extension **/
+#extension .meta {
+	width:300px;
+	float:right;
+}
+#extension .details {
+	width:620px;
+	float:left;
+}
+#extension h1, #extension h2 {
+	display: inline-block;
+	font-size: 36px;
+	font-weight: normal;
+	color: black;
+	margin:.5em 0;
+}
+#extension h1 {
+	padding-left:1.25em;
+	background:url(../img/extension.png) no-repeat left center;
+}
+#extension h1:after {
+	content: "\\";
+	padding: 0 .1em;
 }
 #extension h3 {
-	margin:0 0 1em; padding: 0;
-	font-size:small;
-	color: #666;
+	
+}
+#extension .actions {
+	background:#f0f0f0;
+	-moz-border-radius-topright: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-webkit-border-top-left-radius: 6px;
+}
+#extension .actions a {
+	display: inline-block;
+	padding:.25em 1em;
+	font-weight: bold;
 }
 #extension p.summary {
 	margin: 0 0 1em; padding: 0;
