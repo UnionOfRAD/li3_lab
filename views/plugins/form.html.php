@@ -57,14 +57,12 @@ if (isset($plugin->id) && isset($plugin->rev)) {
 </div>
 <div class="input">
 	<?php
-		echo $this->form->label('source', 'Source Path', array(
-			'class' => 'required'
-		));
-		echo $this->form->text('source');
-		if (isset($errors['source'])) {
-			echo '<p style="color:red">' . implode(', ', $errors['source']) . '</p>';
+		if (isset($errors['sources'])) {
+			echo '<div style="color:red">' . implode(', ', $errors['sources']) . '</div>';
 		}
+		echo $this->form->multi('sources');
 	?>
+	<a href="#add-source" id="add-source" class="adder">Add Source</a>
 </div>
 <div class="input">
 	<fieldset id="maintainers">
@@ -73,10 +71,10 @@ if (isset($plugin->id) && isset($plugin->rev)) {
 		if (isset($errors['maintainers'])) {
 			echo '<div style="color:red">' . implode(', ', $errors['maintainers']) . '</div>';
 		}
-		echo $this->maintainer->render($plugin->maintainers);
+		echo $this->form->multi('maitainers', array('name', 'email', 'website'));
 	?>
 	</fieldset>
-	<a href="#add-maintainer" id="add-maintainer">Add maintainer</a>
+	<a href="#add-maintainer" id="add-maintainer" class="adder">Add Maintainer</a>
 </div>
 <?php echo $this->form->submit('save', array('name' => 'verified'));?>
 <?php echo $this->form->submit('cancel', array('value' => 'cancel'));?>

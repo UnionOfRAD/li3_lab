@@ -69,6 +69,7 @@
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
 			//li3Lab.maintainers();
+			$('#maintainers').inputList();
 			li3Console.setup();
 		});
 	</script>
