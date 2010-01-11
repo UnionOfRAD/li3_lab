@@ -76,8 +76,8 @@ ul.tabs li {
 input, 
 textarea {
 	border:none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	padding: .5em !important;
 }
 input:focus, 
@@ -93,8 +93,8 @@ input[type=button] {
 	padding: .5em !important;
 	background: white;
 	border: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	-moz-box-shadow: 1px 1px 6px #a6a6a6;
 	-webkit-box-shadow: 1px 1px 6px #a6a6a6;
 	box-shadow: 1px 1px 6px #a6a6a6;
