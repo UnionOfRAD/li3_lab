@@ -23,30 +23,35 @@
 	<?=$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js')?>
 </head>
 <body>
-	<div id="container">
+	<div id="container" <?php echo (! empty($home))? 'class="home"' : null ; ?>
 		<div id="header">
-			<h1>Li3 Lab</h1>
+			<h1><?php echo $this->html->link('Lithium Laboratory', array(
+				'plugin' => 'li3_lab',
+				'controller' => 'home',
+				'action' => 'index'
+			)); ?></h1>
 			<div id="menu">
-				<ul style="margin:0 0 15px 0;">
-					<li style="display:inline;">
-						<?php echo $this->html->link('Add new Plugin', array(
-						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add'
-					));?></li>
-					<li style="display:inline;"> | </li>
-					<li style="display:inline;">
-						<?php echo $this->html->link('Latest Plugins', array(
-						'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'index'
-					));?></li>
-					<li style="display:inline;"> | </li>
-					<li style="display:inline;">
-						<?php echo $this->html->link('Add new Extension', array(
-						'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add'
-					));?></li>
-					<li style="display:inline;"> | </li>
-					<li style="display:inline;">
-						<?php echo $this->html->link('Latest Extensions', array(
-						'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'index'
-					));?></li>
+				<ul>
+					<li class="add-plugin">
+						<?php echo $this->html->link('Add Plugin', array(
+							'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add'
+						));?>
+					</li>
+					<li class="add-extension">
+						<?php echo $this->html->link('Add Extension', array(
+							'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add'
+						));?>
+					</li>
+					<li class="all-plugins">
+						<?php echo $this->html->link('View Plugins', array(
+							'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'index'
+						));?>
+					</li>
+					<li class="all-extensions">
+						<?php echo $this->html->link('View Extensions', array(
+							'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'index'
+						));?>
+					</li>
 				</ul>
 			</div>
 		</div>

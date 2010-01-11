@@ -34,7 +34,8 @@ class HomeController extends \lithium\action\Controller {
 			'limit' => '10',
 		);
 		$latestExtensions = Extension::all($extensionParams);
-		return compact('latestPlugins','latestExtensions');
+		$home = true;
+		return compact('latestPlugins','latestExtensions', 'home');
 	}
 
 }
