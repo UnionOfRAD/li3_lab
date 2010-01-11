@@ -20,6 +20,7 @@
 	<?=$this->html->style('base')?>
 	<?=$this->html->style('li3_lab')?>
 	<?=$this->html->script('li3_lab')?>
+	<?=$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js')?>
 </head>
 <body>
 	<div id="container">
@@ -58,11 +59,12 @@
 	</div>
 
 	<?php echo $this->html->script(array(
-		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js', 'li3_lab'
+		'li3_lab', 'http://li3.rad-dev.org/js/li3.console.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
-			li3Lab.maintainers();
+			//li3Lab.maintainers();
+			li3Console.setup();
 		});
 	</script>
 </body>
