@@ -97,11 +97,25 @@ class PluginsController extends \lithium\action\Controller {
 	public function add() {
 		if (!empty($this->request->data['formula'])) {
 			$formula = Formula::create($this->request->data['formula']);
+		}
+		if (!empty($this->request->data['json'])) {
+			$data = json_decode($this->request->data['json']);
+			$formula = Formula::create(array(
+				'name' => "{$data->name}.json",
+				'contents' => $this->request->data['json']
+			));
+		}
+		if (!empty($formula)) {
 			if ($formula->save()) {
 				$this->request->data = json_decode($formula->contents(), true);
-				return $this->verify();
+				$this->verify();
 			}
 		}
+		if (empty($plugin)) {
+			$plugin = Plugin::create();
+		}
+		$url = array('plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add');
+		return compact('plugin', 'url');
 	}
 
 	/**
@@ -122,9 +136,9 @@ class PluginsController extends \lithium\action\Controller {
 		if (empty($plugin)) {
 			$plugin = Plugin::create($this->request->data);
 		}
-
-		$this->set(compact('plugin'));
-		$this->render('form');
+		$url = array('plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'verify');
+		$this->set(compact('plugin', 'url'));
+		$this->render('verify');
 	}
 }
 

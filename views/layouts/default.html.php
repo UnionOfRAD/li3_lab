@@ -15,12 +15,15 @@
 <head>
 	<?=$this->html->charset(); ?>
 	<title>Li3 Lab</title>
-	<?=$this->scripts(); ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
-	<?=$this->html->style(array('base', 'http://li3.rad-dev.org/css/li3.css'))?>
-	<?=$this->html->style('li3_lab')?>
-	<?=$this->html->script('li3_lab')?>
-	<?=$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js')?>
+
+	<?=$this->html->style(array('base', 'http://li3.rad-dev.org/css/li3.css', 'li3_lab'))?>
+	<?=$this->html->script(array(
+		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
+		'http://li3.rad-dev.org/js/jquery.input_list.js'
+	));?>
+	<script type="text/javascript"><?=$this->scripts();?></script>
+
 </head>
 <body>
 	<div id="wrapper">
@@ -66,12 +69,10 @@
 	</div>
 
 	<?php echo $this->html->script(array(
-		'li3_lab', 'http://li3.rad-dev.org/js/li3.console.js'
+		'http://li3.rad-dev.org/js/li3.console.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
-			//li3Lab.maintainers();
-			$('#maintainers').inputList();
 			li3Console.setup();
 		});
 	</script>

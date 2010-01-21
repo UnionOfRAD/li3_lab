@@ -8,8 +8,6 @@
 
 namespace li3_lab\extensions\data\source;
 
-use \ArrayIterator;
-use \SplFileInfo;
 use \lithium\core\Libraries;
 
 /**
@@ -158,17 +156,16 @@ class Media extends \lithium\data\Source {
 			$data = $query->data();
 			$filename = preg_replace('/\W-/', '', $data['name']);
 			if (!empty($data['tmp_name'])) {
-				$contents = file_get_contents($data['tmp_name']);
-
-				if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $contents)) {
-					$contents = base64_decode($contents);
-				}
-				$file = "{$path}/{$table}/{$filename}";
-				if (file_put_contents($file, $contents)) {
-					$query->conditions(array('name' => $filename));
-					$record = $self->read($query, $options);
-					return $query->record()->data = $record;
-				}
+				$data['contents'] = file_get_contents($data['tmp_name']);
+			}
+			if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data['contents'])) {
+				$data['contents'] = base64_decode($data['contents']);
+			}
+			$file = "{$path}/{$table}/{$filename}";
+			if (file_put_contents($file, $data['contents'])) {
+				$query->conditions(array('name' => $filename));
+				$record = $self->read($query, $options);
+				return $query->record()->data = $record;
 			}
 			return false;
 		});
