@@ -45,6 +45,24 @@
 
 <div class="input">
 	<?php
+		echo $this->form->label('name', 'Plugin Name', array('class' => 'required'));
+		echo $this->form->text('name');
+		if (isset($errors['name'])) {
+			echo '<p style="color:red">' . implode(', ', $errors['name']) . '</p>';
+		}
+	?>
+</div>
+<div class="input">
+	<?php
+		echo $this->form->label('version', 'Version', array('class' => 'required'));
+		echo $this->form->text('version');
+		if (isset($errors['version'])) {
+			echo '<p style="color:red">' . implode(', ', $errors['version']) . '</p>';
+		}
+	?>
+</div>
+<div class="input">
+	<?php
 		echo $this->form->label('summary', 'Summary', array('class' => 'required'));
 		echo $this->form->text('summary');
 		if (isset($errors['summary'])) {
