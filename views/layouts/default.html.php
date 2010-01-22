@@ -40,7 +40,7 @@ $commandBase = "http://{$assetHost}/cmd";
 					'controller' => 'home',
 					'action' => 'index'
 				)); ?></h1>
-				<div id="menu">
+				<div class="nav capsule">
 					<ul>
 						<li class="add-plugin">
 							<?php echo $this->html->link('Add Plugin', array(
