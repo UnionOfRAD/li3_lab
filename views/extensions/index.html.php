@@ -1,4 +1,4 @@
-<h2>Available extensions</h2>
+<h2>Available Extensions</h2>
 <ul>
 <?php
 

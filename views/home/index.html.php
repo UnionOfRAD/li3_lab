@@ -1,6 +1,6 @@
 <div class="column latest-plugins">
 	<h2>
-	<?php echo $this->html->link('latest plugins', array(
+	<?php echo $this->html->link('Latest Plugins', array(
 		'plugin' => 'li3_lab',
 		'controller' => 'plugins',
 		'action' => 'index'
@@ -35,7 +35,7 @@
 
 <div class="column latest-extensions">
 	<h2>
-	<?php echo $this->html->link('latest extensions', array(
+	<?php echo $this->html->link('Latest Extensions', array(
 		'plugin' => 'li3_lab',
 		'controller' => 'extensions',
 		'action' => 'index'
@@ -69,6 +69,6 @@
 </div>
 
 <div class="column news">
-	<h2>li3 lab news</h2>
+	<h2>Laboratory News</h2>
 	<p>No news at this time...</p>
 </div>

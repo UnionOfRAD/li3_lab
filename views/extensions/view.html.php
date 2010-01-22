@@ -53,16 +53,16 @@
 		<div class="php"><pre><code><?=$extension->code; ?></code></pre></div>
 	</div>
 	<div class="meta">
-		<h3>Description</h3>
+		<h4>Description</h4>
 		<div class="description"><?=$extension->description;?></div>
-		<h3>Details</h3>
+		<h4>Details</h4>
 		<ul>
 			<li>Version: <?php echo (isset($extension->_revisions->start)) ?: 1;?></li>
 			<li>Created: <?=$extension->created;?></li>
 			<li>File: <?=$extension->file;?></li>
 		</ul>
 	<?php if (isset($extension->maintainers)) {?>
-		<h3>Maintainers</h3>
+		<h4>Maintainers</h4>
 		<ul class="maintainers">
 		<?php
 			foreach ($extension->maintainers as $man) {
