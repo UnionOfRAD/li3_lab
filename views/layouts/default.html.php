@@ -8,24 +8,24 @@
 ?>
 <?php
 $assetHost = $this->request()->env('HTTP_HOST');
-$assetHost = 'lithify.me';
 $assetBase = "http://{$assetHost}";
+$commandBase = "http://{$assetHost}/cmd";
 ?>
 <!doctype html>
 <html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>Lithium Laboratory <?php echo $this->title ? '> '. $this->title : null;?></title>
+	<title>Lithium Laboratory</title>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 
 	<?=$this->html->style(array(
-		"{$assetBase}/css/lithium.css",
+		"{$assetBase}/css/base.css",
 		"{$assetBase}/css/u1m.css",
 		"{$assetBase}/css/li3_lab.css",
 		"{$assetBase}/css/rad.cli.css"
 	)); ?>
 	<?=$this->html->script(array(
-		'http://code.jquery.com/jquery-1.4.2.min.js',
+		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
 		"{$assetBase}/js/jquery.input_list.js",
 		"{$assetBase}/js/rad.cli.js"
 	));?>
@@ -76,7 +76,10 @@ $assetBase = "http://{$assetHost}";
 
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
-			RadCli.setup();
+			RadCli.setup({
+				assetBase: '<?php echo $assetBase; ?>',
+				commandBase: '<?php echo $commandBase; ?>'
+			});
 		});
 	</script>
 </body>
