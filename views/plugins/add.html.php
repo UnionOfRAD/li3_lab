@@ -9,7 +9,6 @@
 </ul>
 
 <div id="paste-json" class="tab-page">
-	<h3>Paste JSON</h3>
 	<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url)); ?>
 		<div class="input">
 		<?php
@@ -25,7 +24,6 @@
 </div>
 
 <div id="upload-json" class="tab-page">
-	<h3>Upload JSON</h3>
 	<?php echo $this->form->create($plugin, array(
 		'method' => 'POST', 'url' => $url, 'enctype' => 'multipart/form-data'
 	)); ?>
@@ -36,8 +34,7 @@
 </div>
 
 <div id="add-form" class="tab-page">
-<h3>New Plugin Form</h3>
-<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url)); ?>
+<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url));?>
 
 <div class="input">
 	<?php
