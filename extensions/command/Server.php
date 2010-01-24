@@ -3,9 +3,8 @@
 namespace li3_lab\extensions\command;
 
 use \li3_lab\models\Plugin;
-use \li3_lab\models\PluginView;
 use \li3_lab\models\Extension;
-use \li3_lab\models\ExtensionView;
+use \li3_lab\models\LabView;
 
 /**
  * Command to assist in setup and management of Lithium Bin
@@ -23,15 +22,10 @@ class Server extends \lithium\console\Command {
 		$result = Plugin::install();
 		$result = $result && Extension::install();
 
-		foreach (array_keys(PluginView::$views) as $view) {
-			PluginView::create($view)->save();
-			$this->_check('\li3_lab\models\PluginView', $view);
+		foreach (array_keys(LabView::$views) as $view) {
+			LabView::create($view)->save();
+			$this->_check('\li3_lab\models\LabView', $view);
 		}
-		foreach (array_keys(ExtensionView::$views) as $view) {
-			ExtensionView::create($view)->save();
-			$this->_check('\li3_lab\models\ExtensionView', $view);
-		}
-
 	}
 
 	protected function _check($model, $name = null) {

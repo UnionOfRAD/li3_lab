@@ -26,7 +26,7 @@ class Plugin extends \lithium\data\Model {
 	 * @var array Meta data to link the model with the couchdb datasource
 	 *		- source : the name of the table (called database in couchdb)
 	 */
-	protected $_meta = array('source' => 'li3_lab_plugins', 'connection' => 'li3_lab');
+	protected $_meta = array('source' => 'li3_lab', 'connection' => 'li3_lab');
 
 	/**
 	 * validation rules
@@ -42,6 +42,15 @@ class Plugin extends \lithium\data\Model {
 
 	public static function __init($options = array()) {
 		parent::__init($options);
+		static::applyFilter('save', function($self, $params, $chain) {
+			$params['record']->type = 'plugins';
+			if (isset($params['record']->created)) {
+				$params['record']->modified = date('Y-m-d h:i:s');
+			} else {
+				$params['record']->created = date('Y-m-d h:i:s');
+			}
+			return $chain->next($self, $params, $chain);
+		});
 		Validator::add('isSource', function ($data, $params, $options) {
 			$types = array('git', 'phar');
 			foreach ($data as $type => $source) {
@@ -50,19 +59,6 @@ class Plugin extends \lithium\data\Model {
 				}
 			}
 		});
-	}
-
-	/**
-	 * undocumented function
-	 *
-	 * @param string $data
-	 * @return void
-	 */
-	public static function create($data = array()) {
-		if (!isset($data['created'])) {
-			$data['created'] = date('Y-m-d h:i:s');
-		}
-		return parent::create($data);
 	}
 
 	/**

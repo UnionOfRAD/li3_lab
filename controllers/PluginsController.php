@@ -9,7 +9,6 @@
 namespace li3_lab\controllers;
 
 use \li3_lab\models\Plugin;
-use \li3_lab\models\PluginView;
 use \li3_lab\models\Formula;
 
 /**
@@ -23,7 +22,7 @@ class PluginsController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$params = array(
-			'conditions'=> array('design' => 'latest', 'view' => 'all'),
+			'conditions'=> array('design' => 'latest', 'view' => 'plugins'),
 			'order' => array('descending' => 'true'),
 			'limit' => '10',
 		);

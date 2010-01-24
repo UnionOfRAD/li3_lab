@@ -22,7 +22,7 @@ class ExtensionsController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$params = array(
-			'conditions'=> array('design' => 'latest', 'view' => 'all'),
+			'conditions'=> array('design' => 'latest', 'view' => 'extensions'),
 			'order' => array('descending' => 'true'),
 			'limit' => '10',
 		);

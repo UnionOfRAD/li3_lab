@@ -25,7 +25,7 @@ class Extension extends \lithium\data\Model {
 	 * @var array Meta data to link the model with the couchdb datasource
 	 *		- source : the name of the table (called database in couchdb)
 	 */
-	protected $_meta = array('source' => 'li3_lab_extensions', 'connection' => 'li3_lab');
+	protected $_meta = array('source' => 'li3_lab', 'connection' => 'li3_lab');
 
 	/**
 	 * validation rules
@@ -45,6 +45,7 @@ class Extension extends \lithium\data\Model {
 	public static function __init($options = array()) {
 		parent::__init($options);
 		static::applyFilter('save', function($self, $params, $chain) {
+			$params['record']->type = 'extensions';
 			if (isset($params['record']->created)) {
 				$params['record']->modified = date('Y-m-d h:i:s');
 			} else {
