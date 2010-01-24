@@ -11,6 +11,7 @@ namespace li3_lab\controllers;
 use \Phar;
 use li3_lab\models\Repo;
 use li3_lab\models\Formula;
+use li3_lab\models\Plugin;
 
 /**
  * Server Controller
@@ -24,6 +25,7 @@ class ServerController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function receive() {
+		$errors = false;
 		if (!empty($this->request->data['phar'])) {
 			$file = Repo::create($this->request->data['phar']);
 
@@ -39,13 +41,28 @@ class ServerController extends \lithium\action\Controller {
 						'tmp_name' => "{$saved}/config/{$name}.json"
 					));
 					if ($formula->save()) {
-						return json_decode($formula->contents(), true);
+						$folder = Repo::create(array('name' => $name));
+						$folder->delete();
+						$plugin = Plugin::create(json_decode($formula->contents(), true));
+						if ($plugin->save()) {
+							return $this->render(
+								array('json' => $plugin->data(), 'status' => 201)
+							);
+						}
+						$errors = $plugin->errors();
 					}
-					return false;
+					if (!$errors) {
+						$errors = $formula->errors();
+					}
 				}
 			}
+			if (!$errors) {
+				$errors = $file->errors();
+			}
+			$file->delete();
+			return $this->render(array('json' => $errors, 'status' => 406));
 		}
-		return false;
+		return 'missing phar.gz';
 	}
 }
 
