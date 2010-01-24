@@ -9,6 +9,8 @@
 namespace li3_lab\extensions\data\source;
 
 use \lithium\core\Libraries;
+use \RecursiveDirectoryIterator;
+use \RecursiveIteratorIterator;
 
 /**
  * Data source for managing files
@@ -40,6 +42,20 @@ class Media extends \lithium\data\Source {
 		'record' => '\li3_lab\extensions\data\model\File',
 		'recordSet' => '\li3_lab\extensions\data\model\Directory',
 		'recordObject' => '\SplFileInfo',
+	);
+
+	/**
+	 * Error messages for possible upload errors.
+	 *
+	 * @var array
+	 */
+	protected $_errors = array(
+		null,
+		"The uploaded file exceeds the upload_max_filesize directive in php.ini",
+		"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
+		"The uploaded file was only partially uploaded",
+		"No file was uploaded",
+		"Missing a temporary folder"
 	);
 
 	/**
@@ -149,19 +165,35 @@ class Media extends \lithium\data\Source {
 	public function create($query, $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
+		$errors = $this->_errors;
 
-		return $this->_filter(__METHOD__, $params, function($self, $params) use ($path) {
+		return $this->_filter(__METHOD__, $params, function($self, $params) use ($path, $errors) {
 			extract($params);
 			extract($query->export($self), EXTR_OVERWRITE);
 			$data = $query->data();
+
+			if(!empty($data['error']) && isset($errors[$data['error']])) {
+				$query->record()->errors('file', $errors[$data['error']]);
+				return false;
+			}
 			$filename = preg_replace('/\W-/', '', $data['name']);
+
 			if (!empty($data['tmp_name'])) {
+				if (!file_exists($data['tmp_name'])) {
+					$query->record()->errors('file', $data['tmp_name'] . 'does not exist');
+					return false;
+				}
 				$data['contents'] = file_get_contents($data['tmp_name']);
+			}
+
+			if (empty($data['contents'])) {
+				return false;
 			}
 			if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data['contents'])) {
 				$data['contents'] = base64_decode($data['contents']);
 			}
 			$file = "{$path}/{$table}/{$filename}";
+
 			if (file_put_contents($file, $data['contents'])) {
 				$query->conditions(array('name' => $filename));
 				$record = $self->read($query, $options);
@@ -209,14 +241,44 @@ class Media extends \lithium\data\Source {
 		return $this->create($query, $options);
 	}
 
-	public function delete($query, $options) {
-		return compact('query', 'options');
+	public function delete($query, $options = array()) {
+		$params = compact('query', 'options');
+		$path = $this->_path;
+		$config = $this->_config;
+
+		return $this->_filter(__METHOD__, $params, function($self, $params) use ($path, $config) {
+			extract($params);
+			extract($query->export($self), EXTR_OVERWRITE);
+			$data = $query->data();
+			$conditions += $options;
+			if (empty($conditions['name']) && is_object($data[0])) {
+				$conditions['name'] = $data[0]->getFilename();
+			}
+			if (!empty($conditions['name'])) {
+				$file = "{$path}/{$table}/{$conditions['name']}";
+
+				if (!file_exists($file)) {
+					return true;
+				}
+				if (is_file($file)) {
+					return (boolean) unlink($file);
+				}
+				$iterator = new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator($file), RecursiveIteratorIterator::CHILD_FIRST
+				);
+				foreach ($iterator as $item) {
+					($item->isDir()) ? rmdir($item->getPathname()) : unlink($item->getPathname());
+				}
+				return (boolean) rmdir($file);
+			}
+			return false;
+		});
 	}
 
 	public function conditions($conditions, $context) {
 		$defaults = array(
-			'namespaces' => true, 'recursive' => false,
-			'filter' => '', 'exclude' => '',
+			'namespaces' => false, 'recursive' => false,
+			'filter' => '', 'exclude' => '', 'suffix' => false,
 			'format' => ''
 		);
 		$conditions = (array) $conditions + $defaults;

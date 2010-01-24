@@ -77,7 +77,7 @@ class MediaTest extends \lithium\test\Unit {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$this->query->data(array(
 			'name' => 'some_file.phar.gz', 'type' => 'application/tar',
-			'tmp_name' => LITHIUM_LIBRARY_PATH . '/lithium/console/command/build/template/app.phar.gz'
+			'tmp_name' => LITHIUM_LIBRARY_PATH . '/lithium/console/command/create/template/app.phar.gz'
 		));
 		$result = $media->create($this->query, array('classes' => $this->classes));
 		$this->assertTrue(is_object($result));
@@ -87,6 +87,22 @@ class MediaTest extends \lithium\test\Unit {
 
 		$result = file_exists("{$this->_testPath}/mock_uploads/some_file.phar.gz");
 		$this->assertTrue($result);
+	}
+
+
+	public function testCreateWithError() {
+		$media = new Media(array('path' => '/resources/tmp/tests'));
+		$this->query->data(array(
+			'name' => 'some_file.phar.gz', 'error' => '1',
+		));
+		$result = $media->create($this->query, array('classes' => $this->classes));
+		$this->assertFalse($result);
+
+		$expected = array(
+			'file' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini'
+		);
+		$result = $this->query->record()->errors();
+		$this->assertEqual($expected, $result);
 	}
 
 	public function testRead() {
@@ -100,6 +116,31 @@ class MediaTest extends \lithium\test\Unit {
 		$this->assertEqual($expected, $result);
 
 		$this->_cleanUp();
+	}
+
+	public function testDeleteFile() {
+		mkdir($this->_testPath . '/mock_uploads');
+		touch($this->_testPath . '/mock_uploads/media_test');
+		$this->assertTrue(file_exists($this->_testPath . '/mock_uploads/media_test'));
+
+		$this->query->data(array('name' => 'media_test'));
+		$media = new Media(array('path' => '/resources/tmp/tests'));
+		$result = $media->delete($this->query);
+		$this->assertTrue($result);
+
+		$this->assertFalse(file_exists($this->_testPath . '/mock_uploads/media_test'));
+	}
+
+	public function testDeleteDirectory() {
+		mkdir($this->_testPath . '/mock_uploads/media_test');
+		$this->assertTrue(file_exists($this->_testPath . '/mock_uploads/media_test'));
+
+		$this->query->data(array('name' => 'media_test'));
+		$media = new Media(array('path' => '/resources/tmp/tests'));
+		$result = $media->delete($this->query);
+		$this->assertTrue($result);
+
+		$this->assertFalse(file_exists($this->_testPath . '/mock_uploads/media_test'));
 	}
 }
 
