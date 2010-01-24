@@ -47,7 +47,7 @@
 		<li>
 			<?php 
 			echo $this->html->link(
-				$extension->class, 
+				$extension->name, 
 				array(
 					'plugin' => 'li3_lab',
 					'controller' => 'extensions',

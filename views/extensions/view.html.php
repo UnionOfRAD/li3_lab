@@ -10,7 +10,7 @@
 <div id="extension">
 	<div class="details">
 		<h1><?=$extension->namespace;?></h1>
-		<h2><?=$extension->class;?></h2>
+		<h2><?=$extension->name;?></h2>
 		<p class="summary"><?=$extension->summary;?></p>
 		<div class="actions">
 			<a href="#">Download</a>

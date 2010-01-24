@@ -54,11 +54,11 @@ class Extension extends \lithium\data\Model {
 					$params['record']->namespace = $match[1];
 				}
 				if (preg_match('/class\s(.*?)\s/', $params['record']->code, $match)) {
-					$params['record']->class = $match[1];
+					$params['record']->name = $match[1];
 				}
 				$params['record']->file =
 					str_replace("\\", "/", $params['record']->namespace) .
-					'/' . $params['record']->class . '.php';
+					'/' . $params['record']->name . '.php';
 			}
 			return $chain->next($self, $params, $chain);
 		});

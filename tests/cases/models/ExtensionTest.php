@@ -99,7 +99,7 @@ class ExtensionTest extends \lithium\test\Unit {
 		$this->assertFalse($result);
 
 		$expected = 'MockExtension';
-		$result = $extension->class;
+		$result = $extension->name;
 		$this->assertEqual($expected, $result);
 	}
 
