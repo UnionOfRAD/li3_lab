@@ -37,7 +37,10 @@ class Plugin extends \lithium\data\Model {
 		'name' => 'You must specify a name for this plugin.',
 		'version' => 'You must specify a version for this plugin.',
 		'summary' => 'You must specify a short summary for this plugin',
-		'sources' => array('isSource', 'message' => 'You must specify a source for this plugin.')
+		'sources' => array(
+			'isSource', 'types' => array('git', 'phar'),
+			'message' => 'You must specify a source for this plugin.'
+		)
 	);
 
 	public static function __init($options = array()) {
@@ -52,11 +55,11 @@ class Plugin extends \lithium\data\Model {
 			return $chain->next($self, $params, $chain);
 		});
 		Validator::add('isSource', function ($data, $params, $options) {
-			$types = array('git', 'phar');
 			foreach ($data as $type => $source) {
-				if (in_array($type, $types)) {
+				if (in_array($type, $options['types'])) {
 					return true;
 				}
+				return false;
 			}
 		});
 	}

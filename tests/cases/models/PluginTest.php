@@ -18,11 +18,6 @@ class PluginTest extends \lithium\test\Unit {
 		Connections::add('test_li3_lab', 'http', array('adapter' => 'CouchDb'));
 	}
 
-	public function tearDown() {
-		Connections::get('test_li3_lab')->delete(new Query());
-
-	}
-
 	protected $_data = array(
 		'name' => 'li3_bot',
 		'version' => '0.3',
@@ -78,6 +73,8 @@ class PluginTest extends \lithium\test\Unit {
 		$expected = 'li3_bot';
 		$result = $plugin->name;
 		$this->assertEqual($expected, $result);
+		
+		MockPlugin::create()->delete();
 	}
 }
 
