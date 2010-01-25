@@ -3,8 +3,10 @@
 <?php
 
 foreach ($latest as $plugin) :
-	echo "<li>{$plugin->name}</li>";
-
+	echo '<li>' . $this->Html->link($plugin->name, array(
+		 'plugin' => 'li3_lab',	'controller' => 'plugins',
+		'action' => 'view', 'args' => array($plugin->id)
+	))  . '</li>';
 endforeach;
 
 ?>
