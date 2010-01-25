@@ -34,7 +34,10 @@ class Plugin extends \lithium\data\Model {
 	 * @var string
 	 */
 	public $validates = array(
-		'name' => 'You must specify a name for this plugin.',
+		'name' => array(
+			array('notEmpty', 'message' => 'You must specify a name for this plugin.'),
+			array('isUnique', 'message' => 'Name must be unique.')
+		),
 		'version' => 'You must specify a version for this plugin.',
 		'summary' => 'You must specify a short summary for this plugin',
 		'sources' => array(
@@ -61,6 +64,19 @@ class Plugin extends \lithium\data\Model {
 				}
 				return false;
 			}
+		});
+		$self = static::_instance();
+		Validator::add('isUnique', function ($data, $params, $options) use ($self){
+			$plugin = $self::find('first', array(
+				'conditions' => array(
+					'design' => 'by_field', 'view' => 'name',
+					'key' => json_encode($data)
+				)
+			));
+			if (!empty($plugin->name)) {
+				return false;
+			}
+			return true;
 		});
 	}
 

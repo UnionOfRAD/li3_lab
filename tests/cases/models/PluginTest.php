@@ -48,7 +48,10 @@ class PluginTest extends \lithium\test\Unit {
 		$this->assertTrue(!empty($result));
 
 		$expected = array(
-			'name' => array('You must specify a name for this plugin.'),
+			'name' => array(
+				'You must specify a name for this plugin.',
+				'Name must be unique.'
+			),
 			'version' => array('You must specify a version for this plugin.'),
 			'summary' => array('You must specify a short summary for this plugin'),
 			'sources' => array('You must specify a source for this plugin.'),
@@ -73,7 +76,7 @@ class PluginTest extends \lithium\test\Unit {
 		$expected = 'li3_bot';
 		$result = $plugin->name;
 		$this->assertEqual($expected, $result);
-		
+
 		MockPlugin::create()->delete();
 	}
 }
