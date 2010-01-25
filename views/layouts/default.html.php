@@ -15,7 +15,7 @@ $commandBase = "http://{$assetHost}/cmd";
 <html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>Lithium Laboratory</title>
+	<title>Lithium Laboratory <?php echo $this->title ? '> '. $this->title : null;?></title>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 
 	<?=$this->html->style(array(

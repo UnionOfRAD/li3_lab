@@ -7,7 +7,7 @@
 
 <div id="extension">
 	<div class="details">
-		<h2><?=$extension->namespace . ' \\ ' . $extension->name;?></h2>
+		<h2><?=$this->title($extension->namespace . ' \\ ' . $extension->name);?></h2>
 		<h3 class="summary"><?=$extension->summary;?></h3>
 		<div class="actions">
 			<a href="#">Download</a>

@@ -28,8 +28,6 @@
 			}
 		?>
 		</ul>
-	<?php } else {
-		echo '<p>No maintainers set.</p>';
-	}?>
+	<?php } ?>
 	</div>
 </div>
