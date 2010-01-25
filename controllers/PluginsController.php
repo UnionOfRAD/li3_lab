@@ -39,13 +39,22 @@ class PluginsController extends \lithium\action\Controller {
 	 * @param string $id
 	 */
 	public function view($id = null) {
-		$plugin = Plugin::find($id);
+		if (strlen($id) > 30) {
+			$plugin = Plugin::find($id);
+		} else {
+			$plugin = Plugin::find('first', array(
+				'conditions' => array(
+					'design' => 'by_field', 'view' => 'name',
+					'key' => json_encode($id)
+				)
+			));
+		}
 
 		if (empty($plugin)) {
 			$this->redirect(array('controller' => 'plugins', 'action' => 'error'));
 		}
 		if ($this->request->type == 'json') {
-			$this->render(array('json' => compact('plugin')));
+			$this->render(array('json' => $plugin->data()));
 		}
 		return compact('plugin');
 	}

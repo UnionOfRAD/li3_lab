@@ -63,6 +63,17 @@ class LabView extends \lithium\data\Model {
 					}'
 				)
 			)
+		),
+		'by_field' => array(
+			'id' => '_design/by_field',
+			'language' => 'javascript',
+			'views' => array(
+				'name' => array(
+					'map' => 'function(doc) {
+						emit(doc.name, doc);
+					}'
+				),
+			)
 		)
 	);
 
