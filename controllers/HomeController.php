@@ -22,14 +22,14 @@ class HomeController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$pluginParams = array(
-			'conditions'=> array('design' => 'latest', 'view' => 'all'),
+			'conditions'=> array('design' => 'latest', 'view' => 'plugins'),
 			'order' => array('descending' => 'true'),
 			'limit' => '10',
 		);
 		$latestPlugins = Plugin::all($pluginParams);
-		
+
 		$extensionParams = array(
-			'conditions'=> array('design' => 'latest', 'view' => 'all'),
+			'conditions'=> array('design' => 'latest', 'view' => 'extensions'),
 			'order' => array('descending' => 'true'),
 			'limit' => '10',
 		);
