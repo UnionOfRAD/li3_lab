@@ -7,7 +7,7 @@
 	],
 	"sources": {
 		"git": "git://rad-dev.org/li3_example.git",
-		"phar": "http://downloads.rad-dev.org/li3_example.phar"
+		"phar": "http://downloads.rad-dev.org/li3_example.phar.gz"
 	},
 	"requires": {
 		"li3_lab": { "version": ">= 1.0" }

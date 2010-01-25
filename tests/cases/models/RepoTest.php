@@ -21,19 +21,19 @@ class RepoTest extends \lithium\test\Unit {
 	public function testSaveAndFind() {
 		Repo::meta('connection', 'test_resources');
 		$repo = Repo::create(array(
-			'name' => 'li3_example.phar', 'type' => 'application/phar',
-			'tmp_name' => $this->_fixturesPath . '/fixtures/plugins/li3_example.phar',
+			'name' => 'li3_example.phar.gz', 'type' => 'application/phar',
+			'tmp_name' => $this->_fixturesPath . '/fixtures/plugins/li3_example.phar.gz',
 		));
 		$result = $repo->save();
 		$this->assertTrue($result);
 
-		$file = LITHIUM_APP_PATH . '/resources/tmp/tests/repos/li3_example.phar';
+		$file = LITHIUM_APP_PATH . '/resources/tmp/tests/repos/li3_example.phar.gz';
 		$result = file_exists($file);
 		$this->assertTrue($result);
 
 		$repo = Repo::find('all');
 
-		$expected = 'li3_example.phar';
+		$expected = 'li3_example.phar.gz';
 		$result = $repo->current()->getFilename();
 		$this->assertEqual($expected, $result);
 	}

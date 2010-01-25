@@ -30,30 +30,22 @@ class ServerController extends \lithium\action\Controller {
 			$file = Repo::create($this->request->data['phar']);
 
 			if ($file->save()) {
-				$archive = new Phar($file->getPathname());
-				$name = $file->getBasename('.gz');
-				$name = basename($name, '.phar');
-				$saved = $file->getPath() . '/' . $name;
-
-				if ($archive->extractTo($saved)) {
-					$formula = Formula::create(array(
-						'name' => "{$name}.json", 'type' => 'application/json',
-						'tmp_name' => "{$saved}/config/{$name}.json"
-					));
-					if ($formula->save()) {
-						$folder = Repo::create(array('name' => $name));
-						$folder->delete();
-						$plugin = Plugin::create(json_decode($formula->contents(), true));
-						if ($plugin->save()) {
-							return $this->render(
-								array('json' => $plugin->data(), 'status' => 201)
-							);
-						}
-						$errors = $plugin->errors();
+				$name = $file->getBasename('.phar.gz');
+				$formula = Formula::create(array(
+					'name' => "{$name}.json", 'type' => 'application/json',
+					'tmp_name' => "phar://". $file->getPathname() . "/config/{$name}.json"
+				));
+ 				if ($formula->save()) {
+					$plugin = Plugin::create(json_decode($formula->contents(), true));
+					if ($plugin->save()) {
+						return $this->render(
+							array('json' => $plugin->data(), 'status' => 201)
+						);
 					}
-					if (!$errors) {
-						$errors = $formula->errors();
-					}
+					$errors = $plugin->errors();
+				}
+				if (!$errors) {
+					$errors = $formula->errors();
 				}
 			}
 			if (!$errors) {

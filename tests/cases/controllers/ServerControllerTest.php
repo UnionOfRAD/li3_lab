@@ -43,8 +43,8 @@ class ServerControllerTest extends \lithium\test\Unit {
 
 	public function testReceive() {
 		$this->request->data['phar'] = array(
-			'name' => 'li3_example.phar', 'type' => 'application/phar',
-			'tmp_name' => $this->_fixturesPath  . '/fixtures/plugins/li3_example.phar',
+			'name' => 'li3_example.phar.gz', 'type' => 'application/phar',
+			'tmp_name' => $this->_fixturesPath  . '/fixtures/plugins/li3_example.phar.gz',
 		);
 
 		$this->server->receive();
@@ -53,7 +53,7 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$expected = 'li3_example';
 		$this->assertEqual($expected, $result->name);
 
-		$file = LITHIUM_APP_PATH . '/resources/tmp/tests/repos/li3_example.phar';
+		$file = LITHIUM_APP_PATH . '/resources/tmp/tests/repos/li3_example.phar.gz';
 		$result = file_exists($file);
 		$this->assertTrue($result);
 
