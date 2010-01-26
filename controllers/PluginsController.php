@@ -28,7 +28,7 @@ class PluginsController extends \lithium\action\Controller {
 		);
 		$latest = Plugin::all($params);
 		if ($this->request->type == 'json') {
-			$this->render(array('json' => $latest->to('array')));
+			$this->render(array('json' => $latest->data()));
 		}
 		return compact('latest');
 	}
@@ -147,6 +147,15 @@ class PluginsController extends \lithium\action\Controller {
 		$url = array('plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'verify');
 		$this->set(compact('plugin', 'url'));
 		$this->render('verify');
+	}
+
+	public function download($name) {
+		$file = LITHIUM_APP_PATH . "/resources/repos/{$name}.phar.gz";
+		if (!file_exists($file)) {
+			return "it doesnt work";
+		}
+		$this->response->headers('download', "{$name}.phar.gz");
+		return file_get_contents($file);
 	}
 }
 
