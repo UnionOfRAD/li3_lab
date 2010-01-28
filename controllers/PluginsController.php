@@ -51,7 +51,7 @@ class PluginsController extends \lithium\action\Controller {
 		}
 
 		if (empty($plugin)) {
-			$this->redirect(array('controller' => 'plugins', 'action' => 'error'));
+			return $this->error();
 		}
 		if ($this->request->type == 'json') {
 			$this->render(array('json' => $plugin->data()));
@@ -89,12 +89,12 @@ class PluginsController extends \lithium\action\Controller {
 	 * return string Result
 	 */
 	public function error($id = null) {
-		$error = array('type' => 'bad request', 'code' => 500);
+		$this->response->status(404);
+
 		if ($this->request->type == 'json') {
-			$this->render(array('json' => compact('error')));
+			return $this->render(array('json' => $this->response->status));
 		}
-		$this->response->code($error['code']);
-		return compact('error');
+		return $this->response->status;
 	}
 
 	/**
@@ -149,6 +149,12 @@ class PluginsController extends \lithium\action\Controller {
 		$this->render('verify');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $name
+	 * @return void
+	 */
 	public function download($name) {
 		$file = LITHIUM_APP_PATH . "/resources/repos/{$name}.phar.gz";
 		if (!file_exists($file)) {
