@@ -1,3 +1,6 @@
+
+<?php $this->title('Home');?>
+
 <div class="column latest-plugins">
 	<h2>
 	<?php echo $this->html->link('Latest Plugins', array(

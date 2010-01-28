@@ -1,6 +1,6 @@
 <div id="plugin">
 	<div class="details">
-		<h1><?=$plugin->name;?></h1>
+		<h1><?=$this->title($plugin->name);?></h1>
 		<h2><?=$plugin->summary;?></h2>
 		<div class="actions">
 			<a href="#">Download</a>

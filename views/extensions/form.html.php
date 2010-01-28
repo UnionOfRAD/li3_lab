@@ -1,4 +1,4 @@
-<h2>Add Extension</h2>
+<h2><?=$this->title('Add Extension');?></h2>
 
 <?php $errors = $extension->errors(); ?>
 

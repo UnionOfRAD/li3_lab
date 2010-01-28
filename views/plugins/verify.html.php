@@ -1,4 +1,4 @@
-<h2>Add Plugin</h2>
+<h2><?=$this->title('Add Plugin');?></h2>
 
 <?php $errors = $plugin->errors(); ?>
 

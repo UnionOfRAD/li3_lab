@@ -1,12 +1,8 @@
 <?php
 /**
  * Lithium: the most rad php framework
- * Copyright 2009, Union of Rad, Inc. (http://union-of-rad.org)
  *
- * Licensed under The BSD License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2009, Union of Rad, Inc. (http://union-of-rad.org)
+ * @copyright     Copyright 2010, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 ?>
@@ -14,16 +10,18 @@
 <html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>Li3 Lab</title>
-	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
+	<title>Li3 Lab<?php echo (!empty($this->title)) ? " > {$this->title}" : null;?></title>
+	<?=$this->html->link('Icon', null, array('type' => 'icon'));?>
 
-	<?=$this->html->style(array('base', 'http://li3.rad-dev.org/css/li3.css', 'li3_lab'))?>
+	<?=$this->html->style('base');?>
+
 	<?=$this->html->script(array(
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
-		'http://li3.rad-dev.org/js/jquery.input_list.js'
+		'http://lithify.me/js/jquery.input_list.js'
 	));?>
-	<script type="text/javascript"><?=$this->scripts();?></script>
-
+	<script type="text/javascript">
+		<?=$this->scripts();?>
+	</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -64,17 +62,5 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer">
-			<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
-	</div>
-
-	<?php echo $this->html->script(array(
-		'http://li3.rad-dev.org/js/li3.console.js'
-	)); ?>
-	<script type="text/javascript" charset="utf-8">
-		$(document).ready(function () {
-			li3Console.setup();
-		});
-	</script>
 </body>
 </html>

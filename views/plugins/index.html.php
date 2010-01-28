@@ -1,4 +1,4 @@
-<h2>Available plugins</h2>
+<h2><?=$this->title('Available Plugins');?></h2>
 <ul>
 <?php
 

@@ -1,4 +1,4 @@
-<h2>Add Plugin</h2>
+<h2><?=$this->title('Add Plugin');?></h2>
 
 <?php $errors = $plugin->errors(); ?>
 
@@ -30,7 +30,7 @@
 	<h3>Upload JSON</h3>
 	<?php echo $this->form->create($plugin, array(
 		'method' => 'POST', 'url' => $url, 'enctype' => 'multipart/form-data'
-	));?>	
+	));?>
 		<input type="file" name="formula">
 		<?php
 			echo $this->form->submit('upload');
