@@ -14,7 +14,10 @@ Router::connect('/lab', array(
 Router::connect('/lab/{:args}.json', array(
 	'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'view', 'type' => 'json'
 ));
+Router::connect('/lab/download/{:args}.phar.gz', array(
+	'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'download'
+));
 Router::connect('/lab/{:controller}/{:action}/{:args}', array(
-	'plugin' => 'li3_lab', 'controller' => 'plugins'
+	'plugin' => 'li3_lab', 'controller' => 'home'
 ));
 ?>
