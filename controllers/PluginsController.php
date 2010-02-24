@@ -27,9 +27,6 @@ class PluginsController extends \lithium\action\Controller {
 			'limit' => '10',
 		);
 		$latest = Plugin::all($params);
-		if ($this->request->type == 'json') {
-			$this->render(array('json' => $latest->data()));
-		}
 		return compact('latest');
 	}
 

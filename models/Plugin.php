@@ -66,7 +66,7 @@ class Plugin extends \lithium\data\Model {
 			}
 		});
 		$self = static::_instance();
-		Validator::add('isUnique', function ($data, $params, $options) use ($self){
+		Validator::add('isUnique', function ($data, $params, $options) use ($self) {
 			$plugin = $self::find('first', array(
 				'conditions' => array(
 					'design' => 'by_field', 'view' => 'name',

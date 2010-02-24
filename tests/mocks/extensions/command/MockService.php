@@ -8,7 +8,7 @@
 
 namespace li3_lab\tests\mocks\extensions\command;
 
-class MockService extends \lithium\http\Service {
+class MockService extends \lithium\net\http\Service {
 
 	public function send($method, $path = null, $data = array(), $options = array()) {
 		if ($path == 'lab/plugins') {

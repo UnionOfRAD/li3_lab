@@ -8,7 +8,7 @@
 
 namespace li3_lab\extensions\command;
 
-use \lithium\http\Service;
+use \lithium\net\http\Service;
 use \Phar;
 /**
  * Client for adding, creating, updating li3 plugins
@@ -64,7 +64,7 @@ class Lab extends \lithium\console\Command {
 	 * @package default
 	 */
 	protected $_classes = array(
-		'service' => '\lithium\http\Service',
+		'service' => '\lithium\net\http\Service',
 		'response' => '\lithium\console\Response'
 	);
 
