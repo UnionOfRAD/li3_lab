@@ -19,7 +19,7 @@ $commandBase = "http://{$assetHost}/cmd";
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 
 	<?=$this->html->style(array(
-		"{$assetBase}/css/base.css",
+		"{$assetBase}/css/lithium.css",
 		"{$assetBase}/css/u1m.css",
 		"{$assetBase}/css/li3_lab.css",
 		"{$assetBase}/css/rad.cli.css"
