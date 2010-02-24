@@ -9,7 +9,6 @@
 <?php
 $assetHost = $this->request()->env('HTTP_HOST');
 $assetBase = "http://{$assetHost}";
-$commandBase = "http://{$assetHost}/cmd";
 ?>
 <!doctype html>
 <html>
@@ -25,7 +24,7 @@ $commandBase = "http://{$assetHost}/cmd";
 		"{$assetBase}/css/rad.cli.css"
 	)); ?>
 	<?=$this->html->script(array(
-		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
+		'http://code.jquery.com/jquery-1.4.2.min.js',
 		"{$assetBase}/js/jquery.input_list.js",
 		"{$assetBase}/js/rad.cli.js"
 	));?>
@@ -76,10 +75,7 @@ $commandBase = "http://{$assetHost}/cmd";
 
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
-			RadCli.setup({
-				assetBase: '<?php echo $assetBase; ?>',
-				commandBase: '<?php echo $commandBase; ?>'
-			});
+			RadCli.setup();
 		});
 	</script>
 </body>
