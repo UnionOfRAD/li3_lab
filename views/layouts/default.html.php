@@ -8,6 +8,7 @@
 ?>
 <?php
 $assetHost = $this->request()->env('HTTP_HOST');
+$assetHost = 'lithify.me';
 $assetBase = "http://{$assetHost}";
 ?>
 <!doctype html>
