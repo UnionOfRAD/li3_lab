@@ -42,7 +42,7 @@ class Extension extends \lithium\data\Model {
 		'code' => array('validCode', 'message' => 'Must be a class with a namespace.')
 	);
 
-	public static function __init($options = array()) {
+	public static function __init(array $options = array()) {
 		parent::__init($options);
 		static::applyFilter('save', function($self, $params, $chain) {
 			$params['record']->type = 'extensions';
