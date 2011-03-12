@@ -14,13 +14,6 @@ use \lithium\data\Connections;
 class Plugin extends \lithium\data\Model {
 
 	/**
-	 * public name of the model
-	 *
-	 * @var string
-	 */
-	public $alias = 'Plugin';
-
-	/**
 	 * Metadata
 	 *
 	 * @var array Meta data to link the model with the couchdb datasource
@@ -46,8 +39,9 @@ class Plugin extends \lithium\data\Model {
 		)
 	);
 
-	public static function __init(array $options = array()) {
-		parent::__init($options);
+	public static function __init() {
+		parent::__init();
+
 		static::applyFilter('save', function($self, $params, $chain) {
 			$params['record']->type = 'plugins';
 			if (isset($params['record']->created)) {
@@ -57,6 +51,7 @@ class Plugin extends \lithium\data\Model {
 			}
 			return $chain->next($self, $params, $chain);
 		});
+
 		Validator::add('isSource', function ($data, $params, $options) {
 			foreach ($data as $type => $source) {
 				if (in_array($type, $options['types'])) {
@@ -65,7 +60,9 @@ class Plugin extends \lithium\data\Model {
 				return false;
 			}
 		});
-		$self = static::_instance();
+
+		$self = static::_object();
+
 		Validator::add('isUnique', function ($data, $params, $options) use ($self) {
 			$plugin = $self::find('first', array(
 				'conditions' => array(
@@ -86,7 +83,7 @@ class Plugin extends \lithium\data\Model {
 	 * @return void
 	 */
 	public static function install() {
-		return Connections::get(static::meta('connection'))->put(static::meta('source'));
+		return static::connection()->put(static::meta('source'));
 	}
 }
 

@@ -1,11 +1,11 @@
-<h2><?=$this->title('Add Extension');?></h2>
+<h2><?=$this->title('Add Extension'); ?></h2>
 
 <?php $errors = $extension->errors(); ?>
 
 <div id="add-form" class="tab-page">
 <?php
 
-echo $this->form->create($extension, array('method' => 'POST','url' => $url));
+echo $this->form->create($extension, array('method' => 'POST', 'url' => $url));
 
 $this->form->config(array('templates' => array('checkbox' =>
 	'<input type="hidden" name="{:name}" value="0" />

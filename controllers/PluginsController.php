@@ -100,6 +100,8 @@ class PluginsController extends \lithium\action\Controller {
 	 * @return void
 	 */
 	public function add() {
+		$plugin = Plugin::create();
+
 		if (!empty($this->request->data['formula'])) {
 			$formula = Formula::create($this->request->data['formula']);
 		}
@@ -116,10 +118,7 @@ class PluginsController extends \lithium\action\Controller {
 				$this->verify();
 			}
 		}
-		if (empty($plugin)) {
-			$plugin = Plugin::create();
-		}
-		$url = array('plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add');
+		$url = array('library' => 'li3_lab', 'Plugins::add');
 		return compact('plugin', 'url');
 	}
 

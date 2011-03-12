@@ -13,13 +13,6 @@ use \lithium\util\Validator;
 class Extension extends \lithium\data\Model {
 
 	/**
-	 * public name of the model
-	 *
-	 * @var string
-	 */
-	public $alias = 'Extension';
-
-	/**
 	 * Metadata
 	 *
 	 * @var array Meta data to link the model with the couchdb datasource
@@ -84,9 +77,7 @@ class Extension extends \lithium\data\Model {
 	 * @return void
 	 */
 	public static function install() {
-		return \lithium\data\Connections::get(
-			static::meta('connection'))->put(static::meta('source')
-		);
+		return static::connection()->put(static::meta('source'));
 	}
 }
 

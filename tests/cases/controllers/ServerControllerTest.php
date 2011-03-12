@@ -2,13 +2,13 @@
 
 namespace li3_lab\tests\cases\controllers;
 
-use \lithium\data\Connections;
-use \li3_lab\controllers\ServerController;
-use \lithium\action\Request;
-use \lithium\action\Response;
-use \li3_lab\models\Repo;
-use \li3_lab\models\Formula;
-use \li3_lab\models\Plugin;
+use lithium\data\Connections;
+use li3_lab\controllers\ServerController;
+use lithium\action\Request;
+use lithium\action\Response;
+use li3_lab\models\Repo;
+use li3_lab\models\Formula;
+use li3_lab\models\Plugin;
 
 class ServerControllerTest extends \lithium\test\Unit {
 
@@ -25,26 +25,31 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$this->server->response = new Response();
 
 		Repo::meta('connection', 'test_resources');
-		Repo::invokeMethod('_connection')->describe(Repo::meta('source'));
+		Repo::connection()->describe(Repo::meta('source'));
+
 		Formula::meta('connection', 'test_resources');
-		Formula::invokeMethod('_connection')->describe(Formula::meta('source'));
+		Formula::connection()->describe(Formula::meta('source'));
+
 		Plugin::meta('source', 'test_li3_lab');
-		Plugin::invokeMethod('_connection')->describe(Plugin::meta('source'));
+		Plugin::connection()->describe(Plugin::meta('source'));
 	}
 
 	public function tearDown() {
 		Repo::meta('connection', 'resources');
-		Repo::invokeMethod('_connection')->describe(Repo::meta('source'));
+		Repo::connection()->describe(Repo::meta('source'));
+
 		Formula::meta('connection', 'resources');
-		Formula::invokeMethod('_connection')->describe(Formula::meta('source'));
+		Formula::connection()->describe(Formula::meta('source'));
+
 		Plugin::meta('source', 'li3_lab');
-		Plugin::invokeMethod('_connection')->describe(Plugin::meta('source'));
+		Plugin::connection()->describe(Plugin::meta('source'));
 	}
 
 	public function testReceive() {
 		$this->request->data['phar'] = array(
-			'name' => 'li3_example.phar.gz', 'type' => 'application/phar',
-			'tmp_name' => $this->_fixturesPath  . '/fixtures/plugins/li3_example.phar.gz',
+			'name' => 'li3_example.phar.gz',
+			'type' => 'application/phar',
+			'tmp_name' => "{$this->_fixturesPath}/fixtures/plugins/li3_example.phar.gz",
 		);
 
 		$this->server->receive();

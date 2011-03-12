@@ -19,16 +19,14 @@
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
 		'http://lithify.me/js/jquery.input_list.js'
 	));?>
-	<script type="text/javascript">
-		<?=$this->scripts();?>
-	</script>
+	<?=$this->scripts(); ?>
 </head>
 <body>
 	<div id="wrapper">
-		<div id="container" class="<?php echo (! empty($home))? 'home' : 'internal' ; ?>">
+		<div id="container" class="<?php echo (!empty($home))? 'home' : 'internal' ; ?>">
 			<div id="header">
 				<h1><?php echo $this->html->link('Lithium Laboratory', array(
-					'plugin' => 'li3_lab',
+					'library' => 'li3_lab',
 					'controller' => 'home',
 					'action' => 'index'
 				)); ?></h1>
@@ -36,23 +34,23 @@
 					<ul>
 						<li class="add-plugin">
 							<?php echo $this->html->link('Add Plugin', array(
-								'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'add'
-							));?>
+								'library' => 'li3_lab', 'Plugins::add'
+							)); ?>
 						</li>
 						<li class="add-extension">
 							<?php echo $this->html->link('Add Extension', array(
-								'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'add'
-							));?>
+								'library' => 'li3_lab', 'Extensions::add'
+							)); ?>
 						</li>
 						<li class="all-plugins">
 							<?php echo $this->html->link('View Plugins', array(
-								'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'index'
-							));?>
+								'library' => 'li3_lab', 'Plugins::index'
+							)); ?>
 						</li>
 						<li class="all-extensions">
 							<?php echo $this->html->link('View Extensions', array(
-								'plugin' => 'li3_lab', 'controller' => 'extensions', 'action' => 'index'
-							));?>
+								'library' => 'li3_lab', 'Extensions::index'
+							)); ?>
 						</li>
 					</ul>
 				</div>

@@ -6,18 +6,22 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-use \lithium\net\http\Router;
+use lithium\net\http\Router;
 
 Router::connect('/lab', array(
-	'plugin' => 'li3_lab', 'controller' => 'home', 'action' => 'index'
+	'library' => 'li3_lab', 'controller' => 'home', 'action' => 'index'
 ));
+
 Router::connect('/lab/{:args}.json', array(
-	'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'view', 'type' => 'json'
+	'library' => 'li3_lab', 'controller' => 'plugins', 'action' => 'view', 'type' => 'json'
 ));
+
 Router::connect('/lab/download/{:args}.phar.gz', array(
-	'plugin' => 'li3_lab', 'controller' => 'plugins', 'action' => 'download'
+	'library' => 'li3_lab', 'controller' => 'plugins', 'action' => 'download'
 ));
+
 Router::connect('/lab/{:controller}/{:action}/{:args}', array(
-	'plugin' => 'li3_lab', 'controller' => 'home'
+	'library' => 'li3_lab', 'controller' => 'home'
 ));
+
 ?>

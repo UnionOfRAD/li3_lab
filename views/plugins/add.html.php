@@ -19,10 +19,8 @@
 			}
 		?>
 		</div>
-		<?php
-			echo $this->form->submit('save');
-			echo $this->form->submit('cancel', array('value' => 'cancel'));
-		?>
+		<?=$this->form->submit('save'); ?>
+		<?=$this->form->submit('cancel', array('value' => 'cancel')); ?>
 	</form>
 </div>
 
@@ -30,18 +28,16 @@
 	<h3>Upload JSON</h3>
 	<?php echo $this->form->create($plugin, array(
 		'method' => 'POST', 'url' => $url, 'enctype' => 'multipart/form-data'
-	));?>
+	)); ?>
 		<input type="file" name="formula">
-		<?php
-			echo $this->form->submit('upload');
-			echo $this->form->submit('cancel', array('value' => 'cancel'));
-		?>
+		<?=$this->form->submit('upload'); ?>
+		<?=$this->form->submit('cancel', array('value' => 'cancel')); ?>
 	</form>
 </div>
 
 <div id="add-form" class="tab-page">
 <h3>New Plugin Form</h3>
-<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url));?>
+<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url)); ?>
 
 <div class="input">
 	<?php
@@ -107,25 +103,25 @@
 </form>
 
 </div>
-<?php
-$this->scripts(
-<<<'script'
-	$(document).ready(function() {
-		$(".tab-page").hide().addClass("hidden");
-		$("ul.tabs li a").click(function() {
-			var id = $(this).attr("id");
-			var page = id.match(/(.*)\-tab/);
-			page = "#"+page[1];
-			if ($(page).hasClass("hidden")) {
-				$(".tab-page").hide().addClass("hidden");
-				$(page).show().removeClass("hidden");
-			}
-			return false;
-		});
-		$("#paste-json").show().removeClass("hidden");
-		$(".sources").input_list();
-		$(".maintainers").input_list();
+
+<?php ob_start(); ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".tab-page").hide().addClass("hidden");
+	$("ul.tabs li a").click(function() {
+		var id = $(this).attr("id");
+		var page = id.match(/(.*)\-tab/);
+		page = "#"+page[1];
+		if ($(page).hasClass("hidden")) {
+			$(".tab-page").hide().addClass("hidden");
+			$(page).show().removeClass("hidden");
+		}
+		return false;
 	});
-script
-);
-?>
+	$("#paste-json").show().removeClass("hidden");
+	$(".sources").input_list();
+	$(".maintainers").input_list();
+});
+</script>
+
+<?php $this->scripts(ob_get_clean()); ?>

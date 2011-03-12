@@ -6,7 +6,7 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-use \lithium\data\Connections;
+use lithium\data\Connections;
 
 Connections::add('li3_lab', array(
 	'type' => 'http', 'adapter' => 'CouchDb', 'port' => 5984,
