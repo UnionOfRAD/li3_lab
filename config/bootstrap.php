@@ -12,6 +12,7 @@ Connections::add('li3_lab', array(
 	'type' => 'http', 'adapter' => 'CouchDb', 'port' => 5984,
 	'database' => 'li3_lab'
 ));
+
 Connections::add('resources', array('type' => 'Media', 'path' => '/resources'));
 
 ?>

@@ -21,7 +21,7 @@ namespace li3_lab\models;
  * When the find call in the example above returns a NULL, that means the view does not
  * exist in the `Plugin` database. To insert it use:
  * {{{
- *		LabView::create()->save();
+ *		LabView::init()->save();
  * }}}
  */
 class LabView extends \lithium\data\Model {
@@ -78,13 +78,12 @@ class LabView extends \lithium\data\Model {
 	);
 
 	/**
-	 * Create a LabView instance of Document
-	 * Unlike Model::create, this takes a string name of a predefined design view
+	 * Create a LabView instance of `Document`. Takes a string name of a predefined design view.
 	 *
-	 * @param string $data 'lastest' is only valid and default
+	 * @param string $data 'latest' is only valid and default
 	 * @return Document
 	 */
-	public static function create($data = 'latest') {
+	public static function init($data = 'latest') {
 		if (!isset(static::$views[$data])) {
 			return false;
 		}
