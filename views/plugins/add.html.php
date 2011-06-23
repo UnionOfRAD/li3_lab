@@ -10,15 +10,10 @@
 
 <div id="paste-json" class="tab-page">
 	<h3>Paste JSON</h3>
-	<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url)); ?>
-		<div class="input">
-		<?php
-			echo $this->form->textarea('json', array('cols' => 40, 'rows' => 10));
-			if (isset($errors['json'])) {
-				echo '<div style="color:red">' . implode(', ', $errors['json']) . '</div>';
-			}
-		?>
-		</div>
+	<?=$this->form->create($plugin, compact('url')); ?>
+		<?=$this->form->field('json', array(
+			'type' => 'textarea', 'label' => false, 'cols' => 40, 'rows' => 10
+		)); ?>
 		<?=$this->form->submit('save'); ?>
 		<?=$this->form->submit('cancel', array('value' => 'cancel')); ?>
 	</form>
@@ -26,9 +21,7 @@
 
 <div id="upload-json" class="tab-page">
 	<h3>Upload JSON</h3>
-	<?php echo $this->form->create($plugin, array(
-		'method' => 'POST', 'url' => $url, 'enctype' => 'multipart/form-data'
-	)); ?>
+	<?=$this->form->create($plugin, compact('url') + array('type' => 'file')); ?>
 		<input type="file" name="formula">
 		<?=$this->form->submit('upload'); ?>
 		<?=$this->form->submit('cancel', array('value' => 'cancel')); ?>
@@ -37,16 +30,12 @@
 
 <div id="add-form" class="tab-page">
 <h3>New Plugin Form</h3>
-<?php echo $this->form->create($plugin, array('method' => 'POST', 'url' => $url)); ?>
+<?=$this->form->create($plugin, compact('url')); ?>
 
 <div class="input">
-	<?php
-		echo $this->form->label('name', 'Plugin Name', array('class' => 'required'));
-		echo $this->form->text('name');
-		if (isset($errors['name'])) {
-			echo '<p style="color:red">' . implode(', ', $errors['name']) . '</p>';
-		}
-	?>
+	<?=$this->form->field('name', array('label' => array(
+		'Plugin Name' => array('class' => 'required')
+	))); ?>
 </div>
 <div class="input">
 	<?php

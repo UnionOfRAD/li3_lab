@@ -23,7 +23,7 @@ class Server extends \lithium\console\Command {
 		$result = $result && Extension::install();
 
 		foreach (array_keys(LabView::$views) as $view) {
-			LabView::create($view)->save();
+			LabView::init($view)->save();
 			$this->_check('\li3_lab\models\LabView', $view);
 		}
 	}

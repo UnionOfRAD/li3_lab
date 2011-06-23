@@ -39,9 +39,9 @@ class Media extends \lithium\data\Source {
 	 * @var array
 	 */
 	protected $_classes = array(
-		'record' => '\li3_lab\extensions\data\model\File',
-		'recordSet' => '\li3_lab\extensions\data\model\Directory',
-		'recordObject' => '\SplFileInfo',
+		'entity' => 'li3_lab\extensions\data\model\File',
+		'set' => 'li3_lab\extensions\data\model\Directory',
+		'object' => 'SplFileInfo',
 	);
 
 	/**
@@ -123,7 +123,7 @@ class Media extends \lithium\data\Source {
 	 * @param $class string
 	 * @return array
 	 */
-	public function entities($class = null) {
+	public function sources($class = null) {
 		return array_map('basename', glob($this->_path . '/*', GLOB_ONLYDIR));
 	}
 
@@ -138,8 +138,8 @@ class Media extends \lithium\data\Source {
 			$result = true;
 		}
 		if ($result) {
-			return new $this->_classes['recordSet'](array(
-				'items' => array(new $this->_classes['recordObject']($full))
+			return new $this->_classes['set'](array(
+				'items' => array(new $this->_classes['object']($full))
 			));
 		}
 		return null;
@@ -173,14 +173,14 @@ class Media extends \lithium\data\Source {
 			$data = $query->data();
 
 			if(!empty($data['error']) && isset($errors[$data['error']])) {
-				$query->record()->errors('file', $errors[$data['error']]);
+				$query->entity()->errors('file', $errors[$data['error']]);
 				return false;
 			}
 			$filename = preg_replace('/\W-/', '', $data['name']);
 
 			if (!empty($data['tmp_name'])) {
 				if (!file_exists($data['tmp_name'])) {
-					$query->record()->errors('file', $data['tmp_name'] . 'does not exist');
+					$query->entity()->errors('file', $data['tmp_name'] . 'does not exist');
 					return false;
 				}
 				$data['contents'] = file_get_contents($data['tmp_name']);
@@ -196,8 +196,8 @@ class Media extends \lithium\data\Source {
 
 			if (file_put_contents($file, $data['contents'])) {
 				$query->conditions(array('name' => $filename));
-				$record = $self->read($query, $options);
-				return $query->record()->data = $record;
+				$entity = $self->read($query, $options);
+				return $query->entity()->data = $entity;
 			}
 			return false;
 		});
@@ -221,7 +221,7 @@ class Media extends \lithium\data\Source {
 
 			if (!is_callable($conditions['format'])) {
 				$conditions['format'] = function ($file, $config) use ($options){
-					return new $options['classes']['recordObject']($file);
+					return $this->_instance('object', $file);
 				};
 			}
 			if (!empty($conditions['name'])) {
