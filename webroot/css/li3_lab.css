@@ -1,3 +1,7 @@
+body.main {
+	overflow: auto;
+}
+
 /** General **/
 #header {
 	padding-bottom: 2em;
@@ -41,7 +45,7 @@ input[type=submit] + input[type=submit] {
 .home h1 {
 	text-align:center;
 }
-.home h1 a {
+.home #header h1 a {
 	display:block;
 	background:url(../img/li3-lab.png) no-repeat center center;
 	width:400px;

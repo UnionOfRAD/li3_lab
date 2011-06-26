@@ -21,6 +21,7 @@ $commandBase = "http://{$assetHost}/cmd";
 	<?=$this->html->style(array(
 		"{$assetBase}/css/base.css",
 		"{$assetBase}/css/u1m.css",
+		"{$assetBase}/css/lithium_site.css",
 		"{$assetBase}/css/li3_lab.css",
 		"{$assetBase}/css/rad.cli.css"
 	)); ?>
@@ -31,7 +32,7 @@ $commandBase = "http://{$assetHost}/cmd";
 	));?>
 	<?=$this->scripts(); ?>
 </head>
-<body>
+<body class="main">
 	<div id="wrapper">
 		<div id="container" class="<?php echo (!empty($home))? 'home' : 'internal' ; ?>">
 			<div id="header">
