@@ -3,7 +3,6 @@
 	position:relative;
 }
 #cli {
-	position: absolute;
 	left: 0;
 	z-index: 5000;
 	width: 100%;
