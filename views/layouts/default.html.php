@@ -8,7 +8,7 @@
 ?>
 <?php
 $assetHost = $this->request()->env('HTTP_HOST');
-$assetBase = "http://{$assetHost}";
+$assetBase = "/li3_lab";
 $commandBase = "http://{$assetHost}/cmd";
 ?>
 <!doctype html>
@@ -19,9 +19,8 @@ $commandBase = "http://{$assetHost}/cmd";
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 
 	<?=$this->html->style(array(
-		"{$assetBase}/css/base.css",
+		"{$assetBase}/css/lithium.css",
 		"{$assetBase}/css/u1m.css",
-		"{$assetBase}/css/lithium_site.css",
 		"{$assetBase}/css/li3_lab.css",
 		"{$assetBase}/css/rad.cli.css"
 	)); ?>
@@ -72,7 +71,7 @@ $commandBase = "http://{$assetHost}/cmd";
 		</div>
 	</div>
 	<div id="footer">
-		<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
+		<p class="copyright">Pretty much everything is &copy; 20011 and beyond, the Union of Rad</p>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
