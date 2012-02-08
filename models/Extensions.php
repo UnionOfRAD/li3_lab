@@ -10,7 +10,7 @@ namespace li3_lab\models;
 
 use \lithium\util\Validator;
 
-class Extension extends \lithium\data\Model {
+class Extensions extends \lithium\data\Model {
 
 	/**
 	 * Metadata

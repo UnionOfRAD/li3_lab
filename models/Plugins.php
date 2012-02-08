@@ -11,7 +11,7 @@ namespace li3_lab\models;
 use \lithium\util\Validator;
 use \lithium\data\Connections;
 
-class Plugin extends \lithium\data\Model {
+class Plugins extends \lithium\data\Model {
 
 	/**
 	 * Metadata
