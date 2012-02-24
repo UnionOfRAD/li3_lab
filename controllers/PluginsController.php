@@ -2,14 +2,14 @@
 /**
  * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
 namespace li3_lab\controllers;
 
-use \li3_lab\models\Plugin;
-use \li3_lab\models\Formula;
+use li3_lab\models\Plugin;
+use li3_lab\models\Formula;
 
 /**
  * Plugins Controller
@@ -24,7 +24,7 @@ class PluginsController extends \lithium\action\Controller {
 		$params = array(
 			'conditions'=> array('design' => 'latest', 'view' => 'plugins'),
 			'order' => array('descending' => 'true'),
-			'limit' => '10',
+			'limit' => '10'
 		);
 		$latest = Plugin::all($params);
 		return compact('latest');

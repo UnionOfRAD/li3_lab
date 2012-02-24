@@ -2,14 +2,14 @@
 /**
  * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
 namespace li3_lab\extensions\command;
 
-use \lithium\net\http\Service;
-use \Phar;
+use lithium\net\http\Service;
+use Phar;
 /**
  * Client for adding, creating, updating li3 plugins
  *
@@ -97,6 +97,7 @@ class Lab extends \lithium\console\Command {
 	/**
 	 * List all the plugins
 	 *
+	 * @param string $type type of results to list
 	 * @return void
 	 */
 	public function run($type = 'plugins') {
@@ -118,7 +119,7 @@ class Lab extends \lithium\console\Command {
 				}
 				$out = array(
 					"{$data->summary}",
-					"Version: {$data->version}", "Created: {$data->created}",
+					"Version: {$data->version}", "Created: {$data->created}"
 				);
 
 				$this->header($header);
@@ -145,9 +146,9 @@ class Lab extends \lithium\console\Command {
 		}
 		$this->header($plugin->name);
 
-		if (isset($plugin->sources->git) &&
-			strpos(shell_exec('git --version'), 'git version 1.6') !== false) {
-				$result = shell_exec("cd {$this->path} && git clone {$plugin->sources->git}");
+		$validGitVersion = strpos(shell_exec('git --version'), 'git version 1.6');
+		if (isset($plugin->sources->git) && $validGitVersion !== false) {
+			$result = shell_exec("cd {$this->path} && git clone {$plugin->sources->git}");
 		} elseif (isset($plugin->sources->phar)) {
 			$remote = $plugin->sources->phar;
 			$local = $this->path . '/' . basename($plugin->sources->phar);
@@ -243,7 +244,7 @@ class Lab extends \lithium\console\Command {
 		if (empty($key) || empty($value)) {
 			return false;
 		}
-		switch($key) {
+		switch ($key) {
 			case 'server':
 				$this->_settings['servers'][$value] = $options;
 			break;
@@ -275,7 +276,7 @@ class Lab extends \lithium\console\Command {
 		}
 		$data = array();
 		$writer = function($conf) use (&$writer, &$data) {
-			foreach((array)$conf as $key => $value) {
+			foreach ((array)$conf as $key => $value) {
 				if (is_array($value)) {
 					$data[] = "[{$key}]";
 					$data[] = $writer($value);

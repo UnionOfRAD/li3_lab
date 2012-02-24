@@ -2,15 +2,14 @@
 /**
  * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
 namespace li3_lab\tests\cases\models;
 
-use \li3_lab\tests\mocks\models\MockPlugin;
-use \lithium\data\Connections;
-use \lithium\data\model\Query;
+use li3_lab\tests\mocks\models\MockPlugin;
+use lithium\data\Connections;
 
 class PluginTest extends \lithium\test\Unit {
 
@@ -26,17 +25,17 @@ class PluginTest extends \lithium\test\Unit {
 			0 => 	array(
 				'name' => 'gwoo',
 				'email' => 'gwoo@rad-dev.org',
-				'website' => 'li3.rad-dev.org',
-			),
+				'website' => 'li3.rad-dev.org'
+			)
 		),
 		'sources' => array(
-			'git' => 'git://rad-dev.org/li3_bot.git',
+			'git' => 'git://rad-dev.org/li3_bot.git'
 		),
 		'commands' => array(
 			'add' => 	array(
-				0 => 'install',
-			),
-		),
+				0 => 'install'
+			)
+		)
 	);
 
 	public function testValidation() {
@@ -54,7 +53,7 @@ class PluginTest extends \lithium\test\Unit {
 			),
 			'version' => array('You must specify a version for this plugin.'),
 			'summary' => array('You must specify a short summary for this plugin'),
-			'sources' => array('You must specify a source for this plugin.'),
+			'sources' => array('You must specify a source for this plugin.')
 		);
 		$result = $plugin->errors();
 		$this->assertEqual($expected, $result);

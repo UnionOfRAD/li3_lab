@@ -2,15 +2,15 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
 namespace li3_lab\extensions\data\source;
 
-use \lithium\core\Libraries;
-use \RecursiveDirectoryIterator;
-use \RecursiveIteratorIterator;
+use lithium\core\Libraries;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Data source for managing files
@@ -41,7 +41,7 @@ class Media extends \lithium\data\Source {
 	protected $_classes = array(
 		'entity' => 'li3_lab\extensions\data\model\File',
 		'set' => 'li3_lab\extensions\data\model\Directory',
-		'object' => 'SplFileInfo',
+		'object' => 'SplFileInfo'
 	);
 
 	/**
@@ -172,7 +172,7 @@ class Media extends \lithium\data\Source {
 			extract($query->export($self), EXTR_OVERWRITE);
 			$data = $query->data();
 
-			if(!empty($data['error']) && isset($errors[$data['error']])) {
+			if (!empty($data['error']) && isset($errors[$data['error']])) {
 				$query->entity()->errors('file', $errors[$data['error']]);
 				return false;
 			}
@@ -304,7 +304,6 @@ class Media extends \lithium\data\Source {
 	}
 
 	public function relationship($class, $type, $name, array $options = array()) {
-		
 	}
 }
 

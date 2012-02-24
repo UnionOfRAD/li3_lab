@@ -2,7 +2,7 @@
 /**
  * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
@@ -72,7 +72,7 @@ class LabView extends \lithium\data\Model {
 					'map' => 'function(doc) {
 						emit(doc.name, doc);
 					}'
-				),
+				)
 			)
 		)
 	);

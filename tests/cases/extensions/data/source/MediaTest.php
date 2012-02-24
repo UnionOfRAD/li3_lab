@@ -2,17 +2,16 @@
 /**
  * Li3 Lab: consume and distribute plugins for the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
 namespace li3_lab\tests\cases\extensions\data\source;
 
-use \li3_lab\extensions\data\source\Media;
-use \lithium\data\Connections;
-use \lithium\data\Model;
-use \lithium\data\model\Query;
-use \lithium\data\model\Record;
+use li3_lab\extensions\data\source\Media;
+use lithium\data\Connections;
+use lithium\data\model\Query;
+use lithium\data\model\Record;
 
 class MediaTest extends \lithium\test\Unit {
 
@@ -26,12 +25,12 @@ class MediaTest extends \lithium\test\Unit {
 		$this->classes = array(
 			'record' => '\li3_lab\extensions\data\model\File',
 			'recordSet' => '\li3_lab\extensions\data\model\Directory',
-			'recordObject' => '\SplFileInfo',
+			'recordObject' => '\SplFileInfo'
 		);
 		MockUpload::__init();
 		$this->query = new Query(array(
-			'model' => '\li3_lab\tests\cases\extensions\data\source\MockUpload',
-			'record' => new Record(),
+			'model' => '\li3_lab\tests\mocks\models\MockUpload',
+			'record' => new Record()
 		));
 	}
 
@@ -77,7 +76,8 @@ class MediaTest extends \lithium\test\Unit {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$this->query->data(array(
 			'name' => 'some_file.phar.gz', 'type' => 'application/tar',
-			'tmp_name' => LITHIUM_LIBRARY_PATH . '/lithium/console/command/create/template/app.phar.gz'
+			'tmp_name' =>
+				LITHIUM_LIBRARY_PATH . '/lithium/console/command/create/template/app.phar.gz'
 		));
 		$result = $media->create($this->query, array('classes' => $this->classes));
 		$this->assertTrue(is_object($result));
@@ -93,7 +93,7 @@ class MediaTest extends \lithium\test\Unit {
 	public function testCreateWithError() {
 		$media = new Media(array('path' => '/resources/tmp/tests'));
 		$this->query->data(array(
-			'name' => 'some_file.phar.gz', 'error' => '1',
+			'name' => 'some_file.phar.gz', 'error' => '1'
 		));
 		$result = $media->create($this->query, array('classes' => $this->classes));
 		$this->assertFalse($result);
@@ -142,11 +142,6 @@ class MediaTest extends \lithium\test\Unit {
 
 		$this->assertFalse(file_exists($this->_testPath . '/mock_uploads/media_test'));
 	}
-}
-
-class MockUpload extends \lithium\data\Model {
-
-	protected $_meta = array('connection' => 'media_test');
 }
 
 ?>

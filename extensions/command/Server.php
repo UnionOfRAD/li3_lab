@@ -2,9 +2,9 @@
 
 namespace li3_lab\extensions\command;
 
-use \li3_lab\models\Plugin;
-use \li3_lab\models\Extension;
-use \li3_lab\models\LabView;
+use li3_lab\models\Plugin;
+use li3_lab\models\Extension;
+use li3_lab\models\LabView;
 
 /**
  * Command to assist in setup and management of Lithium Bin
@@ -36,7 +36,7 @@ class Server extends \lithium\console\Command {
 		$view = $model::find("_design/{$name}");
 
 		if (!empty($view->reason)) {
-			switch($view->reason) {
+			switch ($view->reason) {
 				case 'no_db_file':
 					$this->out(array(
 						'Database does not exist.',

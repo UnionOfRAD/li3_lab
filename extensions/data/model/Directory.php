@@ -2,7 +2,7 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
@@ -13,7 +13,7 @@ namespace li3_lab\extensions\data\model;
  * collections of records from the file system. `FileRecord`
  *
  */
-class Directory extends \lithium\data\model\RecordSet {
+class Directory extends \lithium\data\collection\RecordSet {
 
 	/**
 	 * Magic method for passing some methods through to SplFileInfo type object

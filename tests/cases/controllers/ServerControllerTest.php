@@ -49,7 +49,7 @@ class ServerControllerTest extends \lithium\test\Unit {
 		$this->request->data['phar'] = array(
 			'name' => 'li3_example.phar.gz',
 			'type' => 'application/phar',
-			'tmp_name' => "{$this->_fixturesPath}/fixtures/plugins/li3_example.phar.gz",
+			'tmp_name' => "{$this->_fixturesPath}/fixtures/plugins/li3_example.phar.gz"
 		);
 
 		$this->server->receive();

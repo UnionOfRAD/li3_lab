@@ -2,7 +2,7 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2010, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 ?>
@@ -71,7 +71,7 @@ $commandBase = "http://{$assetHost}/cmd";
 		</div>
 	</div>
 	<div id="footer">
-		<p class="copyright">Pretty much everything is &copy; 20011 and beyond, the Union of Rad</p>
+		<p class="copyright">Pretty much everything is &copy; 2012 and beyond, the Union of Rad</p>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
