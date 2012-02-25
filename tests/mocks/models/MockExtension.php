@@ -10,7 +10,7 @@ namespace li3_lab\tests\mocks\models;
 
 class MockExtension extends \li3_lab\models\Extension {
 
-	protected $_classes = array(
+	protected static $_classes = array(
 	  'query' => '\lithium\data\model\Query',
 	  'record' => '\lithium\data\model\Document',
 	  'validator' => '\lithium\util\Validator',

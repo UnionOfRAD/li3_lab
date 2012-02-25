@@ -11,7 +11,7 @@ namespace li3_lab\tests\cases\extensions\data\source;
 use li3_lab\extensions\data\source\Media;
 use lithium\data\Connections;
 use lithium\data\model\Query;
-use lithium\data\model\Record;
+use lithium\data\entity\Record;
 
 class MediaTest extends \lithium\test\Unit {
 
@@ -19,8 +19,10 @@ class MediaTest extends \lithium\test\Unit {
 
 	public function setUp() {
 		$this->_testPath = LITHIUM_APP_PATH . '/resources/tmp/tests';
-		Connections::add('media_test', 'Media', array(
-			'path' => '/resources/tmp/tests', 'mode' => 0777
+		Connections::add('media_test', array(
+			'type' => 'Media',
+			'path' => '/resources/tmp/tests',
+			'mode' => 0777
 		));
 		$this->classes = array(
 			'record' => '\li3_lab\extensions\data\model\File',
@@ -29,7 +31,7 @@ class MediaTest extends \lithium\test\Unit {
 		);
 		MockUpload::__init();
 		$this->query = new Query(array(
-			'model' => '\li3_lab\tests\mocks\models\MockUpload',
+			'model' => '\li3_lab\tests\cases\extensions\data\source\MockUpload',
 			'record' => new Record()
 		));
 	}
@@ -142,6 +144,11 @@ class MediaTest extends \lithium\test\Unit {
 
 		$this->assertFalse(file_exists($this->_testPath . '/mock_uploads/media_test'));
 	}
+}
+
+class MockUpload extends \lithium\data\Model {
+
+	protected $_meta = array('connection' => 'media_test');
 }
 
 ?>

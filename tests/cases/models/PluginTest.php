@@ -14,7 +14,10 @@ use lithium\data\Connections;
 class PluginTest extends \lithium\test\Unit {
 
 	public function setUp() {
-		Connections::add('test_li3_lab', 'http', array('adapter' => 'CouchDb'));
+		Connections::add('test_li3_lab', array(
+			'type' => 'http',
+			'adapter' => 'CouchDb'
+		));
 	}
 
 	protected $_data = array(

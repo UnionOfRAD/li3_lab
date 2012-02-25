@@ -15,7 +15,10 @@ class ServerControllerTest extends \lithium\test\Unit {
 	public $request;
 
 	public function setUp() {
-		Connections::add('test_resources', 'Media', array('path' => '/resources/tmp/tests'));
+		Connections::add('test_resources', array(
+			'type' => 'Media',
+			'path' => '/resources/tmp/tests'
+		));
 
 		$this->_fixturesPath = dirname(dirname(__DIR__));
 		$this->_cleanUp();

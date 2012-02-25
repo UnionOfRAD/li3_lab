@@ -13,7 +13,7 @@ namespace li3_lab\extensions\data\model;
  * collections of records from the file system. `FileRecord`
  *
  */
-class File extends \lithium\data\model\Record {
+class File extends \lithium\data\entity\Record {
 
 	/**
 	 * Creates a new record object with default values.
