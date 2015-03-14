@@ -1,56 +1,15 @@
-/** Home **/
-.home h1 {
-	text-align:center;
-}
-.home h1 a {
-	display:block;
-	background:url(../img/li3-lab.png) no-repeat center center;
-	width:400px;
-	height:0;
-	margin: 0 auto;
-	padding:250px 0 0 0;
-	overflow:hidden;
-	
-}
-.home #menu ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	text-align:center;
-}
-.home #menu ul li {
-	display: inline-block;
-	padding: 0 1em;
-	
-}
-.home #menu ul li a {
-	display: inline-block;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-}
-.home .add-plugin a, .home .add-extension a {
-	background:black url(../img/add-plugin.png) no-repeat center center;
-	width:240px;
-	height:0;
-	padding:56px 0 0 0;
-	overflow:hidden;
-}
-.home .add-extension a {
-	background-image: url(../img/add-extension.png);
-}
-.home .all-plugins, .home .all-extensions {
-	display:none !important;
+body.main {
+	overflow: auto;
 }
 
-.home .column {
-	float:left;
-	width:33%;
-}
 /** General **/
 #header {
 	padding-bottom: 2em;
-	border-bottom: 1px solid #e6e6e6;
 }
+.nav.capsule {
+	margin-top: 75px;
+}
+
 
 .internal #header {
 	display: block;
@@ -69,79 +28,102 @@
 	padding:126px 0 0 0;
 	overflow:hidden;
 }
-.internal #menu {
-	vertical-align: 60px;
-	display: inline-block;
+
+input[type=submit] {
+clear: both;
+	display: inline;
 }
-.internal #menu ul {
-	display: inline-block;
-	list-style: none;
-	margin: 0;
-	padding: 0;
+input[type=submit] + input[type=submit] {
+	margin-left: 1em;
 }
-.internal #menu ul li {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
+
+#footer {
+	clear:both;
 }
-.internal #menu ul li a {
-	text-transform: lowercase;
-	display: inline-block;
-	background: #f0f0f0;
-	color: black;
-	font-weight:bold;
-	padding:.5em 1em;
+
+/*--- Home ---*/
+.home h1 {
+	text-align:center;
 }
-.internal #menu ul li a:hover {
-	background: black;
-	color: white;
+.home #header h1 a {
+	display:block;
+	background:url(../img/li3-lab.png) no-repeat center center;
+	width:400px;
+	height:0;
+	margin: 0 auto;
+	padding:250px 0 0 0;
+	overflow:hidden;
 }
-.internal #menu .add-plugin a {
-	-moz-border-radius-bottomleft: 6px;
-	-webkit-border-bottom-left-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-	-webkit-border-top-left-radius: 6px;
+
+.home .nav.capsule {
+	float: none;
+	text-align: center;
 }
-.internal #menu .all-extensions a {
+.home .nav.capsule {
+	display: block;
+	width: 600px;
+	margin: 0 auto;
+}
+.home .nav.capsule .add-plugin a {
+	background: black url(../img/add-plugin.png) no-repeat center center;
+}
+.home .nav.capsule .add-extension a {
+	background: black url(../img/add-extension.png) no-repeat center center;
 	-moz-border-radius-bottomright: 6px;
 	-webkit-border-bottom-right-radius: 6px;
 	-moz-border-radius-topright: 6px;
 	-webkit-border-top-right-radius: 6px;
 }
-.internal #content {
-	
+.home .nav.capsule .add-plugin a,
+.home .nav.capsule .add-extension a {
+	width: 240px;
+	height: 0;
+	padding: 56px 0 0 0;
+	overflow: hidden;
 }
-#footer {
-	clear:both;
+.home .nav.capsule .all-plugins,
+.home .nav.capsule .all-extensions {
+	display: none;
 }
 
-/** Extension **/
-#extension .meta {
-	width:300px;
-	float:right;
+.home .column {
+	float:left;
+	width:33%;
 }
+
+
+/** Extension **/
+
 #extension .details {
 	width:620px;
 	float:left;
 }
-#extension h1, #extension h2 {
+#extension h2 {
 	display: inline-block;
-	font-size: 36px;
 	font-weight: normal;
 	color: black;
 	margin:.5em 0;
-}
-#extension h1 {
-	padding-left:1.25em;
+	padding-left:40px;
 	background:url(../img/extension.png) no-repeat left center;
 }
-#extension h1:after {
-	content: "\\";
-	padding: 0 .1em;
+#extension h3.summary {
+	padding-left: 40px;
 }
-#extension h3 {
-	
+h3.summary {
+	margin-top: -0.3em;
+	margin-bottom: 1em;
+	color: #666;
 }
+#extension .meta h4 {
+	font-size: 14px;
+	margin: 0;
+}
+#extension .meta {
+	width:300px;
+	float: right;
+	margin-top: 9.5em;
+}
+
 #extension .actions {
 	background:#f0f0f0;
 	-moz-border-radius-topright: 6px;
@@ -166,7 +148,7 @@
 }
 .input label {
 	font-weight: bold;
-	font-size: 14px;	
+	font-size: 14px;
 }
 div.maintainer {
 	margin: 3px 0 20px;
@@ -180,7 +162,7 @@ div.maintainer {
 	padding: 3px 5px;
 	margin: 5px 5px 5px 0;
 	float: right;
-	
+
 }
 div.buttons {
 	margin: 10px 0 0;
@@ -218,34 +200,4 @@ ul.tabs li {
 }
 .tab-page h3 {
 	margin-top:0;
-}
-/** Forms **/
-input, 
-textarea {
-	border:none;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	padding: .5em !important;
-}
-input:focus, 
-textarea:focus {
-	outline: none;
-}
-a.button,
-button,
-input[type=submit], 
-input[type=cancel], 
-input[type=button] {
-	font-size: 16px;
-	font-weight: bold;
-	padding: .5em !important;
-	background: white;
-	border: none;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 1px 1px 6px #a6a6a6;
-	-webkit-box-shadow: 1px 1px 6px #a6a6a6;
-	box-shadow: 1px 1px 6px #a6a6a6;
-	display: inline-block;
-	margin: .25em;
 }

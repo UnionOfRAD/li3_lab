@@ -127,7 +127,7 @@ class Media extends \lithium\data\Source {
 		return array_map('basename', glob($this->_path . '/*', GLOB_ONLYDIR));
 	}
 
-	public function describe($entity, $meta = array()) {
+	public function describe($entity, array $meta = array()) {
 		$path = $this->_path;
 		$full = "{$path}/{$entity}";
 		$result = false;
@@ -162,7 +162,7 @@ class Media extends \lithium\data\Source {
 	 * @param string $options
 	 * @return void
 	 */
-	public function create($query, $options = array()) {
+	public function create($query, array $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
 		$errors = $this->_errors;
@@ -210,7 +210,7 @@ class Media extends \lithium\data\Source {
 	 * @param string $options
 	 * @return mixed
 	 */
-	public function read($query, $options = array()) {
+	public function read($query, array $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
 		$config = $this->_config;
@@ -237,11 +237,11 @@ class Media extends \lithium\data\Source {
 		});
 	}
 
-	public function update($query, $options) {
+	public function update($query, array $options = array()) {
 		return $this->create($query, $options);
 	}
 
-	public function delete($query, $options = array()) {
+	public function delete($query, array $options = array()) {
 		$params = compact('query', 'options');
 		$path = $this->_path;
 		$config = $this->_config;
@@ -301,6 +301,10 @@ class Media extends \lithium\data\Source {
 			$this->_iterator = 0;
 		}
 		return $result;
+	}
+
+	public function relationship($class, $type, $name, array $options = array()) {
+		
 	}
 }
 

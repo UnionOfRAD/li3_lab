@@ -3,14 +3,12 @@
 	if (isset($extension->_revisions)) {
 		$version = $extension->_revisions->start;
 	}
-
 ?>
 
 <div id="extension">
 	<div class="details">
-		<h1><?=<?=$this->title($extension->namespace);?></h1>
-		<h2><?=$extension->name;?></h2>
-		<p class="summary"><?=$extension->summary;?></p>
+		<h2><?=$this->title($extension->namespace . ' \\ ' . $extension->name);?></h2>
+		<h3 class="summary"><?=$extension->summary;?></h3>
 		<div class="actions">
 			<a href="#">Download</a>
 			 | <?php

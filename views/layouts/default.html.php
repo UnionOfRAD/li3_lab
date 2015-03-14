@@ -6,22 +6,32 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 ?>
+<?php
+$assetHost = $this->request()->env('HTTP_HOST');
+$assetBase = "/li3_lab";
+$commandBase = "http://{$assetHost}/cmd";
+?>
 <!doctype html>
 <html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>Li3 Lab<?php echo (!empty($this->title)) ? " > {$this->title}" : null;?></title>
-	<?=$this->html->link('Icon', null, array('type' => 'icon'));?>
+	<title>Lithium Laboratory</title>
+	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 
-	<?=$this->html->style('base');?>
-
+	<?=$this->html->style(array(
+		"{$assetBase}/css/lithium.css",
+		"{$assetBase}/css/u1m.css",
+		"{$assetBase}/css/li3_lab.css",
+		"{$assetBase}/css/rad.cli.css"
+	)); ?>
 	<?=$this->html->script(array(
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
-		'http://lithify.me/js/jquery.input_list.js'
+		"{$assetBase}/js/jquery.input_list.js",
+		"{$assetBase}/js/rad.cli.js"
 	));?>
 	<?=$this->scripts(); ?>
 </head>
-<body>
+<body class="main">
 	<div id="wrapper">
 		<div id="container" class="<?php echo (!empty($home))? 'home' : 'internal' ; ?>">
 			<div id="header">
@@ -30,7 +40,7 @@
 					'controller' => 'home',
 					'action' => 'index'
 				)); ?></h1>
-				<div id="menu">
+				<div class="nav capsule">
 					<ul>
 						<li class="add-plugin">
 							<?php echo $this->html->link('Add Plugin', array(
@@ -60,5 +70,17 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer">
+		<p class="copyright">Pretty much everything is &copy; 20011 and beyond, the Union of Rad</p>
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function () {
+			RadCli.setup({
+				assetBase: '<?php echo $assetBase; ?>',
+				commandBase: '<?php echo $commandBase; ?>'
+			});
+		});
+	</script>
 </body>
 </html>
